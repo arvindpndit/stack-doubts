@@ -1,7 +1,7 @@
 import React from "react";
+import { popularTags } from "@/utils/constants";
 
 const PopularTags = () => {
-  const popularTags: Array<string> = ["React", "Next", "CSS", "Redux", "Node"];
   return (
     <div>
       <h1 className="font-bold text-xl mt-5">Popular Tags</h1>
