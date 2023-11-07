@@ -5,10 +5,10 @@ import { sideBarMenuOptionList } from "@/utils/constants";
 
 const LeftSideBar = () => {
   return (
-    <div className="bg-slate-50 w-2/12 h-screen p-6">
-      <div className="flex flex-col space-y-4">
+    <div className="h-screen ">
+      <div className="flex flex-col space-y-4 mt-5">
         {sideBarMenuOptionList.map((item) => {
-          return <SideBarMenuOption menutitle={item} />;
+          return <SideBarMenuOption menutitle={item} key={item} />;
         })}
       </div>
     </div>

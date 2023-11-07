@@ -6,7 +6,7 @@ import devLogo from "../public/assets/images/logo-light.svg";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="h-20 background-light800_dark300 flex flex-row justify-between items-center px-12">
+    <div className="h-20  flex flex-row justify-between items-center px-12">
       <Image src={devLogo} alt="devLogo" />
       <div>Search bar</div>
       <UserButton />
