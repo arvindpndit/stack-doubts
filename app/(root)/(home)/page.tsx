@@ -12,13 +12,13 @@ export default function Home() {
       <div className="bg-white">
         <Navbar />
         <div className="flex justify-between px-5">
-          <div className="w-1/5 border ">
+          <div className="w-1/5  ">
             <LeftSideBar />
           </div>
           <div className="w-full px-4">
             <MainContainer />
           </div>
-          <div className="w-2/6 border">
+          <div className="w-2/6 ">
             <RightSideBar />
           </div>
         </div>
