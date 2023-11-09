@@ -5,7 +5,7 @@ import QuestionCard from "./QuestionCard";
 
 const MainContainer = () => {
   return (
-    <div className="w-full px-8 mt-8">
+    <div className="w-full px-8 mt-28">
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl">All questions</h1>
         <button

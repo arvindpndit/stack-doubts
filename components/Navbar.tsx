@@ -7,7 +7,7 @@ import devLogo from "../public/assets/images/logo-light.svg";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="h-20 flex flex-row justify-between items-center px-12">
+    <div className="fixed top-0 left-0 right-0 bg-white h-20 flex items-center justify-between px-12">
       <Image src={devLogo} alt="devLogo" height={28} />
       <div className="relative flex items-center">
         <input

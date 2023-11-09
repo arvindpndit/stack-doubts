@@ -4,7 +4,7 @@ import PopularTags from "./PopularTags";
 
 const RightSideBar = () => {
   return (
-    <div>
+    <div className="fixed top-24">
       <TopQuestions />
       <PopularTags />
     </div>
