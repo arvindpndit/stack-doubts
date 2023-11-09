@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import searchIcon from "../public/assets/icons/search.svg";
+import QuestionCard from "./QuestionCard";
 
 const MainContainer = () => {
   return (
@@ -29,6 +30,8 @@ const MainContainer = () => {
           className="absolute right-2 top-3"
         />
       </div>
+
+      <QuestionCard />
     </div>
   );
 };
