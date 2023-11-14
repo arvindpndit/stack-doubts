@@ -7,22 +7,5 @@ import MainContainer from "@/components/MainContainer";
 import RightSideBar from "@/components/RightSideBar";
 
 export default function Home() {
-  return (
-    <ClerkProvider>
-      <div className="bg-white">
-        <Navbar />
-        <div className="flex justify-between px-5">
-          <div className="w-1/5  ">
-            <LeftSideBar />
-          </div>
-          <div className="w-full px-4">
-            <MainContainer />
-          </div>
-          <div className="w-2/6 ">
-            <RightSideBar />
-          </div>
-        </div>
-      </div>
-    </ClerkProvider>
-  );
+  return <MainContainer />;
 }

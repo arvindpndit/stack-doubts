@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
+import LeftSideBar from "@/components/LeftSideBar";
+import RightSideBar from "@/components/RightSideBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,10 +33,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+          <div className="bg-white">
+            <Navbar />
+            <div className="flex justify-between px-5">
+              <div className="w-1/5  ">
+                <LeftSideBar />
+              </div>
+              <div className="w-full px-4">{children}</div>
+              <div className="w-2/6 ">
+                <RightSideBar />
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

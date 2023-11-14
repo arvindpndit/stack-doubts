@@ -8,7 +8,13 @@ const LeftSideBar = () => {
     <div className="h-screen fixed top-24">
       <div className="flex flex-col space-y-4 mt-5">
         {sideBarMenuOptionList.map((item) => {
-          return <SideBarMenuOption menutitle={item} key={item} />;
+          return (
+            <SideBarMenuOption
+              menutitle={item.title}
+              link={item.link}
+              key={item.link}
+            />
+          );
         })}
       </div>
     </div>
