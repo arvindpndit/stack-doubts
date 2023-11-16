@@ -4,7 +4,7 @@ export const sideBarMenuOptionList: Array<{ title: string; link: string }> = [
   { title: "Collections", link: "/collections" },
   { title: "Find Jobs", link: "/find-jobs" },
   { title: "Tags", link: "/tags" },
-  { title: "Ask a Question", link: "/ask" },
+  { title: "Ask a Question", link: "/ask-question" },
 ];
 
 export const questions: Array<string> = [
