@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { questionSchema } from "@/lib/schema";
 import z from "zod";
+import { Editor } from "@tinymce/tinymce-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,11 +19,13 @@ import {
 import Input from "./ui/input";
 
 const AskQuestionForm = () => {
+  const editorRef = useRef(null);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
-      username: "",
+      question: "",
     },
   });
 
@@ -41,7 +44,7 @@ const AskQuestionForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="username"
+            name="question"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="block text-sm font-medium text-gray-700">
@@ -72,13 +75,34 @@ const AskQuestionForm = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="username"
+              name="explanation"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="block text-sm font-medium text-gray-700">
                     Detailed explanation of your problem?*
                   </FormLabel>
-                  <FormControl className="mt-1">{/* later */}</FormControl>
+                  <FormControl className="mt-1">
+                    <Editor
+                      apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
+                      onInit={(evt, editor) => (editorRef.current = editor)}
+                      initialValue=""
+                      init={{
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                          "advlist autolink lists link image charmap print preview anchor",
+                          "searchreplace visualblocks code fullscreen",
+                          "insertdatetime media table paste code help wordcount",
+                        ],
+                        toolbar:
+                          "undo redo | " +
+                          "bold italic backcolor | alignleft aligncenter " +
+                          "alignright alignjustify | bullist numlist outdent indent | ",
+                        content_style:
+                          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                      }}
+                    />
+                  </FormControl>
                   <FormDescription className="text-xs text-gray-500">
                     Introduce the problem and expand on what you put in the
                     title. Minimum 20 characters.
@@ -97,7 +121,7 @@ const AskQuestionForm = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="username"
+              name="tags"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="block text-sm font-medium text-gray-700">
