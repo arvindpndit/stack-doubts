@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Input from "./ui/input";
+import { createQuestion } from "@/lib/actions/question.action";
 
 const AskQuestionForm = () => {
   const editorRef = useRef(null);
@@ -146,6 +147,15 @@ const AskQuestionForm = () => {
           </form>
         </Form>
       </div>
+
+      <button
+        onClick={() => {
+          createQuestion();
+          console.log("button clicked");
+        }}
+      >
+        connect to db
+      </button>
     </div>
   );
 };
