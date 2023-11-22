@@ -27,16 +27,19 @@ const AskQuestionForm = () => {
     resolver: zodResolver(questionSchema),
     defaultValues: {
       question: "",
+      explanation: "",
+      tags: [],
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof questionSchema>) {
+    console.log("Question Title:", values.question);
     console.log(values);
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 mb-10">
       {/* Question input form */}
       <Form
         {...form}
@@ -85,7 +88,10 @@ const AskQuestionForm = () => {
                   <FormControl className="mt-1">
                     <Editor
                       apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
-                      onInit={(evt, editor) => (editorRef.current = editor)}
+                      onInit={(evt, editor) => {
+                        //@ts-ignore
+                        editorRef.current = editor;
+                      }}
                       initialValue=""
                       init={{
                         height: 500,
