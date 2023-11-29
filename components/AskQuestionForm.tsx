@@ -34,8 +34,8 @@ const AskQuestionForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof questionSchema>) {
-    console.log("Question Title:", values.question);
-    console.log(values);
+    console.log("helllo");
+    console.log("Form Values:", values);
   }
 
   return (
@@ -44,115 +44,103 @@ const AskQuestionForm = () => {
       <Form
         {...form}
         className="max-w-md mx-auto bg-white p-8 rounded shadow-md"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="question"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="block text-sm font-medium text-gray-700">
-                  Question Title *
-                </FormLabel>
-                <FormControl className="mt-1">
-                  <Input
-                    type="text"
-                    placeholder="Type your question here"
-                    {...field}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                  />
-                </FormControl>
-                <FormDescription className="text-xs text-gray-500">
-                  Be specific and imagine you’re asking a question to another
-                  person.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </form>
+        <FormField
+          control={form.control}
+          name="question"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="block text-sm font-medium text-gray-700">
+                Question Title *
+              </FormLabel>
+              <FormControl className="mt-1">
+                <Input
+                  type="text"
+                  placeholder="Type your question here"
+                  {...field}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                />
+              </FormControl>
+              <FormDescription className="text-xs text-gray-500">
+                Be specific and imagine you’re asking a question to another
+                person.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* explaination */}
+        <FormField
+          control={form.control}
+          name="explanation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="block text-sm font-medium text-gray-700">
+                Detailed explanation of your problem?*
+              </FormLabel>
+              <FormControl className="mt-1">
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
+                  onInit={(evt, editor) => {
+                    //@ts-ignore
+                    editorRef.current = editor;
+                  }}
+                  initialValue=""
+                  init={{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                      "advlist autolink lists link image charmap print preview anchor",
+                      "searchreplace visualblocks code fullscreen",
+                      "insertdatetime media table paste code help wordcount",
+                    ],
+                    toolbar:
+                      "undo redo | " +
+                      "bold italic backcolor | alignleft aligncenter " +
+                      "alignright alignjustify | bullist numlist outdent indent | ",
+                    content_style:
+                      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                  }}
+                />
+              </FormControl>
+              <FormDescription className="text-xs text-gray-500">
+                Introduce the problem and expand on what you put in the title.
+                Minimum 20 characters.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* Tags */}
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="block text-sm font-medium text-gray-700">
+                Tags *
+              </FormLabel>
+              <FormControl className="mt-1">
+                <Input
+                  type="text"
+                  placeholder="Add Tags..."
+                  {...field}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                />
+              </FormControl>
+              <FormDescription className="text-xs text-gray-500">
+                Add up to 3 tags to describe what your question is about. You
+                need to press enter to add a tag.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" onClick={() => onSubmit()}>
+          Submit
+        </Button>
       </Form>
-
-      {/* explaination */}
-      <div className="mt-8">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="explanation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium text-gray-700">
-                    Detailed explanation of your problem?*
-                  </FormLabel>
-                  <FormControl className="mt-1">
-                    <Editor
-                      apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
-                      onInit={(evt, editor) => {
-                        //@ts-ignore
-                        editorRef.current = editor;
-                      }}
-                      initialValue=""
-                      init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: [
-                          "advlist autolink lists link image charmap print preview anchor",
-                          "searchreplace visualblocks code fullscreen",
-                          "insertdatetime media table paste code help wordcount",
-                        ],
-                        toolbar:
-                          "undo redo | " +
-                          "bold italic backcolor | alignleft aligncenter " +
-                          "alignright alignjustify | bullist numlist outdent indent | ",
-                        content_style:
-                          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription className="text-xs text-gray-500">
-                    Introduce the problem and expand on what you put in the
-                    title. Minimum 20 characters.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </div>
-
-      {/* Tags */}
-      <div className="mt-8">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium text-gray-700">
-                    Tags *
-                  </FormLabel>
-                  <FormControl className="mt-1">
-                    <Input
-                      type="text"
-                      placeholder="Add Tags..."
-                      {...field}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                    />
-                  </FormControl>
-                  <FormDescription className="text-xs text-gray-500">
-                    Add up to 3 tags to describe what your question is about.
-                    You need to press enter to add a tag.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </div>
 
       <button
         onClick={() => {
