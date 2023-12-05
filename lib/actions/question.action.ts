@@ -9,7 +9,7 @@ export async function createQuestion() {
     connectToMongoDb();
 
     let question = await Question.create({
-      title: "Post new haha",
+      title: "Post new haha day monday",
       content: "Content for post 1.",
       tags: [],
       views: 50,

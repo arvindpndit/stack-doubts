@@ -7,5 +7,5 @@ export const questionSchema = z.object({
   explanation: z.string().min(50, {
     message: "Description must be at least 50 characters ",
   }),
-  tags: z.array(z.string()).min(3),
+  tags: z.array(z.string()),
 });

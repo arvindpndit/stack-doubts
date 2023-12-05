@@ -38,118 +38,169 @@ const AskQuestionForm = () => {
     console.log("Form Values:", values);
   }
 
+  const handleInputKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: any
+  ) => {
+    if (e.key === "Enter" && field.name === "tags") {
+      e.preventDefault();
+
+      const tagInput = e.target as HTMLInputElement;
+      const tagValue = tagInput.value.trim();
+      console.log(tagValue);
+
+      if (tagValue !== "") {
+        if (tagValue.length > 15) {
+          return form.setError("tags", {
+            type: "required",
+            message: "Tag must be less than 15 characters.",
+          });
+        }
+
+        if (!field.value.includes(tagValue as never)) {
+          form.setValue("tags", [...field.value, tagValue]);
+          tagInput.value = "";
+          form.clearErrors("tags");
+        }
+      } else {
+        form.trigger();
+      }
+    }
+  };
+
   return (
     <div className="mt-8 mb-10">
-      {/* Question input form */}
-      <Form
-        {...form}
-        className="max-w-md mx-auto bg-white p-8 rounded shadow-md"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <FormField
-          control={form.control}
-          name="question"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="block text-sm font-medium text-gray-700">
-                Question Title *
-              </FormLabel>
-              <FormControl className="mt-1">
-                <Input
-                  type="text"
-                  placeholder="Type your question here"
-                  {...field}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </FormControl>
-              <FormDescription className="text-xs text-gray-500">
-                Be specific and imagine you’re asking a question to another
-                person.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* explaination */}
-        <FormField
-          control={form.control}
-          name="explanation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="block text-sm font-medium text-gray-700">
-                Detailed explanation of your problem?*
-              </FormLabel>
-              <FormControl className="mt-1">
-                <Editor
-                  apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
-                  onInit={(evt, editor) => {
-                    //@ts-ignore
-                    editorRef.current = editor;
-                  }}
-                  initialValue=""
-                  init={{
-                    height: 500,
-                    menubar: false,
-                    plugins: [
-                      "advlist autolink lists link image charmap print preview anchor",
-                      "searchreplace visualblocks code fullscreen",
-                      "insertdatetime media table paste code help wordcount",
-                    ],
-                    toolbar:
-                      "undo redo | " +
-                      "bold italic backcolor | alignleft aligncenter " +
-                      "alignright alignjustify | bullist numlist outdent indent | ",
-                    content_style:
-                      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                  }}
-                />
-              </FormControl>
-              <FormDescription className="text-xs text-gray-500">
-                Introduce the problem and expand on what you put in the title.
-                Minimum 20 characters.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* Tags */}
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="block text-sm font-medium text-gray-700">
-                Tags *
-              </FormLabel>
-              <FormControl className="mt-1">
-                <Input
-                  type="text"
-                  placeholder="Add Tags..."
-                  {...field}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </FormControl>
-              <FormDescription className="text-xs text-gray-500">
-                Add up to 3 tags to describe what your question is about. You
-                need to press enter to add a tag.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" onClick={() => onSubmit()}>
-          Submit
-        </Button>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full bg-white p-8 rounded shadow-md "
+        >
+          <FormField
+            control={form.control}
+            name="question"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="block text-sm font-medium text-gray-700">
+                  Question Title *
+                </FormLabel>
+                <FormControl className="mt-1">
+                  <Input
+                    type="text"
+                    placeholder="Type your question here"
+                    {...field}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                  />
+                </FormControl>
+                <FormDescription className="text-xs text-gray-500">
+                  Be specific and imagine you’re asking a question to another
+                  person.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <br />
+
+          {/* explanation */}
+          <FormField
+            control={form.control}
+            name="explanation"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col gap-3">
+                <FormLabel className="paragraph-semibold text-dark400_light800">
+                  Detailed explanation of your problem{" "}
+                  <span className="text-primary-500">*</span>
+                </FormLabel>
+                <FormControl className="mt-3.5">
+                  <Editor
+                    apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
+                    onInit={(evt, editor) => {
+                      // @ts-ignore
+                      editorRef.current = editor;
+                    }}
+                    onBlur={field.onBlur}
+                    onEditorChange={(content) => field.onChange(content)}
+                    initialValue=""
+                    init={{
+                      height: 350,
+                      menubar: false,
+                      plugins: [
+                        "advlist",
+                        "autolink",
+                        "lists",
+                        "link",
+                        "image",
+                        "charmap",
+                        "preview",
+                        "anchor",
+                        "searchreplace",
+                        "visualblocks",
+                        "codesample",
+                        "fullscreen",
+                        "insertdatetime",
+                        "media",
+                        "table",
+                      ],
+                      toolbar:
+                        "undo redo | " +
+                        "codesample | bold italic forecolor | alignleft aligncenter |" +
+                        "alignright alignjustify | bullist numlist",
+                      content_style:
+                        "body { font-family:Inter; font-size:16px }",
+                    }}
+                  />
+                </FormControl>
+                <FormDescription className="body-regular mt-2.5 text-light-500">
+                  Introduce the problem and expand on what you put in the title.
+                  Minimum 20 characters.
+                </FormDescription>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
+
+          <br />
+
+          {/* tags */}
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-col">
+                <FormLabel className="paragraph-semibold text-dark400_light800">
+                  Tags <span className="text-primary-500">*</span>
+                </FormLabel>
+                <FormControl className="mt-3.5">
+                  <Input
+                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                    {...field}
+                    placeholder="Add tags..."
+                    onKeyDown={(e) => handleInputKeyDown(e, field)}
+                  />
+                </FormControl>
+                <FormDescription className="body-regular mt-2.5 text-light-500">
+                  Add up to 3 tags to describe what your question is about. You
+                  need to press enter to add a tag.
+                </FormDescription>
+                <FormMessage className="text-red-500" />
+              </FormItem>
+            )}
+          />
+
+          <br />
+          <Button type="submit">Submit</Button>
+        </form>
       </Form>
 
-      <button
-        onClick={() => {
-          createQuestion();
+      {/* <button
+        onClick={(values) => {
+          console.log(values);
           console.log("button clicked");
         }}
       >
         connect to db
-      </button>
+      </button> */}
     </div>
   );
 };
