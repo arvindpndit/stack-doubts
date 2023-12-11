@@ -2,23 +2,21 @@
 
 import Question from "@/database/question-model";
 import { connectToMongoDb } from "../mongoose";
-import mongoose, { Schema } from "mongoose";
+import { CreateQuestionParams } from "./shared.types";
+import { revalidatePath } from "next/cache";
 
-export async function createQuestion() {
+export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToMongoDb();
-
-    let question = await Question.create({
-      title: "Post new haha day monday",
-      content: "Content for post 1.",
-      tags: [],
-      views: 50,
-      upvotes: [],
-      downvotes: [],
-      author: "656619589b0a37033acd3886",
-      answers: [],
-      createdAt: new Date(),
+    const { title, content, tags, path } = params;
+    const question = await Question.create({
+      title,
+      content,
+      tags,
+      path,
     });
+
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
   }

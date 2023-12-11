@@ -18,9 +18,12 @@ import {
 } from "@/components/ui/form";
 import Input from "./ui/input";
 import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
 
 const AskQuestionForm = () => {
   const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
@@ -33,9 +36,16 @@ const AskQuestionForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof questionSchema>) {
-    console.log("helllo");
-    console.log("Form Values:", values);
+  async function onSubmit(values: z.infer<typeof questionSchema>) {
+    await createQuestion({
+      title: values.question,
+      content: values.explanation,
+      tags: values.tags,
+      path: pathname,
+    });
+
+    // navigate to home page
+    router.push("/");
   }
 
   const handleInputKeyDown = (
@@ -46,24 +56,21 @@ const AskQuestionForm = () => {
       e.preventDefault();
 
       const tagInput = e.target as HTMLInputElement;
-      const tagValue = tagInput.value.trim();
-      console.log(tagValue);
+      let tagValue = tagInput.value;
 
       if (tagValue !== "") {
         if (tagValue.length > 15) {
           return form.setError("tags", {
-            type: "required",
             message: "Tag must be less than 15 characters.",
           });
         }
 
-        if (!field.value.includes(tagValue as never)) {
+        if (field.value.includes(tagValue as never)) {
           form.setValue("tags", [...field.value, tagValue]);
-          tagInput.value = "";
           form.clearErrors("tags");
+        } else {
+          form.trigger();
         }
-      } else {
-        form.trigger();
       }
     }
   };
@@ -174,7 +181,6 @@ const AskQuestionForm = () => {
                 <FormControl className="mt-3.5">
                   <Input
                     className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
-                    {...field}
                     placeholder="Add tags..."
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
@@ -192,15 +198,6 @@ const AskQuestionForm = () => {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-
-      {/* <button
-        onClick={(values) => {
-          console.log(values);
-          console.log("button clicked");
-        }}
-      >
-        connect to db
-      </button> */}
     </div>
   );
 };
