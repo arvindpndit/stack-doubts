@@ -1,7 +1,8 @@
 "use server";
 
-import Question from "@/database/question-model";
+import Question, { IQuestion } from "@/database/question-model";
 import { connectToMongoDb } from "../mongoose";
+import { Document, Types } from "mongoose";
 import { CreateQuestionParams } from "./shared.types";
 import { revalidatePath } from "next/cache";
 
@@ -19,5 +20,16 @@ export async function createQuestion(params: CreateQuestionParams) {
     revalidatePath(path);
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function getAllQuestions() {
+  try {
+    await connectToMongoDb();
+    const questions = await Question.find();
+    return questions;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
   }
 }
