@@ -1,23 +1,7 @@
-"use client";
 import { getAllQuestions } from "@/lib/actions/question.action";
-import { IQuestion } from "@/database/question-model";
-import React, { useEffect, useState } from "react";
 
-const QuestionCard = () => {
-  const [questions, setQuestions] = useState<IQuestion[]>([]);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await getAllQuestions();
-        const allQuestions = JSON.parse(JSON.stringify(response));
-        setQuestions(allQuestions);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    }
-
-    fetchData();
-  }, []);
+const QuestionCard = async () => {
+  const questions = await getAllQuestions();
 
   return (
     <div>
