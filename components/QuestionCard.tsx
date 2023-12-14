@@ -17,7 +17,7 @@ const QuestionCard = async () => {
                     key={index}
                     className="px-2 py-1 bg-gray-200 rounded-full text-sm"
                   >
-                    {tag}
+                    {tag.toString()}
                   </span>
                 ))}
             </div>
