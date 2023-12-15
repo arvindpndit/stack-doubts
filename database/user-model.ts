@@ -9,7 +9,7 @@ interface IUser extends Document {
   password?: string;
   bio?: string;
   picture: string;
-  location: string;
+  location?: string;
   portfolioWebsite?: string;
   reputation: number;
   saved: Schema.Types.ObjectId[];
@@ -25,7 +25,7 @@ const userSchema = new Schema<IUser>({
   password: { type: String },
   bio: { type: String },
   picture: { type: String, required: true },
-  location: { type: String, required: true },
+  location: { type: String },
   portfolioWebsite: { type: String },
   reputation: { type: Number, default: 0 },
   saved: [{ type: Schema.Types.ObjectId, ref: "Question" }],
