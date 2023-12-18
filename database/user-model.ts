@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from "mongoose";
+import { Schema, models, model, Document, Model } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
 interface IUser extends Document {
@@ -32,6 +32,6 @@ const userSchema = new Schema<IUser>({
 });
 
 // 3. Create a Model.
-const User: Model<IUser> = model("User", userSchema);
+const User: Model<IUser> = models.User || model("User", userSchema);
 
 export default User;

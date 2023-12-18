@@ -9,12 +9,13 @@ import { revalidatePath } from "next/cache";
 export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToMongoDb();
-    const { title, content, tags, path } = params;
+    const { title, content, tags, path, author } = params;
     const question = await Question.create({
       title,
       content,
       tags,
       path,
+      author,
     });
 
     revalidatePath(path);

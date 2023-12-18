@@ -20,7 +20,11 @@ import Input from "./ui/input";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 
-const AskQuestionForm = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const AskQuestionForm = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -42,6 +46,7 @@ const AskQuestionForm = () => {
       content: values.explanation,
       tags: values.tags,
       path: pathname,
+      author: JSON.parse(mongoUserId),
     });
 
     // navigate to home page

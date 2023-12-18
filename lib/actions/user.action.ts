@@ -8,12 +8,13 @@ import {
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question-model";
+import { ObjectId } from "mongoose";
 
 export async function getUserById(params: any) {
   try {
     connectToMongoDb();
     const { userId } = params;
-    const user = await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ _id: userId });
     return user;
   } catch (error) {
     console.log(error);

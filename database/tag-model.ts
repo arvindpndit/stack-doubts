@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from "mongoose";
+import { Schema, model, Document, Model, models } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
 interface ITag extends Document {
@@ -19,6 +19,6 @@ const tagSchema = new Schema<ITag>({
 });
 
 // 3. Create a Model.
-const Tag: Model<ITag> = model("Tag", tagSchema);
+const Tag: Model<ITag> = models.Tag || model("Tag", tagSchema);
 
 export default Tag;

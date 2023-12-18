@@ -1,10 +1,17 @@
 import AskQuestionForm from "@/components/AskQuestionForm";
+import { getUserById } from "@/lib/actions/user.action";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-const Ask = () => {
+const Ask = async () => {
+  const { userId } = auth();
+  if (!userId) redirect("/sign-in");
+  const mongoUser = await getUserById({ userId });
+
   return (
     <div className="w-full px-8 mt-28 h-screen">
       <h1 className="font-bold text-3xl">Ask a question</h1>
-      <AskQuestionForm />
+      <AskQuestionForm mongoUserId={JSON.stringify(mongoUser?._id)} />
     </div>
   );
 };
