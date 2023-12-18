@@ -66,3 +66,14 @@ export async function deleteUser(params: DeleteUserParams) {
     throw error;
   }
 }
+
+export async function getAllUsers() {
+  try {
+    connectToMongoDb();
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
