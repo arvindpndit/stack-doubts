@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 const Ask = async () => {
   const { userId } = auth();
   if (!userId) redirect("/sign-in");
-  const mongoUser = await getUserById({ userId });
+  const mongoUser = await getUserById({ key: "clerkId", value: userId });
 
   return (
     <div className="w-full px-8 mt-28 h-screen">

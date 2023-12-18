@@ -9,7 +9,8 @@ const QuestionCard = async () => {
     <div>
       {questions?.map(async (question, index) => {
         const authorId = await getUserById({
-          userId: question.author,
+          key: "_id",
+          value: question.author,
         });
         //console.log("this is the author id   " + authorId?.name);
         return (

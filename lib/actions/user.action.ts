@@ -10,11 +10,11 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question-model";
 import { ObjectId } from "mongoose";
 
-export async function getUserById(params: any) {
+export async function getUserById(params: { key: string; value: any }) {
   try {
     connectToMongoDb();
-    const { userId } = params;
-    const user = await User.findOne({ _id: userId });
+    const { key, value } = params;
+    const user = await User.findOne({ [key]: value });
     return user;
   } catch (error) {
     console.log(error);
