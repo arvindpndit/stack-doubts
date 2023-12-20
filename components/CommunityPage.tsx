@@ -6,7 +6,7 @@ import { getAllUsers } from "@/lib/actions/user.action";
 
 const CommunityPage = async () => {
   const users = await getAllUsers();
-  console.log("all users are - " + users);
+  //console.log("all users are - " + users);
   return (
     <div className="w-full px-8 mt-28 h-screen">
       <h1 className="font-bold text-3xl">All Users</h1>
