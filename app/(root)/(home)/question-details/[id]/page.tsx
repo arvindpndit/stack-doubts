@@ -1,4 +1,4 @@
-import QuestionDetailsPage from "@/components/QuestionDetailsPage";
+import QuestionDetailsPage from "@/components/pages/QuestionDetailsPage";
 import React from "react";
 
 const page = ({ params }: { params: { id: string } }) => {

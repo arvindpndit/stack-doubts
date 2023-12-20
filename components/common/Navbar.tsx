@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
-import searchIcon from "../public/assets/icons/search.svg";
+import searchIcon from "../../public/assets/icons/search.svg";
 
-import devLogo from "../public/assets/images/logo.png";
+import devLogo from "../../public/assets/images/logo.png";
 
 const Navbar: React.FC = () => {
   return (

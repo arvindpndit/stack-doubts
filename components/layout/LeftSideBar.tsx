@@ -1,6 +1,6 @@
 import React from "react";
 
-import SideBarMenuOption from "./SideBarMenuOption";
+import SideBarMenuOption from "../partials/SideBarMenuOption";
 import { sideBarMenuOptionList } from "@/utils/constants";
 
 const LeftSideBar = () => {

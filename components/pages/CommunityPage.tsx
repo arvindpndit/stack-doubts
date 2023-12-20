@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-import searchIcon from "../public/assets/icons/search.svg";
+import searchIcon from "../../public/assets/icons/search.svg";
 import { getAllUsers } from "@/lib/actions/user.action";
 
 const CommunityPage = async () => {
