@@ -36,7 +36,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-          <div className="bg-white">
+          <div>
             <Navbar />
             <div className="flex justify-between px-5">
               <div className="w-1/5  ">
