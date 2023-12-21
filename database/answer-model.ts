@@ -2,7 +2,7 @@ import { Schema, model, Document, Model, models } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
 export interface IAnswer extends Document {
-  description: string;
+  content: string;
   views: number;
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
@@ -13,7 +13,7 @@ export interface IAnswer extends Document {
 
 // 2. Create a Schema corresponding to the document interface.
 const answerSchema = new Schema<IAnswer>({
-  description: { type: String, required: true },
+  content: { type: String, required: true },
   views: { type: Number, default: 0 },
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
