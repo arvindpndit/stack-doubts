@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import searchIcon from "../public/assets/icons/search.svg";
-import QuestionCard from "./QuestionCard";
+import searchIcon from "../../public/assets/icons/search.svg";
+import QuestionCard from "../partials/QuestionCard";
 
 const MainContainer = () => {
   return (

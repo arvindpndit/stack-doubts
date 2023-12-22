@@ -1,6 +1,6 @@
 import React from "react";
 
-import { questions } from "../utils/constants";
+import { questions } from "../../utils/constants";
 
 const TopQuestions = () => {
   return (

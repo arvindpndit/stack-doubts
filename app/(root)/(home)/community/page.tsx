@@ -1,4 +1,4 @@
-import CommunityPage from "@/components/CommunityPage";
+import CommunityPage from "@/components/pages/CommunityPage";
 import { SearchIcon } from "lucide-react";
 import React from "react";
 

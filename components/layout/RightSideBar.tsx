@@ -1,6 +1,6 @@
 import React from "react";
-import TopQuestions from "./TopQuestions";
-import PopularTags from "./PopularTags";
+import TopQuestions from "../partials/TopQuestions";
+import PopularTags from "../partials/PopularTags";
 
 const RightSideBar = () => {
   return (
