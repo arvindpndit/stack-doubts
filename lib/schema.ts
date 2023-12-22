@@ -9,3 +9,9 @@ export const questionSchema = z.object({
   }),
   tags: z.array(z.string()),
 });
+
+export const answerSchema = z.object({
+  content: z.string().min(10, {
+    message: "Answer must be at least 10 characters",
+  }),
+});
