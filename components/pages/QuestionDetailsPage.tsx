@@ -9,7 +9,7 @@ const QuestionDetailsPage = async (props: { id: string }) => {
   const question = await getQuestionById(id);
   console.log(question);
   return (
-    <div className=" mx-auto my-8 px-3 py-6 -z-50  rounded-lg">
+    <div className=" mx-auto my-8 px-1 md:px-3 py-6 -z-50  rounded-lg">
       <h2 className="text-3xl font-bold mb-4">{question?.title}</h2>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
