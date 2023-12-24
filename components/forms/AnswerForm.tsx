@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { questionSchema } from "@/lib/schema";
+import { answerSchema } from "@/lib/schema";
 import z from "zod";
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -15,24 +15,38 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { usePathname, useRouter } from "next/navigation";
+import { createAnswer } from "@/lib/actions/answer.action";
 
-const AnswerForm = () => {
+interface Props {
+  id: string;
+  mongoUserId: string;
+}
+
+const AnswerForm = ({ id, mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof questionSchema>>({
-    resolver: zodResolver(questionSchema),
+  const form = useForm<z.infer<typeof answerSchema>>({
+    resolver: zodResolver(answerSchema),
     defaultValues: {
-      explanation: "",
+      content: "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof questionSchema>) {
-    // navigate to home page
-    router.push("/");
+  async function onSubmit(values: z.infer<typeof answerSchema>) {
+    try {
+      await createAnswer({
+        content: values.content,
+        author: JSON.parse(mongoUserId),
+        question: id,
+        path: pathname,
+      });
+    } catch (error) {
+      console.error("Error creating answer:", error);
+    }
   }
 
   return (
@@ -45,7 +59,7 @@ const AnswerForm = () => {
           {/* answer */}
           <FormField
             control={form.control}
-            name="explanation"
+            name="content"
             render={({ field }) => (
               <FormItem className="flex w-full">
                 <FormControl className="mt-3.5">

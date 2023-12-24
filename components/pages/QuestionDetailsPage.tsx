@@ -1,13 +1,15 @@
 import { getQuestionById } from "@/lib/actions/question.action";
-import { CloudCog } from "lucide-react";
 import React from "react";
 import ParseHTML from "../partials/ParseHtml";
 import AnswerForm from "../forms/AnswerForm";
 
-const QuestionDetailsPage = async (props: { id: string }) => {
-  const id = props.id;
+interface Props {
+  id: string;
+  mongoUserId: string;
+}
+
+const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
-  console.log(question);
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50">
       <h2 className="text-3xl font-bold mb-4">{question?.title}</h2>
@@ -34,7 +36,7 @@ const QuestionDetailsPage = async (props: { id: string }) => {
       <ParseHTML code={question?.content}></ParseHTML>
 
       <div className="text-xl font-bold">Write your answer here</div>
-      <AnswerForm />
+      <AnswerForm id={id} mongoUserId={mongoUserId} />
     </div>
   );
 };

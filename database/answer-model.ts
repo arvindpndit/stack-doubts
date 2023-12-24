@@ -13,7 +13,7 @@ export interface IAnswer extends Document {
 
 // 2. Create a Schema corresponding to the document interface.
 const answerSchema = new Schema<IAnswer>({
-  content: { type: String, required: true },
+  content: { type: String },
   views: { type: Number, default: 0 },
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
