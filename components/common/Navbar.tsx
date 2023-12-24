@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import searchIcon from "../../public/assets/icons/search.svg";
+import { FaGithub } from "react-icons/fa";
 
 import devLogo from "../../public/assets/images/logo.png";
 import devLogo2 from "../../public/assets/images/logo2.png";
@@ -13,29 +14,39 @@ const Navbar: React.FC = () => {
         src={devLogo}
         alt="devLogo"
         height={35}
-        className="hidden sm:block"
+        // className="hidden sm:block"
       />
-      <Image
+      {/* <Image
         src={devLogo2}
         alt="devLogo"
         height={35}
         className="block sm:hidden"
-      />
-      <div className="relative flex items-center w-full">
+      /> */}
+      <div className="hidden sm:flex relative  items-center w-1/2">
         <input
           type="text"
           placeholder="Search anything globally..."
-          className="hidden sm:block w-full h-12 px-4 py-2 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none"
+          className="block w-full h-12 px-4 py-2 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none"
         />
         <Image
           src={searchIcon}
           alt="Search Icon"
           width={20}
           height={20}
-          className="sm:absolute right-2 top-3"
+          className="absolute right-2 top-3"
         />
       </div>
-      <UserButton />
+      <div className="flex gap-3">
+        <a
+          href="https://github.com/arvindpndit/stack-overflow-nextjs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-3xl"
+        >
+          <FaGithub />
+        </a>
+        <UserButton />
+      </div>
     </div>
   );
 };
