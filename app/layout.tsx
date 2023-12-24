@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/common/Navbar";
 import LeftSideBar from "@/components/layout/LeftSideBar";
 import RightSideBar from "@/components/layout/RightSideBar";
+import BottomNavigation from "@/components/layout/BottomNavigation";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={` bg-white ${inter.variable} ${spaceGrotesk.variable}`}>
+        <body className={`bg-white ${inter.variable} ${spaceGrotesk.variable}`}>
           <div>
             <Navbar />
             <div className="flex justify-between px-0 md:px-2">
@@ -43,9 +44,12 @@ export default function RootLayout({
                 <LeftSideBar />
               </div>
               <div className="w-full ">{children}</div>
-              <div className="w-2/6 hidden md:block">
+              <div className="w-2/6 hidden lg:block">
                 <RightSideBar />
               </div>
+            </div>
+            <div className="fixed bottom-0 w-full bg-white block md:hidden">
+              <BottomNavigation />
             </div>
           </div>
         </body>
