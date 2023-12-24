@@ -25,14 +25,14 @@ const Navbar: React.FC = () => {
         <input
           type="text"
           placeholder="Search anything globally..."
-          className="w-full h-12 px-4 py-2 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none"
+          className="hidden sm:block w-full h-12 px-4 py-2 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none"
         />
         <Image
           src={searchIcon}
           alt="Search Icon"
           width={20}
           height={20}
-          className="absolute right-2 top-3"
+          className="sm:absolute right-2 top-3"
         />
       </div>
       <UserButton />
