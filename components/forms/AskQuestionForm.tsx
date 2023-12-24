@@ -85,7 +85,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full bg-white p-8 rounded shadow-md "
+          className="w-full bg-white px-1 py-3 md:px-8 md:py-8 rounded shadow-md "
         >
           <FormField
             control={form.control}

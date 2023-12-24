@@ -5,7 +5,7 @@ import QuestionCard from "../partials/QuestionCard";
 
 const MainContainer = () => {
   return (
-    <div className="w-full px-8 mt-28 h-screen">
+    <div className="w-full px-1 md:px-8 mt-28 h-screen">
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl">All questions</h1>
         <button
