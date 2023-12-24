@@ -14,7 +14,6 @@ const page = async ({ params }: { params: { id: string } }) => {
         id={params.id}
         mongoUserId={JSON.stringify(mongoUser?._id)}
       />
-    </div>
   );
 };
 

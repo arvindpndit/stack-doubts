@@ -50,18 +50,18 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
   }
 
   return (
-    <div className="mt-4 mb-10">
+    <div className="">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full bg-white p-8 rounded shadow-md "
+          className="w-full bg-white "
         >
           {/* answer */}
           <FormField
             control={form.control}
             name="content"
             render={({ field }) => (
-              <FormItem className="flex w-full flex-col gap-3">
+              <FormItem className="flex w-full">
                 <FormControl className="mt-3.5">
                   <Editor
                     apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
