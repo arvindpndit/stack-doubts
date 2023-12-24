@@ -40,10 +40,10 @@ export default function RootLayout({
           <div>
             <Navbar />
             <div className="flex justify-between px-0 md:px-2">
-              <div className="w-1/5 hidden md:block  ">
+              <div className="w-1/3 hidden md:block  ">
                 <LeftSideBar />
               </div>
-              <div className="w-full ">{children}</div>
+              <div className="w-full overflow-x-hidden">{children}</div>
               <div className="w-2/6 hidden lg:block">
                 <RightSideBar />
               </div>
