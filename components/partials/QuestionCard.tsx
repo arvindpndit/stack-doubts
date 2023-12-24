@@ -1,6 +1,10 @@
 import { getAllQuestions } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import Link from "next/link";
+import { CiClock2 } from "react-icons/ci";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { FiMessageSquare } from "react-icons/fi";
+import { FaRegThumbsUp } from "react-icons/fa6";
 
 const QuestionCard = async () => {
   const questions = await getAllQuestions();
@@ -30,33 +34,38 @@ const QuestionCard = async () => {
                   ))}
               </div>
 
-              <div className="flex mt-4">
-                <div className="flex items-center mr-4">
-                  <img
-                    src={authorId?.picture}
-                    className="h-8 mr-2 rounded-full"
-                    alt={`Profile of ${authorId?.name}`}
-                  />
-                  <div className="text-sm font-semibold mr-4">
-                    {authorId?.name}
+              <div className="flex flex-col  mt-4 gap-4 ">
+                <div className="flex items-center justify-between mr-4">
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={authorId?.picture}
+                      className="h-8 mr-2 rounded-full"
+                      alt={`Profile of ${authorId?.name}`}
+                    />
+                    <div className="text-sm font-semibold mr-4">
+                      {authorId?.name}
+                    </div>
                   </div>
-                  <div className="text-gray-600 text-sm">
-                    asked on {question.createdAt.toLocaleDateString()}
-                  </div>
-                </div>
-
-                <div className="flex items-center mr-4">
-                  <div className="text-sm font-semibold">
-                    {question.upvotes.length} Votes
-                  </div>
-                  <div className="text-gray-600 text-sm ml-2">
-                    {question.answers.length} Answers
+                  <div className=" text-gray-500 text-sm flex items-center gap-1">
+                    <CiClock2 />
+                    <span>
+                      asked on {question?.createdAt.toLocaleDateString()}
+                    </span>
                   </div>
                 </div>
 
-                <div className="flex items-center">
-                  <div className="text-sm font-semibold">
-                    {question.views} views
+                <div className="flex items-center  gap-4">
+                  <div className="text-sm font-semibold flex items-center gap-1">
+                    <FaRegThumbsUp />
+                    <div>{question.upvotes.length} Votes</div>
+                  </div>
+                  <p className="text-gray-500 text-sm flex items-center gap-1">
+                    <FiMessageSquare />
+                    {question?.answers?.length} Answers
+                  </p>
+                  <div className="  text-sm font-semibold flex items-center gap-1">
+                    <MdOutlineRemoveRedEye />
+                    <div>{question?.views} Views</div>
                   </div>
                 </div>
               </div>

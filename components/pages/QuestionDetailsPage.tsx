@@ -2,6 +2,10 @@ import { getQuestionById } from "@/lib/actions/question.action";
 import React from "react";
 import ParseHTML from "../partials/ParseHtml";
 import AnswerForm from "../forms/AnswerForm";
+import { BiUpvote, BiDownvote } from "react-icons/bi";
+import { CiClock2 } from "react-icons/ci";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { FiMessageSquare } from "react-icons/fi";
 
 interface Props {
   id: string;
@@ -12,25 +16,37 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50">
-      <h2 className="text-3xl font-bold mb-4">{question?.title}</h2>
-      <div className="flex items-center justify-between">
+      <div className="flex justify-between mb-2">
         <div className="flex items-center">
-          <span className="mr-2 text-gray-500">Author: {}</span>
-          <span className="mr-2 text-gray-500">Views: {question?.views}</span>
+          <span className="text-lg font-medium text-gray-800">
+            {"Arvind Pandit"}
+          </span>
         </div>
-
         <div className="flex items-center">
-          <button className="mr-2 text-blue-500 hover:underline">Upvote</button>
-          <button className="text-red-500 hover:underline">Downvote</button>
+          <button className="mr-2 text-blue-500 hover:underline">
+            <BiUpvote />
+          </button>
+          <button className="text-red-500 hover:underline">
+            <BiDownvote />
+          </button>
         </div>
       </div>
+      <h2 className="text-3xl font-bold ">{question?.title}</h2>
+      <div className="flex items-center justify-between"></div>
 
-      <div className="mt-4">
-        <p className="text-gray-500">Answers: {question?.answers?.length}</p>
-      </div>
-
-      <div className="mt-4 text-gray-500 text-sm">
-        {question?.createdAt.toString()}
+      <div className="mt-4 flex gap-4">
+        <div className=" text-gray-500 text-sm flex items-center gap-1">
+          <CiClock2 />
+          <div>asked on {question?.createdAt.toLocaleDateString()}</div>
+        </div>
+        <div className=" text-gray-500 text-sm flex items-center gap-1">
+          <MdOutlineRemoveRedEye />
+          <div>Views: {question?.views}</div>
+        </div>
+        <p className="text-gray-500 text-sm flex items-center gap-1">
+          <FiMessageSquare />
+          Answers: {question?.answers?.length}
+        </p>
       </div>
 
       <ParseHTML code={question?.content}></ParseHTML>

@@ -61,7 +61,7 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
             control={form.control}
             name="content"
             render={({ field }) => (
-              <FormItem className="flex w-full">
+              <FormItem className="w-full">
                 <FormControl className="mt-3.5">
                   <Editor
                     apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
