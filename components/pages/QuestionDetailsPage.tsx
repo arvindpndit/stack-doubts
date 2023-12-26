@@ -3,10 +3,11 @@ import React from "react";
 import ParseHTML from "../partials/ParseHtml";
 import AnswerForm from "../forms/AnswerForm";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
-import { CiClock2 } from "react-icons/ci";
+import { CiClock2, CiStar } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
+import { getUserById } from "@/lib/actions/user.action";
 
 interface Props {
   id: string;
@@ -16,22 +17,39 @@ interface Props {
 const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
   const allAnswers = await getAnswersByQuestionId({ questionId: id });
-  console.log(allAnswers);
+  const authorId = await getUserById({
+    key: "_id",
+    value: question?.author,
+  });
+
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50">
       <div className="flex justify-between mb-2">
-        <div className="flex items-center">
-          <span className="text-lg font-medium text-gray-800">
-            {"Arvind Pandit"}
-          </span>
+        <div className="flex items-center justify-center">
+          <img
+            src={authorId?.picture}
+            className="h-6 mr-2 rounded-full"
+            alt={`Profile of ${authorId?.name}`}
+          />
+          <div className="text-lg font-semibold mr-4">{authorId?.name}</div>
         </div>
         <div className="flex items-center">
           <button className="mr-2 text-blue-500 hover:underline">
             <BiUpvote />
           </button>
-          <button className="text-red-500 hover:underline">
+          <div className="px-1 text-xs mr-2 bg-slate-300 rounded-sm">
+            {question?.upvotes?.length}
+          </div>
+          <button className="mr-2 text-red-500 hover:underline">
             <BiDownvote />
           </button>
+          <div className="px-1 mr-2 text-xs bg-slate-300 rounded-sm">
+            {question?.downvotes?.length}
+          </div>
+
+          <div className="ml-2 text-2xl text-green-600">
+            <CiStar />
+          </div>
         </div>
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
