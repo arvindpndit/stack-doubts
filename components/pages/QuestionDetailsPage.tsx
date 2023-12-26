@@ -48,7 +48,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
         </div>
         <p className="text-gray-500 text-sm flex items-center gap-1">
           <FiMessageSquare />
-          Answers: {question?.answers?.length}
+          Answers: {allAnswers?.length}
         </p>
       </div>
 
