@@ -11,9 +11,9 @@ export interface CreateAnswerParams {
 
 export interface GetAnswersParams {
   questionId: string;
-  sortBy?: string;
-  page?: number;
-  pageSize?: number;
+  // sortBy?: string;
+  // page?: number;
+  // pageSize?: number;
 }
 
 export interface AnswerVoteParams {

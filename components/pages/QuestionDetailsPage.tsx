@@ -6,6 +6,7 @@ import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { CiClock2 } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
+import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
 
 interface Props {
   id: string;
@@ -14,6 +15,8 @@ interface Props {
 
 const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
+  const allAnswers = await getAnswersByQuestionId({ questionId: id });
+  console.log(allAnswers);
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50">
       <div className="flex justify-between mb-2">
@@ -50,6 +53,11 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
 
       <ParseHTML code={question?.content}></ParseHTML>
+
+      {/* render all the answers here */}
+      {allAnswers.map((answer) => {
+        return <div dangerouslySetInnerHTML={{ __html: answer.content }}></div>;
+      })}
 
       <div className="text-xl font-bold">Write your answer here</div>
       <AnswerForm id={id} mongoUserId={mongoUserId} />
