@@ -47,6 +47,44 @@ export async function updateUser(params: UpdateUserParams) {
   }
 }
 
+interface saveTheQuestionProps {
+  userId: string;
+  questionId: string;
+  path: string;
+}
+
+export async function saveTheQuestion(params: saveTheQuestionProps) {
+  try {
+    connectToMongoDb();
+    const { userId, questionId, path } = params;
+
+    const IsQuestionAlreadySaved = await User.findOne({
+      saved: {
+        $elemMatch: { $eq: questionId },
+      },
+    });
+
+    if (IsQuestionAlreadySaved) {
+      console.log("Question is already Saved");
+      return;
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $push: { saved: questionId } },
+      {
+        new: true,
+      }
+    );
+
+    revalidatePath(path);
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function deleteUser(params: DeleteUserParams) {
   try {
     connectToMongoDb();

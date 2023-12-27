@@ -7,7 +7,7 @@ import { CiClock2, CiStar } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
-import { getUserById } from "@/lib/actions/user.action";
+import { getUserById, saveTheQuestion } from "@/lib/actions/user.action";
 
 interface Props {
   id: string;
@@ -21,6 +21,16 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
     key: "_id",
     value: question?.author,
   });
+
+  {
+    question &&
+      authorId &&
+      (await saveTheQuestion({
+        userId: authorId?._id.toString(),
+        questionId: question?._id.toString(),
+        path: "/",
+      }));
+  }
 
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50">
@@ -47,9 +57,9 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
             {question?.downvotes?.length}
           </div>
 
-          <div className="ml-2 text-2xl text-green-600">
+          <button className="ml-2 text-2xl text-green-600">
             <CiStar />
-          </div>
+          </button>
         </div>
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
