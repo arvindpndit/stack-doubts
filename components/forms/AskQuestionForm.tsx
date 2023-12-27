@@ -81,11 +81,11 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
   };
 
   return (
-    <div className="mt-8 mb-10">
+    <div className="mt-8 mb-14 md:mb-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full bg-white px-1 py-3 md:px-8 md:py-8 rounded shadow-md "
+          className="w-full bg-white px-1 py-3 md:px-8 md:py-8 rounded "
         >
           <FormField
             control={form.control}

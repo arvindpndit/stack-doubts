@@ -9,11 +9,11 @@ import devLogo2 from "../../public/assets/images/logo2.png";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 bg-white h-20 flex items-center gap-4 justify-between px-1 md:px-2">
+    <div className="fixed top-0 left-0 right-0 bg-white h-20 flex items-center gap-4 justify-between px-1 md:px-2 z-50">
       <Image
         src={devLogo}
         alt="devLogo"
-        height={35}
+        height={44}
         // className="hidden sm:block"
       />
       {/* <Image

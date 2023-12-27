@@ -6,7 +6,7 @@ import { sideBarMenuOptionList } from "@/utils/constants";
 const BottomNavigation = () => {
   return (
     <div className="">
-      <div className="flex justify-evenly p-3">
+      <div className="flex justify-evenly p-3 z-50">
         {sideBarMenuOptionList.map((item) => {
           return (
             <SideBarMenuOption
