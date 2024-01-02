@@ -8,6 +8,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
 import { getUserById, saveTheQuestion } from "@/lib/actions/user.action";
+import SavedQuestion from "../partials/SavedQuestion";
 
 interface Props {
   id: string;
@@ -21,16 +22,6 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
     key: "_id",
     value: question?.author,
   });
-
-  {
-    question &&
-      authorId &&
-      (await saveTheQuestion({
-        userId: authorId?._id.toString(),
-        questionId: question?._id.toString(),
-        path: "/",
-      }));
-  }
 
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50 mb-14 md:mb-4">
@@ -57,9 +48,10 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
             {question?.downvotes?.length}
           </div>
 
-          <button className="ml-2 text-2xl text-green-600">
-            <CiStar />
-          </button>
+          <SavedQuestion
+            questionId={question?._id.toString()}
+            authorId={authorId?._id.toString()}
+          />
         </div>
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
