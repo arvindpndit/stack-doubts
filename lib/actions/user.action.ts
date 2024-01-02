@@ -8,7 +8,6 @@ import {
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question-model";
-import { ObjectId } from "mongoose";
 
 export async function getUserById(params: { key: string; value: any }) {
   try {
@@ -82,6 +81,26 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+interface getAllSavedQuestionsParams {
+  mongoUser: any;
+}
+
+export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
+  const { mongoUser } = params;
+  const savedQuestion = mongoUser.saved;
+
+  try {
+    await connectToMongoDb();
+    const questions = await Question.find({
+      _id: { $in: savedQuestion },
+    });
+    return questions;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
   }
 }
 

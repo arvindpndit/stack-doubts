@@ -1,14 +1,26 @@
 import { getAllQuestions } from "@/lib/actions/question.action";
-import { getUserById } from "@/lib/actions/user.action";
+import { getAllSavedQuestions, getUserById } from "@/lib/actions/user.action";
 import Link from "next/link";
 import { CiClock2 } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import { FaRegThumbsUp } from "react-icons/fa6";
 
-const QuestionCard = async () => {
-  const questions = await getAllQuestions();
-  //console.log(questions);
+interface QuestionCardProps {
+  filter?: string;
+  mongoUser?: any;
+}
+
+const QuestionCard = async (params: QuestionCardProps) => {
+  const { filter, mongoUser } = params;
+
+  if (filter == "savedQuestions") {
+    var questions = await getAllSavedQuestions({
+      mongoUser: mongoUser,
+    });
+  } else {
+    var questions = await getAllQuestions();
+  }
 
   return (
     <div className="">
