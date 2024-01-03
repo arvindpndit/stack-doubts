@@ -45,3 +45,25 @@ export async function getQuestionById(id: string) {
     throw new Error("Failed to fetch questions");
   }
 }
+
+export async function incrementQuestionViewCount(questionId: string) {
+  try {
+    await connectToMongoDb();
+    const question = await Question.findOneAndUpdate(
+      {
+        _id: questionId,
+      },
+      {
+        $inc: { views: 1 },
+      },
+      {
+        new: true,
+      }
+    );
+
+    return question;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
+  }
+}
