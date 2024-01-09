@@ -139,6 +139,40 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
   }
 }
 
+export async function downvoteQuestion(params: voteTheQuestionParams) {
+  try {
+    const { questionId, authorId } = params;
+
+    //check whether the user is present in the upvotes or downvotes (Question model)
+    const hasUserAlreadyUpvoted = await Question.findOne({
+      _id: questionId,
+      downvotes: authorId,
+    });
+
+    if (!hasUserAlreadyUpvoted) {
+      const question = await Question.findOneAndUpdate(
+        { _id: questionId },
+        { $push: { downvotes: authorId } },
+        {
+          new: true,
+        }
+      );
+
+      return question;
+    }
+
+    const removeUpvote = await Question.updateOne(
+      { _id: questionId },
+      { $pull: { downvotes: authorId } }
+    );
+
+    return;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function deleteUser(params: DeleteUserParams) {
   try {
     connectToMongoDb();

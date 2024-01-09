@@ -1,5 +1,9 @@
 "use client";
-import { saveTheQuestion, upvoteQuestion } from "@/lib/actions/user.action";
+import {
+  downvoteQuestion,
+  saveTheQuestion,
+  upvoteQuestion,
+} from "@/lib/actions/user.action";
 import React from "react";
 import { CiStar } from "react-icons/ci";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
@@ -27,7 +31,12 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       authorId: questionObj.author,
     });
   }
-
+  async function downvoteQuestionHandler() {
+    await downvoteQuestion({
+      questionId: questionObj._id,
+      authorId: questionObj.author,
+    });
+  }
   return (
     <div className="flex items-center">
       <button
@@ -39,7 +48,10 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       <div className="px-1 text-xs mr-2 bg-slate-300 rounded-sm">
         {questionObj?.upvotes?.length}
       </div>
-      <button className="mr-2 text-red-500 hover:underline">
+      <button
+        onClick={downvoteQuestionHandler}
+        className="mr-2 text-red-500 hover:underline"
+      >
         <BiDownvote />
       </button>
       <div className="px-1 mr-2 text-xs bg-slate-300 rounded-sm">
