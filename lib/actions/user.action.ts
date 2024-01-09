@@ -5,6 +5,7 @@ import {
   CreateUserParams,
   DeleteUserParams,
   UpdateUserParams,
+  voteTheQuestionParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question-model";
@@ -101,6 +102,74 @@ export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
   } catch (error) {
     console.error("Error fetching questions:", error);
     throw new Error("Failed to fetch questions");
+  }
+}
+
+export async function upvoteQuestion(params: voteTheQuestionParams) {
+  try {
+    const { questionId, authorId } = params;
+
+    //check whether the user is present in the upvotes or downvotes (Question model)
+    const hasUserAlreadyUpvoted = await Question.findOne({
+      _id: questionId,
+      upvotes: authorId,
+    });
+
+    if (!hasUserAlreadyUpvoted) {
+      const question = await Question.findOneAndUpdate(
+        { _id: questionId },
+        { $pull: { downvotes: authorId }, $push: { upvotes: authorId } },
+        {
+          new: true,
+        }
+      );
+
+      return question;
+    }
+
+    const removeUpvote = await Question.updateOne(
+      { _id: questionId },
+      { $pull: { upvotes: authorId } }
+    );
+
+    return;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function downvoteQuestion(params: voteTheQuestionParams) {
+  try {
+    const { questionId, authorId } = params;
+
+    //check whether the user is present in the upvotes or downvotes (Question model)
+    const hasUserAlreadyUpvoted = await Question.findOne({
+      _id: questionId,
+      downvotes: authorId,
+    });
+
+    if (!hasUserAlreadyUpvoted) {
+      const question = await Question.findOneAndUpdate(
+        { _id: questionId },
+        { $pull: { upvotes: authorId }, $push: { downvotes: authorId } },
+        {
+          new: true,
+        }
+      );
+
+      return question;
+    }
+
+    const removeUpvote = await Question.updateOne(
+      { _id: questionId },
+      { $pull: { upvotes: authorId } }
+    );
+
+    return;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }
 

@@ -9,6 +9,11 @@ export interface CreateAnswerParams {
   path: string;
 }
 
+export interface voteTheQuestionParams {
+  questionId: string;
+  authorId: string;
+}
+
 export interface GetAnswersParams {
   questionId: string;
   // sortBy?: string;
