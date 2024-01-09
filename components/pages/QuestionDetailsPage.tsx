@@ -8,7 +8,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
 import { getUserById, saveTheQuestion } from "@/lib/actions/user.action";
-import SavedQuestion from "../partials/SavedQuestion";
+import QuestionInteractions from "../partials/QuestionInteractions";
 
 interface Props {
   id: string;
@@ -34,25 +34,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
           />
           <div className="text-lg font-semibold mr-4">{authorId?.name}</div>
         </div>
-        <div className="flex items-center">
-          <button className="mr-2 text-blue-500 hover:underline">
-            <BiUpvote />
-          </button>
-          <div className="px-1 text-xs mr-2 bg-slate-300 rounded-sm">
-            {question?.upvotes?.length}
-          </div>
-          <button className="mr-2 text-red-500 hover:underline">
-            <BiDownvote />
-          </button>
-          <div className="px-1 mr-2 text-xs bg-slate-300 rounded-sm">
-            {question?.downvotes?.length}
-          </div>
-
-          <SavedQuestion
-            questionId={question?._id.toString()}
-            authorId={authorId?._id.toString()}
-          />
-        </div>
+        <QuestionInteractions question={JSON.stringify(question)} />
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
       <div className="flex items-center justify-between"></div>

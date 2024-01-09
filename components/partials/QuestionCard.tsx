@@ -69,7 +69,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
                 <div className="flex items-center  gap-4">
                   <div className="text-sm font-semibold flex items-center gap-1">
                     <FaRegThumbsUp />
-                    <div>{question.upvotes.length} Votes</div>
+                    <div>{question?.upvotes?.length} Votes</div>
                   </div>
                   <p className="text-gray-500 text-sm flex items-center gap-1">
                     <FiMessageSquare />
