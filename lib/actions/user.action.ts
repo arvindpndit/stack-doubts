@@ -118,7 +118,7 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
     if (!hasUserAlreadyUpvoted) {
       const question = await Question.findOneAndUpdate(
         { _id: questionId },
-        { $push: { upvotes: authorId } },
+        { $pull: { downvotes: authorId }, $push: { upvotes: authorId } },
         {
           new: true,
         }
@@ -152,7 +152,7 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
     if (!hasUserAlreadyUpvoted) {
       const question = await Question.findOneAndUpdate(
         { _id: questionId },
-        { $push: { downvotes: authorId } },
+        { $pull: { upvotes: authorId }, $push: { downvotes: authorId } },
         {
           new: true,
         }
@@ -163,7 +163,7 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
 
     const removeUpvote = await Question.updateOne(
       { _id: questionId },
-      { $pull: { downvotes: authorId } }
+      { $pull: { upvotes: authorId } }
     );
 
     return;
