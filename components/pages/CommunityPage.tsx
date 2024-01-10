@@ -3,6 +3,7 @@ import React from "react";
 
 import searchIcon from "../../public/assets/icons/search.svg";
 import { getAllUsers } from "@/lib/actions/user.action";
+import Link from "next/link";
 
 const CommunityPage = async () => {
   const users = await getAllUsers();
@@ -28,7 +29,11 @@ const CommunityPage = async () => {
 
       <div className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-8">
         {users.map((user) => (
-          <div key={user.clerkId} className="bg-white p-4 ">
+          <Link
+            href={`/profile/${user._id}`}
+            key={user.clerkId}
+            className="bg-white p-4 "
+          >
             <img
               src={user.picture}
               alt={user.name}
@@ -38,7 +43,7 @@ const CommunityPage = async () => {
               {user.name}
             </div>
             <div className="text-gray-500 text-center">@{user.username}</div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
