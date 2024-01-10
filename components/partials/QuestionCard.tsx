@@ -1,4 +1,7 @@
-import { getAllQuestions } from "@/lib/actions/question.action";
+import {
+  getAllQuestions,
+  getQuestionsByAuthorId,
+} from "@/lib/actions/question.action";
 import { getAllSavedQuestions, getUserById } from "@/lib/actions/user.action";
 import Link from "next/link";
 import { CiClock2 } from "react-icons/ci";
@@ -18,6 +21,9 @@ const QuestionCard = async (params: QuestionCardProps) => {
     var questions = await getAllSavedQuestions({
       mongoUser: mongoUser,
     });
+  }
+  if (filter == "questionAskedByAuthor") {
+    var questions = await getQuestionsByAuthorId(mongoUser);
   } else {
     var questions = await getAllQuestions();
   }

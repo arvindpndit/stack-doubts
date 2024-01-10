@@ -46,6 +46,17 @@ export async function getQuestionById(id: string) {
   }
 }
 
+export async function getQuestionsByAuthorId(id: string) {
+  try {
+    await connectToMongoDb();
+    const questions = await Question.find({ author: id });
+    return questions;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
+  }
+}
+
 export async function incrementQuestionViewCount(questionId: string) {
   try {
     await connectToMongoDb();
