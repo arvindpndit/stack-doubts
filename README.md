@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![stack doubts](./public/assets/images/ss1.png)
 
-## Getting Started
+<div align="center">
+  <h1>stack d🤔ubts</h1>
+</div>
 
-First, run the development server:
+<div align="center">
+  <p>A knowledge sharing opensource platform to facilitate Q&A, real-time events, and community interaction.</p>
+</div>
+
+<div align="center">
+  <a href="https://stack-doubts.vercel.app/">🏠 Website</a>
+  <span> • </span>
+  <a href="https://www.youtube.com/@arvindexplains">🎬 YouTube</a>
+  <span> • </span>
+  <a href="https://twitter.com/arvindpnditz">🐦 Twitter</a>
+</div>
+
+<div align="center">
+  <a href="https://github.com/arvindpndit/stack-doubts">🔎 Explore Code</a>
+</div>
+
+## Prerequisites
+
+- Node.js v18+
+
+## Development
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/arvindpndit/stack-doubts.git
+```
+
+2. Enter the project directory:
+
+```bash
+cd stack-doubts
+```
+
+3. Install the dependencies:
+
+```bash
+npm i
+```
+
+4. Configure the env vars as described below -
+
+   1. Create a new file named `.env.local` in your project's root directory
+   2. Open the `.env.local` file in a text editor.
+   3. Set the values of the environment variables with the appropriate values
+
+```dotenv
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_TINY_URL_API_KEY=your_tinyurl_api_key
+MONGODB_URL=your_mongodb_connection_url
+WEBHOOK_SECRET=your_webhook_secret
+```
+
+5. Start the development server with:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> Note:
+> If you encounter any problem in local setup, DM me on [LinkedIn](https://www.linkedin.com/in/arvindpndit/) or on [X/twitter](https://twitter.com/arvindpnditz)
