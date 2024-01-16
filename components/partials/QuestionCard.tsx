@@ -1,6 +1,7 @@
 import {
   getAllQuestions,
   getQuestionsByAuthorId,
+  questionsAnsweredByAuthor,
 } from "@/lib/actions/question.action";
 import { getAllSavedQuestions, getUserById } from "@/lib/actions/user.action";
 import Link from "next/link";
@@ -24,13 +25,16 @@ const QuestionCard = async (params: QuestionCardProps) => {
   }
   if (filter == "questionAskedByAuthor") {
     var questions = await getQuestionsByAuthorId(mongoUser);
+  }
+  if (filter == "questionsAnsweredByAuthor") {
+    var questions = await questionsAnsweredByAuthor(mongoUser);
   } else {
     var questions = await getAllQuestions();
   }
 
   return (
     <div className="">
-      {questions.map(async (question, index) => {
+      {questions?.map(async (question, index) => {
         const authorId = await getUserById({
           key: "_id",
           value: question.author,
