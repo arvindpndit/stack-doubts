@@ -47,3 +47,14 @@ export async function getAnswersByQuestionId(params: GetAnswersParams) {
     throw error;
   }
 }
+
+export async function getAnswersByAuthorId(id: string) {
+  try {
+    await connectToMongoDb();
+    const answers = await Answer.find({ author: id });
+    return answers;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
+  }
+}
