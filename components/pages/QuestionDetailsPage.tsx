@@ -9,6 +9,7 @@ import { FiMessageSquare } from "react-icons/fi";
 import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
 import { getUserById, saveTheQuestion } from "@/lib/actions/user.action";
 import QuestionInteractions from "../partials/QuestionInteractions";
+import Image from "next/image";
 
 interface Props {
   id: string;
@@ -22,6 +23,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
     key: "_id",
     value: question?.author,
   });
+  console.log(allAnswers);
 
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50 mb-14 md:mb-4">
@@ -56,9 +58,28 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
 
       <ParseHTML code={question?.content}></ParseHTML>
 
+      <div className="my-8 font-semibold text-lg  p-2 rounded-xl w-fit text-green-800">
+        {allAnswers?.length} Answers
+      </div>
       {/* render all the answers here */}
-      {allAnswers.map((answer) => {
-        return <div dangerouslySetInnerHTML={{ __html: answer.content }}></div>;
+      {allAnswers.map(async (answer) => {
+        const authorId = await getUserById({
+          key: "_id",
+          value: answer?.author,
+        });
+
+        return (
+          <div className="mb-8">
+            <div className="flex gap-2">
+              <img src={authorId?.picture} className="h-5 rounded-full" />
+              <div className="font-medium text-sm">{authorId?.name}</div>
+              <div className="text-gray-500 text-sm">
+                ‣ answered on {answer?.createdAt.toLocaleDateString()}
+              </div>
+            </div>
+            <ParseHTML code={answer.content} />
+          </div>
+        );
       })}
 
       <div className="text-xl font-bold">Write your answer here</div>
