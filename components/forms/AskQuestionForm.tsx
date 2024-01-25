@@ -185,14 +185,17 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                 </FormLabel>
                 <FormControl className="mt-3.5">
                   <Input
-                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                     placeholder="Add tags..."
+                    disabled={true}
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                   />
                 </FormControl>
                 <FormDescription className="body-regular mt-2.5 text-light-500">
-                  Add up to 3 tags to describe what your question is about. You
-                  need to press enter to add a tag.
+                  Adding tags is disabled. This feature will be added in
+                  upcoming release.
+                  {/* Add up to 3 tags to describe what your question is about. You
+                  need to press enter to add a tag. */}
                 </FormDescription>
                 <FormMessage className="text-red-500" />
               </FormItem>
