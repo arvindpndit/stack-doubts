@@ -14,11 +14,9 @@ export const answerSchema = z.object({
   content: z.string().refine(
     (data) => {
       // Extract content inside <></> tags
-      const matches = data.match(/<.*?>(.*?)<\/.*?>/);
-
+      const matches = data.match(/<(?:\/?[^>]+|pre.*?)>([^<]*)/g);
       // Count characters inside <></> tags while excluding &nbsp;
       const count = matches ? matches[1].replace(/&nbsp;/g, "").length : 0;
-
       // Validate against the minimum length
       return count >= 10;
     },
