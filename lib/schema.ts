@@ -11,7 +11,19 @@ export const questionSchema = z.object({
 });
 
 export const answerSchema = z.object({
-  content: z.string().min(10, {
-    message: "Answer must be at least 10 characters",
-  }),
+  content: z.string().refine(
+    (data) => {
+      // Extract content inside <></> tags
+      const matches = data.match(/<.*?>(.*?)<\/.*?>/);
+
+      // Count characters inside <></> tags while excluding &nbsp;
+      const count = matches ? matches[1].replace(/&nbsp;/g, "").length : 0;
+
+      // Validate against the minimum length
+      return count >= 10;
+    },
+    {
+      message: "Answer must contain at least 10 characters",
+    }
+  ),
 });
