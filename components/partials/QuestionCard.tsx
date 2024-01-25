@@ -34,7 +34,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
 
   return (
     <div className="">
-      {questions?.map(async (question, index) => {
+      {questions?.reverse().map(async (question, index) => {
         const authorId = await getUserById({
           key: "_id",
           value: question.author,

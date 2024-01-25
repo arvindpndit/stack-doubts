@@ -38,12 +38,17 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof answerSchema>) {
     try {
+      console.log(values.content);
       await createAnswer({
         content: values.content,
         author: JSON.parse(mongoUserId),
         question: id,
         path: pathname,
       });
+      if (editorRef.current) {
+        // @ts-ignore
+        editorRef.current.setContent("");
+      }
     } catch (error) {
       console.error("Error creating answer:", error);
     }
