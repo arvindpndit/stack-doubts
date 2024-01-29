@@ -29,6 +29,7 @@ const userSchema = new Schema<IUser>({
   portfolioWebsite: { type: String },
   reputation: { type: Number, default: 0 },
   saved: [{ type: Schema.Types.ObjectId, ref: "Question" }],
+  joinedAt: { type: Date, default: Date.now },
 });
 
 // 3. Create a Model.
