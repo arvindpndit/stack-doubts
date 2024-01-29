@@ -7,9 +7,17 @@ const Profile = ({ params }: { params: { id: string } }) => {
   return (
     <div className="w-full px-1 md:px-8 mt-28 h-screen">
       <ProfileHeader authorId={params.id} />
-      <ToggleUserQuestions authorId={params.id}>
-        <QuestionCard />
-      </ToggleUserQuestions>
+      <ToggleUserQuestions
+        questionsAsked={
+          <QuestionCard filter="questionAskedByAuthor" mongoUser={params.id} />
+        }
+        answersGiven={
+          <QuestionCard
+            filter="questionsAnsweredByAuthor"
+            mongoUser={params.id}
+          />
+        }
+      ></ToggleUserQuestions>
     </div>
   );
 };
