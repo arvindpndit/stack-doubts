@@ -7,6 +7,7 @@ import {
 import React from "react";
 import { CiStar } from "react-icons/ci";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
+import { usePathname } from "next/navigation";
 
 interface QuestionInteractionProps {
   question: string;
@@ -14,6 +15,7 @@ interface QuestionInteractionProps {
 
 const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
   const { question } = params;
+  const pathname = usePathname();
 
   const questionObj = JSON.parse(question);
 
@@ -21,7 +23,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
     await saveTheQuestion({
       userId: questionObj.author,
       questionId: questionObj._id,
-      path: "/",
+      path: pathname,
     });
   }
 
@@ -29,12 +31,14 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
     await upvoteQuestion({
       questionId: questionObj._id,
       authorId: questionObj.author,
+      path: pathname,
     });
   }
   async function downvoteQuestionHandler() {
     await downvoteQuestion({
       questionId: questionObj._id,
       authorId: questionObj.author,
+      path: pathname,
     });
   }
   return (
