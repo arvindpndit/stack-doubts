@@ -65,11 +65,19 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
     });
 
     if (IsQuestionAlreadySaved) {
-      console.log("Question is already Saved");
+      await User.findOneAndUpdate(
+        { _id: userId },
+        { $pull: { saved: questionId } },
+        {
+          new: true,
+        }
+      );
+
+      revalidatePath(path);
       return;
     }
 
-    const updatedUser = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { _id: userId },
       { $push: { saved: questionId } },
       {
@@ -78,7 +86,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
     );
 
     revalidatePath(path);
-    return updatedUser;
+    return true;
   } catch (error) {
     console.log(error);
     throw error;
