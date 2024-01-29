@@ -74,7 +74,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
       );
 
       revalidatePath(path);
-      return;
+      return false;
     }
 
     await User.findOneAndUpdate(
