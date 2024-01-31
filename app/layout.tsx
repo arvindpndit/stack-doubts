@@ -43,7 +43,7 @@ export default function RootLayout({
               <div className="w-1/3 hidden md:block  ">
                 <LeftSideBar />
               </div>
-              <div className="w-full overflow-x-hidden">{children}</div>
+              <div className="w-full">{children}</div>
               <div className="w-2/6 hidden lg:block">
                 <RightSideBar />
               </div>
