@@ -23,7 +23,6 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
     key: "_id",
     value: question?.author,
   });
-  console.log(allAnswers);
 
   return (
     <div className=" mx-auto my-8 px-1 md:px-3 md:py-6 -z-50 mb-14 md:mb-4">

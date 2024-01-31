@@ -38,7 +38,6 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof answerSchema>) {
     try {
-      console.log(values.content);
       await createAnswer({
         content: values.content,
         author: JSON.parse(mongoUserId),

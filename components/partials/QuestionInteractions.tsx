@@ -29,7 +29,6 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
     setQuestionSavedStatus(response);
   };
 
-  console.log(questionSavedStatus);
   async function upvoteQuestionHandler() {
     await upvoteQuestion({
       questionId: questionObj._id,
