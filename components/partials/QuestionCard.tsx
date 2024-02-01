@@ -22,11 +22,9 @@ const QuestionCard = async (params: QuestionCardProps) => {
     var questions = await getAllSavedQuestions({
       mongoUser: mongoUser,
     });
-  }
-  if (filter == "questionAskedByAuthor") {
+  } else if (filter == "questionAskedByAuthor") {
     var questions = await getQuestionsByAuthorId(mongoUser);
-  }
-  if (filter == "questionsAnsweredByAuthor") {
+  } else if (filter == "questionsAnsweredByAuthor") {
     var questions = await questionsAnsweredByAuthor(mongoUser);
   } else {
     var questions = await getAllQuestions();

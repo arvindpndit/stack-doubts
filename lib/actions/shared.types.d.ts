@@ -12,6 +12,7 @@ export interface CreateAnswerParams {
 export interface voteTheQuestionParams {
   questionId: string;
   authorId: string;
+  path: string;
 }
 
 export interface GetAnswersParams {

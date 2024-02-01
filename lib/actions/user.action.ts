@@ -65,11 +65,19 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
     });
 
     if (IsQuestionAlreadySaved) {
-      console.log("Question is already Saved");
-      return;
+      await User.findOneAndUpdate(
+        { _id: userId },
+        { $pull: { saved: questionId } },
+        {
+          new: true,
+        }
+      );
+
+      revalidatePath(path);
+      return false;
     }
 
-    const updatedUser = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { _id: userId },
       { $push: { saved: questionId } },
       {
@@ -78,7 +86,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
     );
 
     revalidatePath(path);
-    return updatedUser;
+    return true;
   } catch (error) {
     console.log(error);
     throw error;
@@ -107,7 +115,7 @@ export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
 
 export async function upvoteQuestion(params: voteTheQuestionParams) {
   try {
-    const { questionId, authorId } = params;
+    const { questionId, authorId, path } = params;
 
     //check whether the user is present in the upvotes or downvotes (Question model)
     const hasUserAlreadyUpvoted = await Question.findOne({
@@ -123,6 +131,7 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
           new: true,
         }
       );
+      revalidatePath(path);
 
       return question;
     }
@@ -141,7 +150,7 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
 
 export async function downvoteQuestion(params: voteTheQuestionParams) {
   try {
-    const { questionId, authorId } = params;
+    const { questionId, authorId, path } = params;
 
     //check whether the user is present in the upvotes or downvotes (Question model)
     const hasUserAlreadyUpvoted = await Question.findOne({
@@ -157,7 +166,7 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
           new: true,
         }
       );
-
+      revalidatePath(path);
       return question;
     }
 

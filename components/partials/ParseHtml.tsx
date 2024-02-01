@@ -10,7 +10,14 @@ const ParseHTML = ({ code }) => {
   const codeSnippetWithoutTags = code.replace(/<[^>]*>/g, "");
 
   return (
-    <SyntaxHighlighter style={prism} language={language}>
+    <SyntaxHighlighter
+      lineProps={{
+        style: { overflowWrap: "break-word", whiteSpace: "pre-wrap" },
+      }}
+      wrapLines={true}
+      style={prism}
+      language={language}
+    >
       {codeSnippetWithoutTags}
     </SyntaxHighlighter>
   );

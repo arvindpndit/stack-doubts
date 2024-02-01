@@ -1,23 +1,21 @@
 "use client";
-import React, { ReactElement, useState } from "react";
+import React, { Children, ReactNode, useState } from "react";
 
 interface Props {
-  authorId: string;
-  children: React.ReactNode;
+  questionsAsked: ReactNode;
+  answersGiven: ReactNode;
 }
 
-const ToggleUserQuestions = ({ children, authorId }: Props) => {
+const ToggleUserQuestions = ({ questionsAsked, answersGiven }: Props) => {
   const [toggleQuestionsAndAnswers, setToggleQuestionsAndAnswers] =
     useState(true);
 
   function toggleQuestions() {
     setToggleQuestionsAndAnswers(true);
-    console.log("Displaying Questions Asked");
   }
 
   function toggleAnswers() {
     setToggleQuestionsAndAnswers(false);
-    console.log("Displaying Answers Given");
   }
 
   return (
@@ -42,10 +40,14 @@ const ToggleUserQuestions = ({ children, authorId }: Props) => {
       </div>
 
       <div className="mt-3 text-xs">
-        *Question Asked and Answers given toggle feature will be developed soon
+        *Ask questions and provide more answers to earn badges.
       </div>
 
-      {children}
+      {toggleQuestionsAndAnswers ? (
+        <div>{questionsAsked}</div>
+      ) : (
+        <div>{answersGiven}</div>
+      )}
     </div>
   );
 };
