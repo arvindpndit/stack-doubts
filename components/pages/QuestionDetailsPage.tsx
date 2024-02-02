@@ -35,7 +35,10 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
           />
           <div className="text-lg font-semibold mr-4">{authorId?.name}</div>
         </div>
-        <QuestionInteractions question={JSON.stringify(question)} />
+        <QuestionInteractions
+          userId={mongoUserId}
+          question={JSON.stringify(question)}
+        />
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
       <div className="flex items-center justify-between"></div>

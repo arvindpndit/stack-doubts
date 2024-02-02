@@ -11,18 +11,20 @@ import { usePathname } from "next/navigation";
 
 interface QuestionInteractionProps {
   question: string;
+  userId: string;
 }
 
 const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
-  const { question } = params;
+  const { question, userId } = params;
   const pathname = usePathname();
   const [questionSavedStatus, setQuestionSavedStatus] = useState(true);
 
   const questionObj = JSON.parse(question);
+  const userIdObj = JSON.parse(userId);
 
   const isQuestionSaved = async function () {
     const response = await saveTheQuestion({
-      userId: questionObj.author,
+      userId: userIdObj,
       questionId: questionObj._id,
       path: pathname,
     });
@@ -32,7 +34,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
   async function upvoteQuestionHandler() {
     await upvoteQuestion({
       questionId: questionObj._id,
-      authorId: questionObj.author,
+      authorId: userIdObj,
       path: pathname,
     });
   }
@@ -40,7 +42,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
   async function downvoteQuestionHandler() {
     await downvoteQuestion({
       questionId: questionObj._id,
-      authorId: questionObj.author,
+      authorId: userIdObj,
       path: pathname,
     });
   }
