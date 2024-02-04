@@ -56,7 +56,6 @@ interface saveTheQuestionProps {
 
 export async function saveTheQuestion(params: saveTheQuestionProps) {
   try {
-    connectToMongoDb();
     const { userId, questionId, path, update } = params;
 
     const IsQuestionAlreadySaved = await User.findOne({
@@ -67,10 +66,10 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
     });
 
     if (!update) {
-      return IsQuestionAlreadySaved;
+      return IsQuestionAlreadySaved; //null or obj
     } else {
       if (IsQuestionAlreadySaved === null) {
-        await User.findOneAndUpdate(
+        const res = await User.findOneAndUpdate(
           { _id: userId },
           { $push: { saved: questionId } },
           {
@@ -78,7 +77,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
           }
         );
         revalidatePath(path);
-        return IsQuestionAlreadySaved;
+        return res; //obj
       } else {
         await User.findOneAndUpdate(
           { _id: userId },
@@ -89,7 +88,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
         );
 
         revalidatePath(path);
-        return IsQuestionAlreadySaved;
+        return null; //null
       }
     }
   } catch (error) {
