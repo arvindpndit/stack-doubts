@@ -51,42 +51,47 @@ interface saveTheQuestionProps {
   userId: string;
   questionId: string;
   path: string;
+  update: boolean;
 }
 
 export async function saveTheQuestion(params: saveTheQuestionProps) {
   try {
     connectToMongoDb();
-    const { userId, questionId, path } = params;
+    const { userId, questionId, path, update } = params;
 
     const IsQuestionAlreadySaved = await User.findOne({
+      _id: userId,
       saved: {
         $elemMatch: { $eq: questionId },
       },
     });
 
-    if (IsQuestionAlreadySaved) {
-      await User.findOneAndUpdate(
-        { _id: userId },
-        { $pull: { saved: questionId } },
-        {
-          new: true,
-        }
-      );
+    if (!update) {
+      return IsQuestionAlreadySaved;
+    } else {
+      if (IsQuestionAlreadySaved === null) {
+        await User.findOneAndUpdate(
+          { _id: userId },
+          { $push: { saved: questionId } },
+          {
+            new: true,
+          }
+        );
+        revalidatePath(path);
+        return IsQuestionAlreadySaved;
+      } else {
+        await User.findOneAndUpdate(
+          { _id: userId },
+          { $pull: { saved: questionId } },
+          {
+            new: true,
+          }
+        );
 
-      revalidatePath(path);
-      return false;
-    }
-
-    await User.findOneAndUpdate(
-      { _id: userId },
-      { $push: { saved: questionId } },
-      {
-        new: true,
+        revalidatePath(path);
+        return IsQuestionAlreadySaved;
       }
-    );
-
-    revalidatePath(path);
-    return true;
+    }
   } catch (error) {
     console.log(error);
     throw error;

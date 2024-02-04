@@ -4,10 +4,12 @@ import {
   saveTheQuestion,
   upvoteQuestion,
 } from "@/lib/actions/user.action";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { usePathname } from "next/navigation";
+import { IUser } from "@/database/user-model";
+import { questionSchema } from "@/lib/schema";
 
 interface QuestionInteractionProps {
   question: string;
@@ -17,7 +19,9 @@ interface QuestionInteractionProps {
 const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
   const { question, userId } = params;
   const pathname = usePathname();
-  const [questionSavedStatus, setQuestionSavedStatus] = useState(true);
+  const [questionSavedStatus, setQuestionSavedStatus] = useState<IUser | null>(
+    null
+  );
 
   const questionObj = JSON.parse(question);
   const userIdObj = JSON.parse(userId);
@@ -27,6 +31,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       userId: userIdObj,
       questionId: questionObj._id,
       path: pathname,
+      update: true,
     });
     setQuestionSavedStatus(response);
   };
@@ -46,6 +51,19 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       path: pathname,
     });
   }
+
+  useEffect(() => {
+    (async () => {
+      const response = await saveTheQuestion({
+        userId: userIdObj,
+        questionId: questionObj._id,
+        path: pathname,
+        update: false,
+      });
+      setQuestionSavedStatus(response);
+    })();
+  }, []);
+  console.log(questionSavedStatus);
 
   return (
     <div className="flex items-center">
@@ -68,21 +86,12 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
         {questionObj?.downvotes?.length}
       </div>
 
-      {questionSavedStatus ? (
-        <button
-          onClick={isQuestionSaved}
-          className="ml-2 text-2xl text-green-600"
-        >
-          <FaStar />
-        </button>
-      ) : (
-        <button
-          onClick={isQuestionSaved}
-          className="ml-2 text-2xl text-green-600"
-        >
-          <FaRegStar />
-        </button>
-      )}
+      <button
+        onClick={isQuestionSaved}
+        className="ml-2 text-2xl text-green-600"
+      >
+        {!(questionSavedStatus === null) ? <FaStar /> : <FaRegStar />}
+      </button>
     </div>
   );
 };
