@@ -1,5 +1,4 @@
 import CommunityPage from "@/components/pages/CommunityPage";
-import { SearchIcon } from "lucide-react";
 import React from "react";
 
 const page = () => {
