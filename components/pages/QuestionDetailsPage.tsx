@@ -42,7 +42,6 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
       <div className="flex items-center justify-between"></div>
-
       <div className="mt-4 flex gap-4">
         <div className=" text-gray-500 text-sm flex items-center gap-1">
           <CiClock2 />
@@ -58,8 +57,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
         </p>
       </div>
 
-      <ParseHTML code={question?.content}></ParseHTML>
-
+      <ParseHTML code={question?.content || ""}></ParseHTML>
       <div className="my-8 font-semibold text-lg  p-2 rounded-xl w-fit text-green-800">
         {allAnswers?.length} Answers
       </div>
@@ -83,7 +81,6 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
           </div>
         );
       })}
-
       <div className="text-xl font-bold">Write your answer here</div>
       <AnswerForm id={id} mongoUserId={mongoUserId} />
     </div>
