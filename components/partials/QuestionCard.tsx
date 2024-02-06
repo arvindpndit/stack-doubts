@@ -31,7 +31,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
   }
 
   return (
-    <div className="">
+    <div className="mb-16 md:mb-10">
       {questions?.reverse().map(async (question, index) => {
         const authorId = await getUserById({
           key: "_id",

@@ -13,7 +13,7 @@ const TopQuestions = async () => {
       {topQuestions?.map((question) => {
         return (
           <Link key={question._id} href={`/question-details/${question?._id}`}>
-            <div className="my-5 text-sm hover:bg-amber-100 p-2 rounded-lg cursor-pointer lg:mr-2">
+            <div className="my-2 text-sm hover:bg-amber-100 p-2 rounded-lg cursor-pointer lg:mr-2">
               {question.title}
             </div>
           </Link>
