@@ -104,3 +104,16 @@ export async function incrementQuestionViewCount(questionId: string) {
     throw new Error("Failed to fetch questions");
   }
 }
+
+export async function getTopQuestions() {
+  try {
+    connectToMongoDb();
+    const topQuestions = await Question.find()
+      .sort({ views: -1, upvotes: -1 })
+      .limit(5);
+    return topQuestions;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
+  }
+}
