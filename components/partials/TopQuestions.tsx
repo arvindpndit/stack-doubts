@@ -1,12 +1,10 @@
 import React from "react";
 
-import { questions } from "../../utils/constants";
 import { getTopQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
 const TopQuestions = async () => {
   const topQuestions = await getTopQuestions();
-  console.log(topQuestions);
   return (
     <div className="w-full">
       <h1 className="font-bold text-xl mt-5">Top Questions</h1>
