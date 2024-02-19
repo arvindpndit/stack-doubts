@@ -63,7 +63,6 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       setQuestionSavedStatus(response);
     })();
   }, []);
-  console.log(questionSavedStatus);
 
   return (
     <div className="flex items-center">

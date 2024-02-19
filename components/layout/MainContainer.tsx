@@ -1,11 +1,13 @@
 import React from "react";
-import Image from "next/image";
-import searchIcon from "../../public/assets/icons/search.svg";
 import QuestionCard from "../partials/QuestionCard";
 import Link from "next/link";
 import LocalSearchBar from "../common/LocalSearchBar";
 
-const MainContainer = () => {
+interface Props {
+  searchQuestionQuery?: string | undefined;
+}
+
+const MainContainer = ({ searchQuestionQuery }: Props) => {
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <div className="flex justify-between">
@@ -21,7 +23,7 @@ const MainContainer = () => {
 
       <LocalSearchBar placeholder="Search questions..." />
 
-      <QuestionCard />
+      <QuestionCard searchQuestionQuery={searchQuestionQuery} />
     </div>
   );
 };

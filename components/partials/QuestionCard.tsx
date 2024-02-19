@@ -1,6 +1,7 @@
 import {
   getAllQuestions,
   getQuestionsByAuthorId,
+  getSearchQuestions,
   questionsAnsweredByAuthor,
 } from "@/lib/actions/question.action";
 import { getAllSavedQuestions, getUserById } from "@/lib/actions/user.action";
@@ -11,12 +12,13 @@ import { FiMessageSquare } from "react-icons/fi";
 import { FaRegThumbsUp } from "react-icons/fa6";
 
 interface QuestionCardProps {
+  searchQuestionQuery?: string | undefined;
   filter?: string;
   mongoUser?: any;
 }
 
 const QuestionCard = async (params: QuestionCardProps) => {
-  const { filter, mongoUser } = params;
+  const { filter, mongoUser, searchQuestionQuery } = params;
 
   if (filter == "savedQuestions") {
     var questions = await getAllSavedQuestions({
@@ -27,7 +29,11 @@ const QuestionCard = async (params: QuestionCardProps) => {
   } else if (filter == "questionsAnsweredByAuthor") {
     var questions = await questionsAnsweredByAuthor(mongoUser);
   } else {
-    var questions = await getAllQuestions();
+    if (searchQuestionQuery === undefined) {
+      var questions = await getAllQuestions();
+    } else {
+      var questions = await getSearchQuestions(searchQuestionQuery);
+    }
   }
 
   return (
