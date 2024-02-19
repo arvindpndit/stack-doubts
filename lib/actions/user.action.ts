@@ -99,18 +99,27 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
 
 interface getAllSavedQuestionsParams {
   mongoUser: any;
+  searchQuestionQuery?: string;
 }
 
 export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
-  const { mongoUser } = params;
+  const { mongoUser, searchQuestionQuery } = params;
   const savedQuestion = mongoUser.saved;
 
   try {
     await connectToMongoDb();
-    const questions = await Question.find({
-      _id: { $in: savedQuestion },
-    });
-    return questions;
+    if (searchQuestionQuery === undefined) {
+      const questions = await Question.find({
+        _id: { $in: savedQuestion },
+      });
+      return questions;
+    } else {
+      const questions = await Question.find({
+        _id: { $in: savedQuestion },
+        title: { $regex: searchQuestionQuery, $options: "i" },
+      });
+      return questions;
+    }
   } catch (error) {
     console.error("Error fetching questions:", error);
     throw new Error("Failed to fetch questions");
@@ -214,5 +223,23 @@ export async function getAllUsers() {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function getSearchUsers(searchUserQuery: string) {
+  try {
+    await connectToMongoDb();
+
+    const users = await User.find({
+      $or: [
+        { name: { $regex: searchUserQuery, $options: "i" } },
+        { username: { $regex: searchUserQuery, $options: "i" } },
+      ],
+    });
+
+    return users;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users");
   }
 }

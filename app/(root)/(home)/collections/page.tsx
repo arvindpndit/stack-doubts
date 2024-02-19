@@ -1,10 +1,11 @@
 import CollectionsPage from "@/components/pages/CollectionsPage";
 import React from "react";
 
-const page = async () => {
+const page = async ({ searchParams }: any) => {
+  const searchQuestionQuery = searchParams.query;
   return (
     <div className="w-full px-1 md:px-8 mt-28 h-screen">
-      <CollectionsPage />
+      <CollectionsPage searchQuestionQuery={searchQuestionQuery} />
     </div>
   );
 };

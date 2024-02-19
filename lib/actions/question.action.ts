@@ -25,6 +25,24 @@ export async function createQuestion(params: CreateQuestionParams) {
   }
 }
 
+export async function getSearchQuestions(searchQuestionQuery: string) {
+  try {
+    await connectToMongoDb();
+
+    const questions = await Question.find({
+      $or: [
+        { title: { $regex: searchQuestionQuery, $options: "i" } },
+        { content: { $regex: searchQuestionQuery, $options: "i" } },
+      ],
+    });
+
+    return questions;
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    throw new Error("Failed to fetch questions");
+  }
+}
+
 export async function getAllQuestions() {
   try {
     await connectToMongoDb();

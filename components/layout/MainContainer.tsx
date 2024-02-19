@@ -1,10 +1,13 @@
 import React from "react";
-import Image from "next/image";
-import searchIcon from "../../public/assets/icons/search.svg";
 import QuestionCard from "../partials/QuestionCard";
 import Link from "next/link";
+import LocalSearchBar from "../common/LocalSearchBar";
 
-const MainContainer = () => {
+interface Props {
+  searchQuestionQuery?: string | undefined;
+}
+
+const MainContainer = ({ searchQuestionQuery }: Props) => {
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <div className="flex justify-between">
@@ -18,22 +21,9 @@ const MainContainer = () => {
         </Link>
       </div>
 
-      <div className="relative flex items-center mt-6">
-        <input
-          type="text"
-          placeholder="Search questions..."
-          className="w-full h-12 px-4 py-2 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none"
-        />
-        <Image
-          src={searchIcon}
-          alt="Search Icon"
-          width={20}
-          height={20}
-          className="absolute right-2 top-3"
-        />
-      </div>
+      <LocalSearchBar placeholder="Search questions..." />
 
-      <QuestionCard />
+      <QuestionCard searchQuestionQuery={searchQuestionQuery} />
     </div>
   );
 };
