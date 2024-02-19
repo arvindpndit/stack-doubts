@@ -1,12 +1,19 @@
 import React from "react";
 
-import { getAllUsers } from "@/lib/actions/user.action";
+import { getAllUsers, getSearchUsers } from "@/lib/actions/user.action";
 import Link from "next/link";
 import LocalSearchBar from "../common/LocalSearchBar";
-LocalSearchBar;
 
-const CommunityPage = async () => {
-  const users = await getAllUsers();
+interface Props {
+  searchParams: string | undefined;
+}
+
+const CommunityPage = async ({ searchParams }: Props) => {
+  if (searchParams === undefined) {
+    var users = await getAllUsers();
+  } else {
+    var users = await getSearchUsers(searchParams);
+  }
   return (
     <div className="w-full px-1 md:px-8 mt-28 h-screen">
       <h1 className="font-bold text-3xl">All Users</h1>
@@ -14,7 +21,7 @@ const CommunityPage = async () => {
       <LocalSearchBar placeholder="Search amazing minds here..." />
 
       <div className="mt-8 mb-16 md:mb-10 grid grid-cols-2 lg:grid-cols-3 gap-8">
-        {users.map((user) => (
+        {users?.map((user) => (
           <Link
             href={`/profile/${user._id}`}
             key={user.clerkId}

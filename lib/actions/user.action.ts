@@ -216,3 +216,21 @@ export async function getAllUsers() {
     throw error;
   }
 }
+
+export async function getSearchUsers(searchUserQuery: string) {
+  try {
+    await connectToMongoDb();
+
+    const users = await User.find({
+      $or: [
+        { name: { $regex: searchUserQuery, $options: "i" } },
+        { username: { $regex: searchUserQuery, $options: "i" } },
+      ],
+    });
+
+    return users;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users");
+  }
+}
