@@ -7,7 +7,12 @@ import searchIcon from "../../public/assets/icons/search.svg";
 import QuestionCard from "../partials/QuestionCard";
 import LocalSearchBar from "../common/LocalSearchBar";
 
-const CollectionsPage = async () => {
+interface Props {
+  searchQuestionQuery: string | undefined;
+}
+
+const CollectionsPage = async ({ searchQuestionQuery }: Props) => {
+  console.log(searchQuestionQuery);
   const { userId } = auth();
   if (!userId) redirect("/sign-in");
   const mongoUser = await getUserById({ key: "clerkId", value: userId });
@@ -18,7 +23,11 @@ const CollectionsPage = async () => {
         <h1 className="font-bold text-3xl">Saved Questions</h1>
       </div>
       <LocalSearchBar placeholder="Search questions..." />
-      <QuestionCard filter="savedQuestions" mongoUser={mongoUser} />
+      <QuestionCard
+        searchQuestionQuery={searchQuestionQuery}
+        filter="savedQuestions"
+        mongoUser={mongoUser}
+      />
     </div>
   );
 };

@@ -22,7 +22,8 @@ const QuestionCard = async (params: QuestionCardProps) => {
 
   if (filter == "savedQuestions") {
     var questions = await getAllSavedQuestions({
-      mongoUser: mongoUser,
+      mongoUser,
+      searchQuestionQuery,
     });
   } else if (filter == "questionAskedByAuthor") {
     var questions = await getQuestionsByAuthorId(mongoUser);

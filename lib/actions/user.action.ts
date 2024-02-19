@@ -99,18 +99,27 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
 
 interface getAllSavedQuestionsParams {
   mongoUser: any;
+  searchQuestionQuery?: string;
 }
 
 export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
-  const { mongoUser } = params;
+  const { mongoUser, searchQuestionQuery } = params;
   const savedQuestion = mongoUser.saved;
 
   try {
     await connectToMongoDb();
-    const questions = await Question.find({
-      _id: { $in: savedQuestion },
-    });
-    return questions;
+    if (searchQuestionQuery === undefined) {
+      const questions = await Question.find({
+        _id: { $in: savedQuestion },
+      });
+      return questions;
+    } else {
+      const questions = await Question.find({
+        _id: { $in: savedQuestion },
+        title: { $regex: searchQuestionQuery, $options: "i" },
+      });
+      return questions;
+    }
   } catch (error) {
     console.error("Error fetching questions:", error);
     throw new Error("Failed to fetch questions");
