@@ -57,7 +57,17 @@ export async function getAllQuestions() {
 export async function getQuestionById(id: string) {
   try {
     await connectToMongoDb();
-    const question = await Question.findById(id);
+    const question = await Question.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        $inc: { views: 1 },
+      },
+      {
+        new: true,
+      }
+    );
     return question;
   } catch (error) {
     console.error("Error fetching questions:", error);
@@ -95,28 +105,6 @@ export async function questionsAnsweredByAuthor(id: string) {
     const questions = await Question.find({ _id: { $in: uniqueQuestionIds } });
 
     return questions;
-  } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
-  }
-}
-
-export async function incrementQuestionViewCount(questionId: string) {
-  try {
-    await connectToMongoDb();
-    const question = await Question.findOneAndUpdate(
-      {
-        _id: questionId,
-      },
-      {
-        $inc: { views: 1 },
-      },
-      {
-        new: true,
-      }
-    );
-
-    return question;
   } catch (error) {
     console.error("Error fetching questions:", error);
     throw new Error("Failed to fetch questions");
