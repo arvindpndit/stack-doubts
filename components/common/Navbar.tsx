@@ -4,18 +4,24 @@ import { UserButton } from "@clerk/nextjs";
 import searchIcon from "../../public/assets/icons/search.svg";
 import { FaGithub } from "react-icons/fa";
 
-import devLogo from "../../public/assets/images/logo.png";
+import logo from "../../public/assets/icons/logo.png";
 import devLogo2 from "../../public/assets/images/logo2.png";
 
 const Navbar: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 right-0 bg-white h-20 flex items-center gap-4 justify-between px-1 md:px-2 z-50">
-      <Image
-        src={devLogo}
-        alt="devLogo"
-        height={44}
-        // className="hidden sm:block"
-      />
+      <div className=" flex items-center justify-center">
+        <Image
+          src={logo}
+          alt="devLogo"
+          className="sm:h-16 sm:w-16 h-12 w-12"
+          // className="hidden sm:block"
+        />
+
+        <div className="hidden lg:block text-3xl font-bold">
+          Stack <span className="text-orange-500">Doubts</span>
+        </div>
+      </div>
       {/* <Image
         src={devLogo2}
         alt="devLogo"

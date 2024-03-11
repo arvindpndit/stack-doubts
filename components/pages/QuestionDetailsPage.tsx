@@ -58,7 +58,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
 
       <ParseHTML code={question?.content || ""}></ParseHTML>
-      <div className="my-8 font-semibold text-lg  p-2 rounded-xl w-fit text-green-800">
+      <div className="my-8 font-semibold text-lg  p-2 rounded-2xl w-fit text-green-800">
         {allAnswers?.length} Answers
       </div>
       {/* render all the answers here */}

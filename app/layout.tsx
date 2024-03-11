@@ -37,11 +37,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`bg-white ${inter.variable} ${spaceGrotesk.variable}`}>
+        <body className={`bg-white ${spaceGrotesk.className}`}>
           <div>
             <Navbar />
             <div className="flex justify-between px-0 md:px-2">
-              <div className="w-1/3 hidden md:block  ">
+              <div className="w-1/3 hidden md:block   ">
                 <LeftSideBar />
               </div>
               <div className="w-full">{children}</div>

@@ -20,19 +20,19 @@ const ToggleUserQuestions = ({ questionsAsked, answersGiven }: Props) => {
 
   return (
     <div>
-      <div className="bg-green-300 w-max rounded-md">
+      <div className="bg-orange-300 w-max rounded-2xl p-1">
         <button
           onClick={toggleQuestions}
-          className={`font-semibold text-sm p-3 rounded-md hover:bg-green-400 ${
-            toggleQuestionsAndAnswers ? "bg-green-400" : ""
+          className={`mr-1 text-white font-semibold text-sm p-3 rounded-2xl hover:bg-orange-500 ${
+            toggleQuestionsAndAnswers ? "bg-orange-500" : ""
           }`}
         >
           Questions Asked
         </button>
         <button
           onClick={toggleAnswers}
-          className={`font-semibold text-sm p-3 rounded-md hover:bg-green-400 ${
-            !toggleQuestionsAndAnswers ? "bg-green-400" : ""
+          className={`text-white font-semibold text-sm p-3 rounded-2xl hover:bg-orange-500 ${
+            !toggleQuestionsAndAnswers ? "bg-orange-500" : ""
           }`}
         >
           Answers Given
