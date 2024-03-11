@@ -203,7 +203,12 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
           />
 
           <br />
-          <Button type="submit">Submit</Button>
+          <Button
+            className="bg-orange-500 rounded-2xl hover:bg-orange-600"
+            type="submit"
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

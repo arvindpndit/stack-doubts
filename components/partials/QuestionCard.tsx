@@ -47,7 +47,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
 
         return (
           <Link key={index} href={`/question-details/${question._id}`}>
-            <div className="bg-white p-4 rounded-lg shadow-md my-5 md:my-8 cursor-pointer">
+            <div className="bg-white p-4 rounded-2xl shadow-md my-5 md:my-8 cursor-pointer">
               <h1 className="text-xl font-semibold">{question.title}</h1>
               <div className="flex space-x-2 mt-2">
                 {question.tags &&

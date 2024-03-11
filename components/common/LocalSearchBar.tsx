@@ -30,7 +30,7 @@ const LocalSearchBar = ({ placeholder }: localSearchBarProps) => {
   return (
     <div className="relative flex items-center mt-6">
       <input
-        className="w-full h-12 px-4 py-2 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none"
+        className="w-full h-12 px-4 py-2 bg-gray-50 rounded-2xl border border-gray-300 focus:outline-none"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);

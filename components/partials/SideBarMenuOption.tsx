@@ -17,12 +17,15 @@ interface SideBarMenuOptionProps {
 const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
   const IconComponent = getIconComponent(props.menutitle);
   return (
-    <Link href={props.link} className=" hover:bg-amber-100 md:p-3 rounded-lg">
+    <Link
+      href={props.link}
+      className="hover:text-white hover:bg-orange-500  md:p-3 rounded-2xl"
+    >
       <div className="flex flex-col md:flex-row items-center  gap-2">
-        <div className="text-3xl md:text-2xl">
+        <div className="text-3xl md:text-2xl ">
           {IconComponent && <IconComponent />}
         </div>
-        <div className="hidden md:block md:text-xl"> {props.menutitle}</div>
+        <div className=" hidden md:block md:text-xl"> {props.menutitle}</div>
       </div>
     </Link>
   );

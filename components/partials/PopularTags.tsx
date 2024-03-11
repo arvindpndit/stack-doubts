@@ -7,7 +7,7 @@ const PopularTags = () => {
       <h1 className="font-bold text-xl mt-5">Popular Tags</h1>
       {popularTags.map((tag) => {
         return (
-          <div className="my-5 text-xs p-2 bg-blue-300 w-16 rounded-lg text-blue-800 shadow-md">
+          <div className="text-orange-500 my-5 text-xs p-2 w-16 rounded-2xl border-orange-500 shadow-md">
             {tag}
           </div>
         );
