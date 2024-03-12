@@ -15,7 +15,7 @@ const CommunityPage = async ({ searchParams }: Props) => {
     var users = await getSearchUsers(searchParams);
   }
   return (
-    <div className="w-full px-1 md:px-8 mt-28 h-screen">
+    <div>
       <h1 className="font-bold text-3xl">All Users</h1>
 
       <LocalSearchBar placeholder="Search amazing minds here..." />

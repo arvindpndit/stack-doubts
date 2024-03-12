@@ -1,13 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import {
-  RiBriefcaseLine,
-  RiCommunityLine,
-  RiHashtag,
-  RiFolderLine,
-  RiHome2Line,
-  RiQuestionLine,
-} from "react-icons/ri";
+import { TbSmartHome, TbHash, TbBriefcase } from "react-icons/tb";
+import { MdPeopleOutline } from "react-icons/md";
+import { FaRegStar } from "react-icons/fa";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 interface SideBarMenuOptionProps {
   menutitle: string;
@@ -21,11 +17,11 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
       href={props.link}
       className="hover:text-white hover:bg-orange-500  md:p-3 rounded-2xl"
     >
-      <div className="flex flex-col md:flex-row items-center  gap-2">
-        <div className="text-3xl md:text-2xl ">
+      <div className="flex flex-col lg:flex-row items-center  gap-5 ">
+        <div className="text-3xl lg:text-2xl">
           {IconComponent && <IconComponent />}
         </div>
-        <div className=" hidden md:block md:text-xl"> {props.menutitle}</div>
+        <div className="hidden lg:block md:text-xl"> {props.menutitle}</div>
       </div>
     </Link>
   );
@@ -34,17 +30,17 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
 export const getIconComponent = (menutitle: string) => {
   switch (menutitle.toLowerCase()) {
     case "home":
-      return RiHome2Line;
+      return TbSmartHome;
     case "community":
-      return RiCommunityLine;
+      return MdPeopleOutline;
     case "collections":
-      return RiFolderLine;
+      return FaRegStar;
     case "find jobs":
-      return RiBriefcaseLine;
+      return TbBriefcase;
     case "tags":
-      return RiHashtag;
+      return TbHash;
     case "ask a question":
-      return RiQuestionLine;
+      return AiOutlineQuestionCircle;
     default:
       return null;
   }

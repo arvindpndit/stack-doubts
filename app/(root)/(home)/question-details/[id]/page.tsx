@@ -9,7 +9,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   const mongoUser = await getUserById({ key: "clerkId", value: userId });
 
   return (
-    <div className="w-full px-1 md:px-8 mt-28 h-screen">
+    <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <QuestionDetailsPage
         id={params.id}
         mongoUserId={JSON.stringify(mongoUser?._id)}

@@ -11,23 +11,13 @@ const Navbar: React.FC = () => {
   return (
     <div className="fixed top-0 left-0 right-0 bg-white h-20 flex items-center gap-4 justify-between px-1 md:px-2 z-50">
       <div className=" flex items-center justify-center">
-        <Image
-          src={logo}
-          alt="devLogo"
-          className="sm:h-16 sm:w-16 h-12 w-12"
-          // className="hidden sm:block"
-        />
+        <Image src={logo} alt="devLogo" className="h-12 w-12" />
 
         <div className="hidden lg:block text-3xl font-bold">
           Stack <span className="text-orange-500">Doubts</span>
         </div>
       </div>
-      {/* <Image
-        src={devLogo2}
-        alt="devLogo"
-        height={35}
-        className="block sm:hidden"
-      /> */}
+
       <div className="hidden sm:flex relative  items-center w-1/2">
         <input
           type="text"

@@ -38,18 +38,18 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`bg-white ${spaceGrotesk.className}`}>
-          <div>
+          <div className="min-h-screen">
             <Navbar />
             <div className="flex justify-between px-0 md:px-2">
-              <div className="w-1/3 hidden md:block   ">
+              <div className="w-1/3 hidden lg:block   ">
                 <LeftSideBar />
               </div>
               <div className="w-full">{children}</div>
-              <div className="w-2/6 hidden lg:block">
+              <div className="w-2/6 hidden xl:block">
                 <RightSideBar />
               </div>
             </div>
-            <div className="fixed bottom-0 w-full bg-white block md:hidden">
+            <div className="fixed bottom-0 w-full bg-white block lg:hidden">
               <BottomNavigation />
             </div>
           </div>
