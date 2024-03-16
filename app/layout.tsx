@@ -21,7 +21,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Stack Overflow",
+  title: "Stack Doubts",
   description:
     "A community driven platform for asking and answering programming questions",
   icons: {
