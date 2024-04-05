@@ -1,7 +1,14 @@
 import AskQuestionForm from "@/components/forms/AskQuestionForm";
 import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Ask a Question | Stack Doubts",
+  description:
+    "Ask programming-related questions and receive expert answers from the knowledgeable community at Stack Doubts.",
+};
 
 const Ask = async () => {
   const { userId } = auth();

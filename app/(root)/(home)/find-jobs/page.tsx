@@ -1,4 +1,10 @@
-import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Find Jobs | Stack Doubts",
+  description:
+    "Discover programming job opportunities and advance your career in the tech industry with Stack Doubts' job listings.",
+};
 
 const page = () => {
   return (

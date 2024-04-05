@@ -15,7 +15,7 @@ const MainContainer = ({ searchQuestionQuery }: Props) => {
         <Link
           href="/ask-question"
           type="button"
-          className="text-white bg-orange-500 font-medium rounded-2xl text-sm px-5 py-3 text-center  mb-2"
+          className="text-white bg-orange-500 font-medium rounded-2xl text-sm px-5 py-3 text-center  mb-2 hover:scale-105  hover:shadow-md"
         >
           Ask a question
         </Link>
