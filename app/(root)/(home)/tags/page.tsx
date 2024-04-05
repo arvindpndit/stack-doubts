@@ -1,4 +1,10 @@
-import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tags | Stack Doubts",
+  description:
+    "Browse through programming tags and categories to find relevant content, discussions, and resources on Stack Doubts.",
+};
 
 const Tags = () => {
   return (
