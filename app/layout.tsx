@@ -40,7 +40,7 @@ export default function RootLayout({
         <body className={`bg-white ${spaceGrotesk.className}`}>
           <div className="min-h-screen">
             <Navbar />
-            <div className="flex justify-between px-0 md:px-2">
+            <div className="container flex justify-between px-0 md:px-2">
               <div className="w-1/3 hidden lg:block   ">
                 <LeftSideBar />
               </div>
@@ -49,7 +49,7 @@ export default function RootLayout({
                 <RightSideBar />
               </div>
             </div>
-            <div className="fixed bottom-0 w-full bg-white block lg:hidden">
+            <div className="fixed bottom-0 w-full bg-white block lg:hidden z-50">
               <BottomNavigation />
             </div>
           </div>

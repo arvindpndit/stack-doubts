@@ -8,7 +8,7 @@ const PopularTags = () => {
       <div className="flex gap-3 flex-wrap">
         {popularTags.map((tag) => {
           return (
-            <div className="text-orange-500 text-xs p-2 w-16 rounded-2xl border-orange-500 shadow-md">
+            <div className="text-orange-500 text-xs p-2 w-16 rounded-full border-orange-500 shadow-md">
               {tag}
             </div>
           );

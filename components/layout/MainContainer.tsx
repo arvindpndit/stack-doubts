@@ -11,11 +11,11 @@ const MainContainer = ({ searchQuestionQuery }: Props) => {
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl">All questions</h1>
+        <h1 className="font-bold text-3xl">All Questions</h1>
         <Link
           href="/ask-question"
           type="button"
-          className="text-white bg-orange-500 font-medium rounded-2xl text-sm px-5 py-3 text-center  mb-2 hover:scale-105  hover:shadow-md"
+          className="text-white transition-all bg-orange-500 font-medium rounded-full text-sm px-5 py-3 text-center  mb-2 hover:scale-105  hover:shadow-md"
         >
           Ask a question
         </Link>
