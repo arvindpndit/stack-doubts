@@ -4,7 +4,7 @@ import PopularTags from "../partials/PopularTags";
 
 const RightSideBar = () => {
   return (
-    <div className="fixed top-24">
+    <div className="w-64 fixed top-24">
       <TopQuestions />
       <PopularTags />
     </div>

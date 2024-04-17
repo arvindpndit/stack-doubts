@@ -15,9 +15,9 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
   return (
     <Link
       href={props.link}
-      className="hover:text-white hover:bg-orange-500  md:p-3 rounded-2xl"
+      className="hover:text-white hover:bg-orange-500 w-fit transition-all md:p-3 rounded-full"
     >
-      <div className="flex flex-col lg:flex-row items-center  gap-5 ">
+      <div className="flex flex-col lg:flex-row items-center  gap-3">
         <div className="text-3xl lg:text-2xl">
           {IconComponent && <IconComponent />}
         </div>
