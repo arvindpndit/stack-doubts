@@ -25,7 +25,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   });
 
   return (
-    <div className="mt-8 mb-16 md:mb-12">
+    <div className="mt-8 mb-24 lg:mb-14">
       <div className="flex justify-between mb-2">
         <div className="flex items-center justify-center">
           <img
