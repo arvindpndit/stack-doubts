@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TbSmartHome, TbHash, TbBriefcase } from "react-icons/tb";
 import { MdPeopleOutline } from "react-icons/md";
 import { FaRegStar } from "react-icons/fa";
+import { BiBookReader } from "react-icons/bi";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 interface SideBarMenuOptionProps {
@@ -33,6 +34,8 @@ export const getIconComponent = (menutitle: string) => {
       return TbSmartHome;
     case "community":
       return MdPeopleOutline;
+    case "courses":
+      return BiBookReader;
     case "collections":
       return FaRegStar;
     case "find jobs":
