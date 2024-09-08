@@ -1,9 +1,9 @@
-import Image from "next/image";
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 const CoursesPage = ({ playlists }: any) => {
   return (
-    <div className="container mx-auto p-4 mt-8 mb-24 lg:mb-14">
+    <div className="container mx-auto p-4 mt-8 pb-24 lg:mb-14">
       <h1 className="font-bold text-3xl">All Courses</h1>
       <div className="flex  flex-wrap gap-4 mt-6">
         {playlists.map((playlist: any) => (
@@ -64,3 +64,4 @@ const CoursesPage = ({ playlists }: any) => {
 };
 
 export default CoursesPage;
+

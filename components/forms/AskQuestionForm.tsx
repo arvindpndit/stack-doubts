@@ -1,12 +1,12 @@
-"use client";
-import React, { useRef } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { questionSchema } from "@/lib/schema";
-import z from "zod";
-import { Editor } from "@tinymce/tinymce-react";
+'use client';
+import React, { useRef } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { questionSchema } from '@/lib/schema';
+import z from 'zod';
+import { Editor } from '@tinymce/tinymce-react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -15,10 +15,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import Input from "../ui/input";
-import { createQuestion } from "@/lib/actions/question.action";
-import { usePathname, useRouter } from "next/navigation";
+} from '@/components/ui/form';
+import Input from '../ui/input';
+import { createQuestion } from '@/lib/actions/question.action';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface Props {
   mongoUserId: string;
@@ -33,8 +33,8 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
-      question: "",
-      explanation: "",
+      question: '',
+      explanation: '',
       tags: [],
     },
   });
@@ -50,29 +50,29 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
     });
 
     // navigate to home page
-    router.push("/");
+    router.push('/');
   }
 
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    field: any
+    field: any,
   ) => {
-    if (e.key === "Enter" && field.name === "tags") {
+    if (e.key === 'Enter' && field.name === 'tags') {
       e.preventDefault();
 
       const tagInput = e.target as HTMLInputElement;
       let tagValue = tagInput.value;
 
-      if (tagValue !== "") {
+      if (tagValue !== '') {
         if (tagValue.length > 15) {
-          return form.setError("tags", {
-            message: "Tag must be less than 15 characters.",
+          return form.setError('tags', {
+            message: 'Tag must be less than 15 characters.',
           });
         }
 
         if (field.value.includes(tagValue as never)) {
-          form.setValue("tags", [...field.value, tagValue]);
-          form.clearErrors("tags");
+          form.setValue('tags', [...field.value, tagValue]);
+          form.clearErrors('tags');
         } else {
           form.trigger();
         }
@@ -81,7 +81,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
   };
 
   return (
-    <div className="mt-8 mb-24 lg:mb-14">
+    <div className="mt-8 pb-24 lg:pb-14">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -121,7 +121,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
                 <FormLabel className="paragraph-semibold text-dark400_light800">
-                  Detailed explanation of your problem{" "}
+                  Detailed explanation of your problem{' '}
                   <span className="text-primary-500">*</span>
                 </FormLabel>
                 <FormControl className="mt-3.5">
@@ -138,28 +138,28 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                       height: 350,
                       menubar: false,
                       plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "codesample",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
+                        'advlist',
+                        'autolink',
+                        'lists',
+                        'link',
+                        'image',
+                        'charmap',
+                        'preview',
+                        'anchor',
+                        'searchreplace',
+                        'visualblocks',
+                        'codesample',
+                        'fullscreen',
+                        'insertdatetime',
+                        'media',
+                        'table',
                       ],
                       toolbar:
-                        "undo redo | " +
-                        "codesample | bold italic forecolor | alignleft aligncenter |" +
-                        "alignright alignjustify | bullist numlist",
+                        'undo redo | ' +
+                        'codesample | bold italic forecolor | alignleft aligncenter |' +
+                        'alignright alignjustify | bullist numlist',
                       content_style:
-                        "body { font-family:Inter; font-size:16px }",
+                        'body { font-family:Inter; font-size:16px }',
                     }}
                   />
                 </FormControl>
@@ -216,3 +216,4 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
 };
 
 export default AskQuestionForm;
+

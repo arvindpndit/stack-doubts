@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { getAllUsers, getSearchUsers } from "@/lib/actions/user.action";
-import Link from "next/link";
-import LocalSearchBar from "../common/LocalSearchBar";
+import { getAllUsers, getSearchUsers } from '@/lib/actions/user.action';
+import Link from 'next/link';
+import LocalSearchBar from '../common/LocalSearchBar';
 
 interface Props {
   searchParams: string | undefined;
@@ -20,7 +20,7 @@ const CommunityPage = async ({ searchParams }: Props) => {
 
       <LocalSearchBar placeholder="Search amazing minds here..." />
 
-      <div className="mt-8 mb-16 md:mb-10 grid grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="mt-8 pb-16 md:pb-10 grid grid-cols-2 lg:grid-cols-3 gap-8">
         {users?.map((user) => (
           <Link
             href={`/profile/${user._id}`}
@@ -44,3 +44,4 @@ const CommunityPage = async ({ searchParams }: Props) => {
 };
 
 export default CommunityPage;
+

@@ -1,7 +1,7 @@
-import React from "react";
-import QuestionCard from "../partials/QuestionCard";
-import Link from "next/link";
-import LocalSearchBar from "../common/LocalSearchBar";
+import React from 'react';
+import QuestionCard from '../partials/QuestionCard';
+import Link from 'next/link';
+import LocalSearchBar from '../common/LocalSearchBar';
 
 interface Props {
   searchQuestionQuery?: string | undefined;
@@ -29,3 +29,4 @@ const MainContainer = ({ searchQuestionQuery }: Props) => {
 };
 
 export default MainContainer;
+

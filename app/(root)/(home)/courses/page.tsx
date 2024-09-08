@@ -1,11 +1,11 @@
-import CoursesPage from "@/components/pages/CoursesPage";
-import getYoutubePlaylists from "@/lib/actions/course.action";
-import { Metadata } from "next";
+import CoursesPage from '@/components/pages/CoursesPage';
+import getYoutubePlaylists from '@/lib/actions/course.action';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Courses | Stack Doubts",
+  title: 'Courses | Stack Doubts',
   description:
-    "Browse through programming courses and resources on Stack Doubts.",
+    'Browse through programming courses and resources on Stack Doubts.',
 };
 
 const Courses = async () => {
@@ -18,3 +18,4 @@ const Courses = async () => {
 };
 
 export default Courses;
+

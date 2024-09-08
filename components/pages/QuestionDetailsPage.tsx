@@ -1,15 +1,15 @@
-import { getQuestionById } from "@/lib/actions/question.action";
-import React from "react";
-import ParseHTML from "../partials/ParseHtml";
-import AnswerForm from "../forms/AnswerForm";
-import { BiUpvote, BiDownvote } from "react-icons/bi";
-import { CiClock2, CiStar } from "react-icons/ci";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FiMessageSquare } from "react-icons/fi";
-import { getAnswersByQuestionId } from "@/lib/actions/answer.action";
-import { getUserById, saveTheQuestion } from "@/lib/actions/user.action";
-import QuestionInteractions from "../partials/QuestionInteractions";
-import Image from "next/image";
+import { getQuestionById } from '@/lib/actions/question.action';
+import React from 'react';
+import ParseHTML from '../partials/ParseHtml';
+import AnswerForm from '../forms/AnswerForm';
+import { BiUpvote, BiDownvote } from 'react-icons/bi';
+import { CiClock2, CiStar } from 'react-icons/ci';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import { FiMessageSquare } from 'react-icons/fi';
+import { getAnswersByQuestionId } from '@/lib/actions/answer.action';
+import { getUserById, saveTheQuestion } from '@/lib/actions/user.action';
+import QuestionInteractions from '../partials/QuestionInteractions';
+import Image from 'next/image';
 
 interface Props {
   id: string;
@@ -20,12 +20,12 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
   const allAnswers = await getAnswersByQuestionId({ questionId: id });
   const authorId = await getUserById({
-    key: "_id",
+    key: '_id',
     value: question?.author,
   });
 
   return (
-    <div className="mt-8 mb-24 lg:mb-14">
+    <div className="mt-8 pb-24 lg:pb-14">
       <div className="flex justify-between mb-2">
         <div className="flex items-center justify-center">
           <img
@@ -57,14 +57,14 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
         </p>
       </div>
 
-      <ParseHTML code={question?.content || ""}></ParseHTML>
+      <ParseHTML code={question?.content || ''}></ParseHTML>
       <div className="my-8 font-semibold text-lg  p-2 rounded-full w-fit text-green-800">
         {allAnswers?.length} Answers
       </div>
       {/* render all the answers here */}
       {allAnswers.map(async (answer) => {
         const authorId = await getUserById({
-          key: "_id",
+          key: '_id',
           value: answer?.author,
         });
 
@@ -88,3 +88,4 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
 };
 
 export default QuestionDetailsPage;
+
