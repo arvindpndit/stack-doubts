@@ -25,7 +25,7 @@ const CommunityPage = async ({ searchParams }: Props) => {
           <Link
             href={`/profile/${user._id}`}
             key={user.clerkId}
-            className="bg-white p-4 "
+            className=" p-4 "
           >
             <img
               src={user.picture}
@@ -35,7 +35,9 @@ const CommunityPage = async ({ searchParams }: Props) => {
             <div className="text-2xl font-semibold mb-2 text-center">
               {user.name}
             </div>
-            <div className="text-gray-500 text-center">@{user.username}</div>
+            <div className="text-gray-500 dark:text-gray-400 text-center">
+              @{user.username}
+            </div>
           </Link>
         ))}
       </div>

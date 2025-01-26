@@ -43,22 +43,22 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
       <div className="flex items-center justify-between"></div>
       <div className="mt-4 flex gap-4">
-        <div className=" text-gray-500 text-sm flex items-center gap-1">
+        <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <CiClock2 />
           <div>asked on {question?.createdAt.toLocaleDateString()}</div>
         </div>
-        <div className=" text-gray-500 text-sm flex items-center gap-1">
+        <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <MdOutlineRemoveRedEye />
           <div>Views: {question?.views}</div>
         </div>
-        <p className="text-gray-500 text-sm flex items-center gap-1">
+        <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <FiMessageSquare />
           Answers: {allAnswers?.length}
         </p>
       </div>
 
       <ParseHTML code={question?.content || ''}></ParseHTML>
-      <div className="my-8 font-semibold text-lg  p-2 rounded-full w-fit text-green-800">
+      <div className="my-8 font-semibold text-lg  p-2 rounded-full w-fit text-green-800 dark:text-green-300">
         {allAnswers?.length} Answers
       </div>
       {/* render all the answers here */}

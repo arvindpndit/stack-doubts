@@ -3,13 +3,13 @@ import {
   getQuestionsByAuthorId,
   getSearchQuestions,
   questionsAnsweredByAuthor,
-} from "@/lib/actions/question.action";
-import { getAllSavedQuestions, getUserById } from "@/lib/actions/user.action";
-import Link from "next/link";
-import { CiClock2 } from "react-icons/ci";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FiMessageSquare } from "react-icons/fi";
-import { FaRegThumbsUp } from "react-icons/fa6";
+} from '@/lib/actions/question.action';
+import { getAllSavedQuestions, getUserById } from '@/lib/actions/user.action';
+import Link from 'next/link';
+import { CiClock2 } from 'react-icons/ci';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import { FiMessageSquare } from 'react-icons/fi';
+import { FaRegThumbsUp } from 'react-icons/fa6';
 
 interface QuestionCardProps {
   searchQuestionQuery?: string | undefined;
@@ -20,14 +20,14 @@ interface QuestionCardProps {
 const QuestionCard = async (params: QuestionCardProps) => {
   const { filter, mongoUser, searchQuestionQuery } = params;
 
-  if (filter == "savedQuestions") {
+  if (filter == 'savedQuestions') {
     var questions = await getAllSavedQuestions({
       mongoUser,
       searchQuestionQuery,
     });
-  } else if (filter == "questionAskedByAuthor") {
+  } else if (filter == 'questionAskedByAuthor') {
     var questions = await getQuestionsByAuthorId(mongoUser);
-  } else if (filter == "questionsAnsweredByAuthor") {
+  } else if (filter == 'questionsAnsweredByAuthor') {
     var questions = await questionsAnsweredByAuthor(mongoUser);
   } else {
     if (searchQuestionQuery === undefined) {
@@ -41,13 +41,13 @@ const QuestionCard = async (params: QuestionCardProps) => {
     <div className="mb-16 md:mb-10">
       {questions?.reverse().map(async (question, index) => {
         const authorId = await getUserById({
-          key: "_id",
+          key: '_id',
           value: question.author,
         });
 
         return (
           <Link key={index} href={`/question-details/${question._id}`}>
-            <div className=" p-4 rounded-3xl bg-gray-50 shadow-md my-5 md:my-8 cursor-pointer">
+            <div className=" p-4 rounded-3xl bg-gray-50 dark:bg-gray-700 shadow-md my-5 md:my-8 cursor-pointer">
               <h1 className="text-xl font-semibold">{question.title}</h1>
               <div className="flex space-x-2 mt-2">
                 {question.tags &&
@@ -73,7 +73,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
                       {authorId?.name}
                     </div>
                   </div>
-                  <div className=" text-gray-500 text-sm flex items-center gap-1">
+                  <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
                     <CiClock2 />
                     <span>
                       asked on {question?.createdAt.toLocaleDateString()}
@@ -86,7 +86,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
                     <FaRegThumbsUp />
                     <div>{question?.upvotes?.length} Votes</div>
                   </div>
-                  <p className="text-gray-500 text-sm flex items-center gap-1">
+                  <p className="text-gray-500  dark:text-gray-400 text-sm flex items-center gap-1">
                     <FiMessageSquare />
                     {question?.answers?.length} Answers
                   </p>
@@ -105,3 +105,4 @@ const QuestionCard = async (params: QuestionCardProps) => {
 };
 
 export default QuestionCard;
+
