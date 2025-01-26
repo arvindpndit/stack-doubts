@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useDebouncedCallback } from "use-debounce";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from 'use-debounce';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import Image from "next/image";
-import searchIcon from "../../public/assets/icons/search.svg";
+import Image from 'next/image';
+import searchIcon from '../../public/assets/icons/search.svg';
 
 interface localSearchBarProps {
   placeholder: string;
@@ -19,9 +19,9 @@ const LocalSearchBar = ({ placeholder }: localSearchBarProps) => {
     {
       const params = new URLSearchParams(searchParams);
       if (term) {
-        params.set("query", term);
+        params.set('query', term);
       } else {
-        params.delete("query");
+        params.delete('query');
       }
       replace(`${pathname}?${params.toString()}`);
     }
@@ -30,12 +30,12 @@ const LocalSearchBar = ({ placeholder }: localSearchBarProps) => {
   return (
     <div className="relative flex items-center mt-6">
       <input
-        className="w-full h-12 px-4 py-2 bg-gray-50 rounded-full border border-gray-300 focus:outline-none"
+        className="w-full h-12 px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600  focus:outline-none"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
-        defaultValue={searchParams.get("query")?.toString()}
+        defaultValue={searchParams.get('query')?.toString()}
       />
       <Image
         src={searchIcon}
@@ -49,3 +49,4 @@ const LocalSearchBar = ({ placeholder }: localSearchBarProps) => {
 };
 
 export default LocalSearchBar;
+

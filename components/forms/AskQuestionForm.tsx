@@ -85,14 +85,14 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full bg-white px-1 py-3 md:px-8 md:py-8 "
+          className="w-full px-1 py-3 md:px-8 md:py-8 "
         >
           <FormField
             control={form.control}
             name="question"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="block text-sm font-medium text-gray-700">
+                <FormLabel className="block text-sm font-medium ">
                   Question Title *
                 </FormLabel>
                 <FormControl className="mt-1">
@@ -100,7 +100,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     type="text"
                     placeholder="Type your question here"
                     {...field}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-full shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                   />
                 </FormControl>
                 <FormDescription className="text-xs text-gray-500">

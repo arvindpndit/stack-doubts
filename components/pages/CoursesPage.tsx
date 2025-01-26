@@ -9,7 +9,7 @@ const CoursesPage = ({ playlists }: any) => {
         {playlists.map((playlist: any) => (
           <div
             key={playlist.id}
-            className=" border p-2 bg-gray-50 rounded-2xl overflow-hidden grid md:grid-cols-2"
+            className=" border dark:border-gray-600  p-2 bg-gray-50 dark:bg-gray-700 rounded-2xl overflow-hidden grid md:grid-cols-2"
           >
             {playlist.snippet.thumbnails && (
               <div className="relative ">

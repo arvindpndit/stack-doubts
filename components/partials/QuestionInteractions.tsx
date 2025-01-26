@@ -1,15 +1,15 @@
-"use client";
+'use client';
 import {
   downvoteQuestion,
   saveTheQuestion,
   upvoteQuestion,
-} from "@/lib/actions/user.action";
-import React, { useEffect, useState } from "react";
-import { FaRegStar, FaStar } from "react-icons/fa";
-import { BiUpvote, BiDownvote } from "react-icons/bi";
-import { usePathname } from "next/navigation";
-import { IUser } from "@/database/user-model";
-import { questionSchema } from "@/lib/schema";
+} from '@/lib/actions/user.action';
+import React, { useEffect, useState } from 'react';
+import { FaRegStar, FaStar } from 'react-icons/fa';
+import { BiUpvote, BiDownvote } from 'react-icons/bi';
+import { usePathname } from 'next/navigation';
+import { IUser } from '@/database/user-model';
+import { questionSchema } from '@/lib/schema';
 
 interface QuestionInteractionProps {
   question: string;
@@ -20,7 +20,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
   const { question, userId } = params;
   const pathname = usePathname();
   const [questionSavedStatus, setQuestionSavedStatus] = useState<IUser | null>(
-    null
+    null,
   );
 
   const questionObj = JSON.parse(question);
@@ -72,7 +72,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       >
         <BiUpvote />
       </button>
-      <div className="px-1 text-xs mr-2 bg-slate-300 rounded-sm">
+      <div className="px-1 text-xs mr-2 bg-slate-300 dark:bg-slate-600 rounded-sm">
         {questionObj?.upvotes?.length}
       </div>
       <button
@@ -81,7 +81,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       >
         <BiDownvote />
       </button>
-      <div className="px-1 mr-2 text-xs bg-slate-300 rounded-sm">
+      <div className="px-1 mr-2 text-xs bg-slate-300 dark:bg-slate-600 rounded-sm">
         {questionObj?.downvotes?.length}
       </div>
 
@@ -96,3 +96,4 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
 };
 
 export default QuestionInteractions;
+

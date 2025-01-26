@@ -1,21 +1,21 @@
-"use client";
-import React, { useRef } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { answerSchema } from "@/lib/schema";
-import z from "zod";
-import { Editor } from "@tinymce/tinymce-react";
+'use client';
+import React, { useRef } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { answerSchema } from '@/lib/schema';
+import z from 'zod';
+import { Editor } from '@tinymce/tinymce-react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { usePathname, useRouter } from "next/navigation";
-import { createAnswer } from "@/lib/actions/answer.action";
+} from '@/components/ui/form';
+import { usePathname, useRouter } from 'next/navigation';
+import { createAnswer } from '@/lib/actions/answer.action';
 
 interface Props {
   id: string;
@@ -31,7 +31,7 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
   const form = useForm<z.infer<typeof answerSchema>>({
     resolver: zodResolver(answerSchema),
     defaultValues: {
-      content: "",
+      content: '',
     },
   });
 
@@ -46,20 +46,17 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
       });
       if (editorRef.current) {
         // @ts-ignore
-        editorRef.current.setContent("");
+        editorRef.current.setContent('');
       }
     } catch (error) {
-      console.error("Error creating answer:", error);
+      console.error('Error creating answer:', error);
     }
   }
 
   return (
     <div className="">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full bg-white "
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full ">
           {/* answer */}
           <FormField
             control={form.control}
@@ -80,28 +77,28 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
                       height: 350,
                       menubar: false,
                       plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "codesample",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
+                        'advlist',
+                        'autolink',
+                        'lists',
+                        'link',
+                        'image',
+                        'charmap',
+                        'preview',
+                        'anchor',
+                        'searchreplace',
+                        'visualblocks',
+                        'codesample',
+                        'fullscreen',
+                        'insertdatetime',
+                        'media',
+                        'table',
                       ],
                       toolbar:
-                        "undo redo | " +
-                        "codesample | bold italic forecolor | alignleft aligncenter |" +
-                        "alignright alignjustify | bullist numlist",
+                        'undo redo | ' +
+                        'codesample | bold italic forecolor | alignleft aligncenter |' +
+                        'alignright alignjustify | bullist numlist',
                       content_style:
-                        "body { font-family:Inter; font-size:16px }",
+                        'body { font-family:Inter; font-size:16px }',
                     }}
                   />
                 </FormControl>
@@ -126,3 +123,4 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
 };
 
 export default AnswerForm;
+
