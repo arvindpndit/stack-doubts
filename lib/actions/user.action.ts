@@ -1,14 +1,14 @@
-"use server";
-import User from "@/database/user-model";
-import { connectToMongoDb } from "../mongoose";
+'use server';
+import User from '@/database/user-model';
+import { connectToMongoDb } from '../mongoose';
 import {
   CreateUserParams,
   DeleteUserParams,
   UpdateUserParams,
   voteTheQuestionParams,
-} from "./shared.types";
-import { revalidatePath } from "next/cache";
-import Question from "@/database/question-model";
+} from './shared.types';
+import { revalidatePath } from 'next/cache';
+import Question from '@/database/question-model';
 
 export async function getUserById(params: { key: string; value: any }) {
   try {
@@ -74,7 +74,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
           { $push: { saved: questionId } },
           {
             new: true,
-          }
+          },
         );
         revalidatePath(path);
         return res; //obj
@@ -84,7 +84,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
           { $pull: { saved: questionId } },
           {
             new: true,
-          }
+          },
         );
 
         revalidatePath(path);
@@ -111,18 +111,22 @@ export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
     if (searchQuestionQuery === undefined) {
       const questions = await Question.find({
         _id: { $in: savedQuestion },
-      });
+      })
+        .populate('author', 'name picture')
+        .exec();
       return questions;
     } else {
       const questions = await Question.find({
         _id: { $in: savedQuestion },
-        title: { $regex: searchQuestionQuery, $options: "i" },
-      });
+        title: { $regex: searchQuestionQuery, $options: 'i' },
+      })
+        .populate('author', 'name picture')
+        .exec();
       return questions;
     }
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
 
@@ -142,7 +146,7 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
         { $pull: { downvotes: authorId }, $push: { upvotes: authorId } },
         {
           new: true,
-        }
+        },
       );
       revalidatePath(path);
 
@@ -151,7 +155,7 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
 
     const removeUpvote = await Question.updateOne(
       { _id: questionId },
-      { $pull: { upvotes: authorId } }
+      { $pull: { upvotes: authorId } },
     );
 
     return;
@@ -177,7 +181,7 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
         { $pull: { upvotes: authorId }, $push: { downvotes: authorId } },
         {
           new: true,
-        }
+        },
       );
       revalidatePath(path);
       return question;
@@ -185,7 +189,7 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
 
     const removeUpvote = await Question.updateOne(
       { _id: questionId },
-      { $pull: { upvotes: authorId } }
+      { $pull: { upvotes: authorId } },
     );
 
     return;
@@ -201,7 +205,7 @@ export async function deleteUser(params: DeleteUserParams) {
     const { clerkId } = params;
     const user = await User.findOneAndDelete({ clerkId });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     await Question.deleteMany({ author: user._id });
 
@@ -232,14 +236,15 @@ export async function getSearchUsers(searchUserQuery: string) {
 
     const users = await User.find({
       $or: [
-        { name: { $regex: searchUserQuery, $options: "i" } },
-        { username: { $regex: searchUserQuery, $options: "i" } },
+        { name: { $regex: searchUserQuery, $options: 'i' } },
+        { username: { $regex: searchUserQuery, $options: 'i' } },
       ],
     });
 
     return users;
   } catch (error) {
-    console.error("Error fetching users:", error);
-    throw new Error("Failed to fetch users");
+    console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
   }
 }
+

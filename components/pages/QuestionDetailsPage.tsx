@@ -18,22 +18,20 @@ interface Props {
 
 const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
-  const allAnswers = await getAnswersByQuestionId({ questionId: id });
-  const authorId = await getUserById({
-    key: '_id',
-    value: question?.author,
-  });
+  //const allAnswers = await getAnswersByQuestionId({ questionId: id });
 
   return (
     <div className="mt-8 pb-24 lg:pb-14">
       <div className="flex justify-between mb-2">
         <div className="flex items-center justify-center">
           <img
-            src={authorId?.picture}
+            src={question?.author?.picture}
             className="h-6 mr-2 rounded-full"
-            alt={`Profile of ${authorId?.name}`}
+            alt={`Profile of ${question?.author?.name}`}
           />
-          <div className="text-lg font-semibold mr-4">{authorId?.name}</div>
+          <div className="text-lg font-semibold mr-4">
+            {question?.author?.name}
+          </div>
         </div>
         <QuestionInteractions
           userId={mongoUserId}
@@ -45,7 +43,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       <div className="mt-4 flex gap-4">
         <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <CiClock2 />
-          <div>asked on {question?.createdAt.toLocaleDateString()}</div>
+          <div>asked on {question?.createdAt?.toLocaleDateString()}</div>
         </div>
         <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <MdOutlineRemoveRedEye />
@@ -53,23 +51,25 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
         </div>
         <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <FiMessageSquare />
-          Answers: {allAnswers?.length}
+          Answers: {question?.answers?.length}
         </p>
       </div>
 
       <ParseHTML code={question?.content || ''}></ParseHTML>
       <div className="my-8 font-semibold text-lg  p-2 rounded-full w-fit text-green-800 dark:text-green-300">
-        {allAnswers?.length} Answers
+        {question?.answers?.length} Answers
       </div>
       {/* render all the answers here */}
-      {allAnswers.map(async (answer) => {
+      {question?.answers?.map(async (answer) => {
+        //TODO: find alternative to get the author of the answer
+        //so that we can reduce the no. of db calls if there are many answers
         const authorId = await getUserById({
           key: '_id',
           value: answer?.author,
         });
 
         return (
-          <div className="mb-8">
+          <div key={answer?._id} className="mb-8">
             <div className="flex gap-2">
               <img src={authorId?.picture} className="h-5 rounded-full" />
               <div className="font-medium text-sm">{authorId?.name}</div>
@@ -77,7 +77,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
                 ‣ answered on {answer?.createdAt.toLocaleDateString()}
               </div>
             </div>
-            <ParseHTML code={answer.content} />
+            <ParseHTML code={answer?.content} />
           </div>
         );
       })}
