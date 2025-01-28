@@ -1,11 +1,12 @@
-"use server";
+'use server';
 
-import Question, { IQuestion } from "@/database/question-model";
-import { connectToMongoDb } from "../mongoose";
-import { Document, Types } from "mongoose";
-import { CreateQuestionParams } from "./shared.types";
-import { revalidatePath } from "next/cache";
-import Answer from "@/database/answer-model";
+import Question, { IQuestion } from '@/database/question-model';
+import { connectToMongoDb } from '../mongoose';
+import { Document, Types } from 'mongoose';
+import { CreateQuestionParams } from './shared.types';
+import { revalidatePath } from 'next/cache';
+import Answer from '@/database/answer-model';
+import path from 'path';
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
@@ -31,26 +32,31 @@ export async function getSearchQuestions(searchQuestionQuery: string) {
 
     const questions = await Question.find({
       $or: [
-        { title: { $regex: searchQuestionQuery, $options: "i" } },
-        { content: { $regex: searchQuestionQuery, $options: "i" } },
+        { title: { $regex: searchQuestionQuery, $options: 'i' } },
+        { content: { $regex: searchQuestionQuery, $options: 'i' } },
       ],
-    });
+    })
+      .populate('author', 'name picture')
+      .exec();
 
     return questions;
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
 
 export async function getAllQuestions() {
   try {
     await connectToMongoDb();
-    const questions = await Question.find();
+    const questions = await Question.find()
+      .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
+      .exec();
+
     return questions;
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
 
@@ -66,23 +72,29 @@ export async function getQuestionById(id: string) {
       },
       {
         new: true,
-      }
-    );
+      },
+    )
+      .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
+      .populate('answers') // Populate the 'answers' field (full answer documents)
+      // .populate('answers.author', 'name picture') // Populate the 'author' inside each answer with 'name' and 'picture'
+      .exec();
     return question;
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
 
 export async function getQuestionsByAuthorId(id: string) {
   try {
     await connectToMongoDb();
-    const questions = await Question.find({ author: id });
+    const questions = await Question.find({ author: id })
+      .populate('author', 'name picture')
+      .exec();
     return questions;
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
 
@@ -95,19 +107,21 @@ export async function questionsAnsweredByAuthor(id: string) {
     const questionIds = answers.reduce(
       //@ts-ignore
       (ids, answer) => ids.concat(answer?.question),
-      []
+      [],
     );
 
     // Remove duplicate question IDs
     const uniqueQuestionIds = Array.from(new Set(questionIds));
 
     // Use Mongoose to find the questions based on their IDs
-    const questions = await Question.find({ _id: { $in: uniqueQuestionIds } });
+    const questions = await Question.find({ _id: { $in: uniqueQuestionIds } })
+      .populate('author', 'name picture')
+      .exec();
 
     return questions;
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
 
@@ -119,7 +133,8 @@ export async function getTopQuestions() {
       .limit(5);
     return topQuestions;
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    throw new Error("Failed to fetch questions");
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
   }
 }
+

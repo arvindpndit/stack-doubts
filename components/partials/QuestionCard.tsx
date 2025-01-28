@@ -26,25 +26,20 @@ const QuestionCard = async (params: QuestionCardProps) => {
       searchQuestionQuery,
     });
   } else if (filter == 'questionAskedByAuthor') {
-    var questions = await getQuestionsByAuthorId(mongoUser);
+    questions = await getQuestionsByAuthorId(mongoUser);
   } else if (filter == 'questionsAnsweredByAuthor') {
-    var questions = await questionsAnsweredByAuthor(mongoUser);
+    questions = await questionsAnsweredByAuthor(mongoUser);
   } else {
     if (searchQuestionQuery === undefined) {
-      var questions = await getAllQuestions();
+      questions = await getAllQuestions();
     } else {
-      var questions = await getSearchQuestions(searchQuestionQuery);
+      questions = await getSearchQuestions(searchQuestionQuery);
     }
   }
 
   return (
     <div className="mb-16 md:mb-10">
       {questions?.reverse().map(async (question, index) => {
-        const authorId = await getUserById({
-          key: '_id',
-          value: question.author,
-        });
-
         return (
           <Link key={index} href={`/question-details/${question._id}`}>
             <div className=" p-4 rounded-3xl bg-gray-50 dark:bg-gray-700 shadow-md my-5 md:my-8 cursor-pointer">
@@ -65,12 +60,12 @@ const QuestionCard = async (params: QuestionCardProps) => {
                 <div className="flex items-center justify-between mr-4">
                   <div className="flex items-center justify-center">
                     <img
-                      src={authorId?.picture}
+                      src={question?.author?.picture}
                       className="h-8 mr-2 rounded-full"
-                      alt={`Profile of ${authorId?.name}`}
+                      alt={`Profile of ${question?.author?.name}`}
                     />
                     <div className="text-sm font-semibold mr-4">
-                      {authorId?.name}
+                      {question?.author?.name}
                     </div>
                   </div>
                   <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
