@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form';
 import { usePathname, useRouter } from 'next/navigation';
 import { createAnswer } from '@/lib/actions/answer.action';
+import { useTheme } from 'next-themes';
 
 interface Props {
   id: string;
@@ -26,6 +27,7 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof answerSchema>>({
@@ -65,6 +67,7 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
               <FormItem className="w-full">
                 <FormControl className="mt-3.5">
                   <Editor
+                    key={theme}
                     apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
                     onInit={(evt, editor) => {
                       // @ts-ignore
@@ -97,8 +100,18 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
                         'undo redo | ' +
                         'codesample | bold italic forecolor | alignleft aligncenter |' +
                         'alignright alignjustify | bullist numlist',
-                      content_style:
-                        'body { font-family:Inter; font-size:16px }',
+                      skin: theme === 'dark' ? 'oxide-dark' : 'oxide',
+                      content_css: theme === 'dark' ? 'dark' : 'default',
+                      content_style: `
+                        body { 
+                          background-color: ${
+                            theme === 'dark' ? '#1e293b' : '#ffffff'
+                          }; 
+                          color: ${theme === 'dark' ? '#f8fafc' : '#1e293b'}; 
+                          font-family: 'Inter', sans-serif;
+                          padding: 10px;
+                        }
+                      `,
                     }}
                   />
                 </FormControl>
