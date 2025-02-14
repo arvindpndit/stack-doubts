@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { questionSchema } from '@/lib/schema';
@@ -19,6 +19,7 @@ import {
 import Input from '../ui/input';
 import { createQuestion } from '@/lib/actions/question.action';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 interface Props {
   mongoUserId: string;
@@ -28,6 +29,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
@@ -126,6 +128,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                 </FormLabel>
                 <FormControl className="mt-3.5">
                   <Editor
+                    key={theme}
                     apiKey={process.env.NEXT_PUBLIC_TINY_URL_API_KEY}
                     onInit={(evt, editor) => {
                       // @ts-ignore
@@ -158,8 +161,18 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                         'undo redo | ' +
                         'codesample | bold italic forecolor | alignleft aligncenter |' +
                         'alignright alignjustify | bullist numlist',
-                      content_style:
-                        'body { font-family:Inter; font-size:16px }',
+                      skin: theme === 'dark' ? 'oxide-dark' : 'oxide',
+                      content_css: theme === 'dark' ? 'dark' : 'default',
+                      content_style: `
+                        body { 
+                          background-color: ${
+                            theme === 'dark' ? '#1e293b' : '#ffffff'
+                          }; 
+                          color: ${theme === 'dark' ? '#f8fafc' : '#1e293b'}; 
+                          font-family: 'Inter', sans-serif;
+                          padding: 10px;
+                        }
+                      `,
                     }}
                   />
                 </FormControl>
