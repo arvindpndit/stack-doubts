@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
   if (resolvedTheme === 'dark') {
     return (
       <FiSun
-        className="text-4xl lg:text-3xl hover:cursor-pointer"
+        className="text-3xl hover:cursor-pointer"
         onClick={() => setTheme('light')}
       />
     );
@@ -25,7 +25,7 @@ const ThemeSwitcher = () => {
   if (resolvedTheme === 'light') {
     return (
       <FiMoon
-        className="text-4xl lg:text-3xl hover:cursor-pointer"
+        className="text-3xl hover:cursor-pointer"
         onClick={() => setTheme('dark')}
       />
     );

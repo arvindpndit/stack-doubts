@@ -74,9 +74,14 @@ export async function getQuestionById(id: string) {
         new: true,
       },
     )
-      .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
-      .populate('answers') // Populate the 'answers' field (full answer documents)
-      // .populate('answers.author', 'name picture') // Populate the 'author' inside each answer with 'name' and 'picture'
+      .populate('author', 'name picture') // Populate the 'author' of the question
+      .populate({
+        path: 'answers',
+        populate: {
+          path: 'author',
+          select: 'name picture',
+        },
+      })
       .exec();
     return question;
   } catch (error) {
