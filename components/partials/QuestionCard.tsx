@@ -38,7 +38,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
   }
 
   return (
-    <div className="mb-16 md:mb-10">
+    <div className="mt-8 pb-16 md:pb-10 mb-16 md:mb-10">
       {questions?.reverse().map(async (question, index) => {
         return (
           <Link key={index} href={`/question-details/${question._id}`}>

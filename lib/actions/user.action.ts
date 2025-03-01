@@ -230,6 +230,20 @@ export async function getAllUsers() {
   }
 }
 
+export async function getMostReputedUser() {
+  try {
+    await connectToMongoDb();
+    const mostReputedUser = await User.findOne()
+      .sort({ reputation: -1 })
+      .limit(1)
+      .exec();
+    return mostReputedUser;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw new Error('Failed to fetch user');
+  }
+}
+
 export async function getSearchUsers(searchUserQuery: string) {
   try {
     await connectToMongoDb();

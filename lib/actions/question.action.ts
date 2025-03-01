@@ -1,24 +1,25 @@
 'use server';
 
-import Question, { IQuestion } from '@/database/question-model';
+import Question from '@/database/question-model';
 import { connectToMongoDb } from '../mongoose';
-import { Document, Types } from 'mongoose';
 import { CreateQuestionParams } from './shared.types';
 import { revalidatePath } from 'next/cache';
 import Answer from '@/database/answer-model';
-import path from 'path';
+import User from '@/database/user-model';
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToMongoDb();
     const { title, content, tags, path, author } = params;
-    const question = await Question.create({
+    await Question.create({
       title,
       content,
       tags,
       path,
       author,
     });
+
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 
     revalidatePath(path);
   } catch (error) {
