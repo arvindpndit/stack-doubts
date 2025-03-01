@@ -12,7 +12,6 @@ interface Props {
 }
 
 const CollectionsPage = async ({ searchQuestionQuery }: Props) => {
-  console.log(searchQuestionQuery);
   const { userId } = auth();
   if (!userId) redirect('/sign-in');
   const mongoUser = await getUserById({ key: 'clerkId', value: userId });

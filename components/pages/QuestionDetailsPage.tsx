@@ -2,14 +2,10 @@ import { getQuestionById } from '@/lib/actions/question.action';
 import React from 'react';
 import ParseHTML from '../partials/ParseHtml';
 import AnswerForm from '../forms/AnswerForm';
-import { BiUpvote, BiDownvote } from 'react-icons/bi';
 import { CiClock2, CiStar } from 'react-icons/ci';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { FiMessageSquare } from 'react-icons/fi';
-import { getAnswersByQuestionId } from '@/lib/actions/answer.action';
-import { getUserById, saveTheQuestion } from '@/lib/actions/user.action';
 import QuestionInteractions from '../partials/QuestionInteractions';
-import Image from 'next/image';
 
 interface Props {
   id: string;
@@ -18,8 +14,6 @@ interface Props {
 
 const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
-  //const allAnswers = await getAnswersByQuestionId({ questionId: id });
-
   return (
     <div className="mt-8 pb-24 lg:pb-14">
       <div className="flex justify-between mb-2">
@@ -61,18 +55,13 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
       {/* render all the answers here */}
       {question?.answers?.map(async (answer) => {
-        //TODO: find alternative to get the author of the answer
-        //so that we can reduce the no. of db calls if there are many answers
-        const authorId = await getUserById({
-          key: '_id',
-          value: answer?.author,
-        });
-
         return (
           <div key={answer?._id} className="mb-8">
             <div className="flex gap-2">
-              <img src={authorId?.picture} className="h-5 rounded-full" />
-              <div className="font-medium text-sm">{authorId?.name}</div>
+              {/* @ts-ignore */}
+              <img src={answer?.author?.picture} className="h-5 rounded-full" />
+              {/* @ts-ignore */}
+              <div className="font-medium text-sm">{answer.author?.name}</div>
               <div className="text-gray-500 text-sm">
                 ‣ answered on {answer?.createdAt.toLocaleDateString()}
               </div>
