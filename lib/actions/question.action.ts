@@ -94,10 +94,12 @@ export async function getQuestionById(id: string) {
 export async function getQuestionsByAuthorId(id: string) {
   try {
     await connectToMongoDb();
-    const questions = await Question.find({ author: id })
-      .populate('author', 'name picture')
-      .exec();
-    return questions;
+    const [questions, totalQuestions] = await Promise.all([
+      Question.find({ author: id }).populate('author', 'name picture').exec(),
+      Question.countDocuments({ author: id }),
+    ]);
+
+    return { questions, totalQuestions };
   } catch (error) {
     console.error('Error fetching questions:', error);
     throw new Error('Failed to fetch questions');
@@ -120,11 +122,14 @@ export async function questionsAnsweredByAuthor(id: string) {
     const uniqueQuestionIds = Array.from(new Set(questionIds));
 
     // Use Mongoose to find the questions based on their IDs
-    const questions = await Question.find({ _id: { $in: uniqueQuestionIds } })
-      .populate('author', 'name picture')
-      .exec();
+    const [totalQuestionsAnswered, questions] = await Promise.all([
+      Question.countDocuments({ _id: { $in: uniqueQuestionIds } }),
+      Question.find({ _id: { $in: uniqueQuestionIds } })
+        .populate('author', 'name picture')
+        .exec(),
+    ]);
 
-    return questions;
+    return { totalQuestionsAnswered, questions };
   } catch (error) {
     console.error('Error fetching questions:', error);
     throw new Error('Failed to fetch questions');
