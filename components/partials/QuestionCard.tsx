@@ -44,14 +44,15 @@ const QuestionCard = async (params: QuestionCardProps) => {
           <Link key={index} href={`/question-details/${question._id}`}>
             <div className=" p-4 rounded-3xl bg-gray-50 dark:bg-gray-700 shadow-md my-5 md:my-8 cursor-pointer">
               <h1 className="text-xl font-semibold">{question.title}</h1>
-              <div className="flex space-x-2 mt-2">
-                {question.tags &&
+              <div className="flex flex-wrap gap-2 mt-2 w-full">
+                {question?.tags &&
                   question.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-200 rounded-full text-sm"
+                      className="px-2.5 py-0.5 bg-orange-100 dark:bg-gray-600  text-orange-400 rounded-full text-sm"
                     >
-                      {tag.toString()}
+                      {/* @ts-ignore */}
+                      {tag?.name}
                     </span>
                   ))}
               </div>

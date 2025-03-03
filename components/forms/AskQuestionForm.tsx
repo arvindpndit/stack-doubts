@@ -107,7 +107,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
             name="question"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="block text-sm font-medium ">
+                <FormLabel className="block text-sm font-medium text-black dark:text-gray-200">
                   Question Title *
                 </FormLabel>
                 <FormControl className="mt-1">
@@ -135,7 +135,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
             name="explanation"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
-                <FormLabel className="paragraph-semibold text-dark400_light800">
+                <FormLabel className="paragraph-semibold text-black dark:text-gray-200">
                   Detailed explanation of your problem{' '}
                   <span className="text-primary-500">*</span>
                 </FormLabel>
@@ -189,7 +189,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     }}
                   />
                 </FormControl>
-                <FormDescription className="body-regular mt-2.5 text-light-500">
+                <FormDescription className="text-xs text-gray-500">
                   Introduce the problem and expand on what you put in the title.
                   Minimum 20 characters.
                 </FormDescription>
@@ -206,7 +206,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
             name="tags"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col">
-                <FormLabel className="paragraph-semibold text-dark400_light800">
+                <FormLabel className="paragraph-semibold text-black dark:text-gray-200">
                   Tags <span className="text-primary-500">*</span>
                 </FormLabel>
                 <FormControl className="mt-3.5">
@@ -221,7 +221,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                   {field.value.map((tag, index) => (
                     <div
                       key={index}
-                      className="flex items-center bg-orange-100 dark:bg-orange-800 px-2 py-1 rounded-full text-sm"
+                      className="flex items-center bg-orange-100 dark:bg-gray-600  text-orange-400  px-2.5 py-1 rounded-full text-sm"
                     >
                       {tag}
                       <button
@@ -240,10 +240,10 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     </div>
                   ))}
                 </div>
-                <FormDescription className="body-regular mt-2.5 text-light-500">
+                <FormDescription className="text-xs text-gray-500">
                   {/* Adding tags is disabled. This feature will be added in
                   upcoming release. */}
-                  Add up to tags to describe what your question is about. You
+                  Add up to 5 tags to describe what your question is about. You
                   need to press enter to add a tag.
                 </FormDescription>
                 <FormMessage className="text-red-500" />

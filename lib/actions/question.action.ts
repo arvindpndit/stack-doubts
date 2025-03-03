@@ -68,6 +68,7 @@ export async function getSearchQuestions(searchQuestionQuery: string) {
       ],
     })
       .populate('author', 'name picture')
+      .populate('tags', 'name')
       .exec();
 
     return questions;
@@ -82,8 +83,8 @@ export async function getAllQuestions() {
     await connectToMongoDb();
     const questions = await Question.find()
       .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
+      .populate('tags', 'name')
       .exec();
-
     return questions;
   } catch (error) {
     console.error('Error fetching questions:', error);
@@ -113,6 +114,7 @@ export async function getQuestionById(id: string) {
           select: 'name picture',
         },
       })
+      .populate('tags', 'name')
       .exec();
     return question;
   } catch (error) {
@@ -125,7 +127,10 @@ export async function getQuestionsByAuthorId(id: string) {
   try {
     await connectToMongoDb();
     const [questions, totalQuestions] = await Promise.all([
-      Question.find({ author: id }).populate('author', 'name picture').exec(),
+      Question.find({ author: id })
+        .populate('author', 'name picture')
+        .populate('tags', 'name')
+        .exec(),
       Question.countDocuments({ author: id }),
     ]);
 
@@ -156,6 +161,7 @@ export async function questionsAnsweredByAuthor(id: string) {
       Question.countDocuments({ _id: { $in: uniqueQuestionIds } }),
       Question.find({ _id: { $in: uniqueQuestionIds } })
         .populate('author', 'name picture')
+        .populate('tags', 'name')
         .exec(),
     ]);
 

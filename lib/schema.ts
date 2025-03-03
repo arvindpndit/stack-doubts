@@ -1,13 +1,15 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 export const questionSchema = z.object({
   question: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: 'Username must be at least 2 characters!',
   }),
   explanation: z.string().min(50, {
-    message: "Description must be at least 50 characters ",
+    message: 'Description must be at least 50 characters!',
   }),
-  tags: z.array(z.string()),
+  tags: z.array(z.string()).max(5, {
+    message: 'Cannot add more than 5 tags!',
+  }),
 });
 
 export const answerSchema = z.object({
@@ -16,32 +18,33 @@ export const answerSchema = z.object({
       // Extract visible text content inside <p></p> tags
       const pMatches = data.match(/<p>([^<]*)<\/p>/g) || [];
       const pContent = pMatches
-        .map((match) => match.replace(/<\/?[^>]+(>|$)/g, ""))
-        .join("")
+        .map((match) => match.replace(/<\/?[^>]+(>|$)/g, ''))
+        .join('')
         .trim();
 
       // Extract visible text content inside <pre><code></code></pre> tags
       const preMatches =
         data.match(
-          /<pre class="language-javascript"><code>(.*?)<\/code><\/pre>/g
+          /<pre class="language-javascript"><code>(.*?)<\/code><\/pre>/g,
         ) || [];
       const preContent = preMatches
         .map((match) =>
-          match.replace(/<\/?[^>]+(>|$)/g, "").replace(/\s+/g, " ")
+          match.replace(/<\/?[^>]+(>|$)/g, '').replace(/\s+/g, ' '),
         )
-        .join("")
+        .join('')
         .trim();
 
       // Concatenate the content from both <p> and <pre><code> tags
       const finalContent = pContent + preContent;
 
       // Count characters of visible text content while excluding &nbsp;
-      const count = finalContent.replace(/&nbsp;/g, "").length;
+      const count = finalContent.replace(/&nbsp;/g, '').length;
       // Validate against the minimum length
       return count >= 10;
     },
     {
-      message: "Answer must contain at least 10 characters",
-    }
+      message: 'Answer must contain at least 10 characters',
+    },
   ),
 });
+
