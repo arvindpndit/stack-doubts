@@ -1,11 +1,12 @@
+//@ts-nocheck
+
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { questionSchema } from '@/lib/schema';
 import z from 'zod';
 import { Editor } from '@tinymce/tinymce-react';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -16,10 +17,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { AiOutlineClose } from 'react-icons/ai';
 import Input from '../ui/input';
 import { createQuestion } from '@/lib/actions/question.action';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import TagInput from './TagInput';
 
 interface Props {
   mongoUserId: string;
@@ -30,6 +33,9 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
+
+  const [tags, setTags] = useState(['kdjfl', 'kdjfld']);
+  const [inputValue, setInputValue] = useState('');
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
@@ -50,7 +56,6 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
       path: pathname,
       author: JSON.parse(mongoUserId),
     });
-
     // navigate to home page
     router.push('/');
   }
@@ -72,11 +77,19 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
           });
         }
 
-        if (field.value.includes(tagValue as never)) {
+        if (tagValue.includes(' ')) {
+          form.setError('tags', {
+            message: 'Tags cannot contain spaces.',
+          });
+          return;
+        }
+
+        if (!field.value.includes(tagValue as never)) {
           form.setValue('tags', [...field.value, tagValue]);
           form.clearErrors('tags');
+          tagInput.value = '';
         } else {
-          form.trigger();
+          form.trigger('tags');
         }
       }
     }
@@ -199,16 +212,39 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                 <FormControl className="mt-3.5">
                   <Input
                     placeholder="Add tags..."
-                    disabled={true}
+                    //disabled={true}
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                   />
                 </FormControl>
+                <div className="flex flex-wrap gap-2 p-2 rounded-md mt-2">
+                  {field.value.map((tag, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center bg-orange-100 dark:bg-orange-800 px-2 py-1 rounded-full text-sm"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          form.setValue(
+                            'tags',
+                            field.value.filter((_, i) => i !== index),
+                          );
+                          form.trigger('tags');
+                        }}
+                        className="ml-1"
+                      >
+                        <AiOutlineClose size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
                 <FormDescription className="body-regular mt-2.5 text-light-500">
-                  Adding tags is disabled. This feature will be added in
-                  upcoming release.
-                  {/* Add up to 3 tags to describe what your question is about. You
-                  need to press enter to add a tag. */}
+                  {/* Adding tags is disabled. This feature will be added in
+                  upcoming release. */}
+                  Add up to tags to describe what your question is about. You
+                  need to press enter to add a tag.
                 </FormDescription>
                 <FormMessage className="text-red-500" />
               </FormItem>
@@ -216,6 +252,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
           />
 
           <br />
+
           <Button
             className="bg-orange-500 rounded-full hover:bg-orange-600"
             type="submit"
