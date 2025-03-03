@@ -6,24 +6,54 @@ import { CreateQuestionParams } from './shared.types';
 import { revalidatePath } from 'next/cache';
 import Answer from '@/database/answer-model';
 import User from '@/database/user-model';
+import Tag from '@/database/tag-model';
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
-    connectToMongoDb();
-    const { title, content, tags, path, author } = params;
-    await Question.create({
+    await connectToMongoDb();
+    const { title, content, tags: tagNames, path, author } = params;
+    const tagIds = [];
+
+    // Process each tag
+    for (const tagName of tagNames) {
+      // Check if tag already exists
+      let tag = await Tag.findOne({ name: tagName.toLowerCase() });
+
+      if (!tag) {
+        // Create new tag if it doesn't exist
+        tag = await Tag.create({
+          name: tagName.toLowerCase(),
+          description: `Questions about ${tagName}`,
+          followers: [],
+          questions: [],
+        });
+      }
+
+      // Add tag ID to our array
+      tagIds.push(tag._id);
+    }
+
+    // Create the question with tag IDs
+    const question = await Question.create({
       title,
       content,
-      tags,
-      path,
+      tags: tagIds,
       author,
     });
 
+    // Update each tag to include this question
+    await Tag.updateMany(
+      { _id: { $in: tagIds } },
+      { $addToSet: { questions: question._id } },
+    );
+
+    // Update user reputation
     await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
+    throw new Error('Failed to create question');
   }
 }
 
