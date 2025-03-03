@@ -26,9 +26,9 @@ const QuestionCard = async (params: QuestionCardProps) => {
       searchQuestionQuery,
     });
   } else if (filter == 'questionAskedByAuthor') {
-    questions = await getQuestionsByAuthorId(mongoUser);
+    var { questions } = await getQuestionsByAuthorId(mongoUser);
   } else if (filter == 'questionsAnsweredByAuthor') {
-    questions = await questionsAnsweredByAuthor(mongoUser);
+    var { questions } = await questionsAnsweredByAuthor(mongoUser);
   } else {
     if (searchQuestionQuery === undefined) {
       questions = await getAllQuestions();
