@@ -2,6 +2,7 @@ import {
   getAllQuestions,
   getQuestionsByAuthorId,
   getSearchQuestions,
+  getSearchTagQuestions,
   questionsAnsweredByAuthor,
 } from '@/lib/actions/question.action';
 import { getAllSavedQuestions, getUserById } from '@/lib/actions/user.action';
@@ -10,31 +11,44 @@ import { CiClock2 } from 'react-icons/ci';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { FiMessageSquare } from 'react-icons/fi';
 import { FaRegThumbsUp } from 'react-icons/fa6';
+import { getQuestionsbyTag } from '@/lib/actions/question.action';
 
 interface QuestionCardProps {
   searchQuestionQuery?: string | undefined;
   filter?: string;
   mongoUser?: any;
+  tagId?: string | undefined;
 }
 
 const QuestionCard = async (params: QuestionCardProps) => {
-  const { filter, mongoUser, searchQuestionQuery } = params;
+  const { filter, mongoUser, searchQuestionQuery, tagId } = params;
 
-  if (filter == 'savedQuestions') {
-    var questions = await getAllSavedQuestions({
-      mongoUser,
-      searchQuestionQuery,
-    });
-  } else if (filter == 'questionAskedByAuthor') {
-    var { questions } = await getQuestionsByAuthorId(mongoUser);
-  } else if (filter == 'questionsAnsweredByAuthor') {
-    var { questions } = await questionsAnsweredByAuthor(mongoUser);
-  } else {
-    if (searchQuestionQuery === undefined) {
-      questions = await getAllQuestions();
-    } else {
-      questions = await getSearchQuestions(searchQuestionQuery);
-    }
+  let questions;
+
+  switch (filter) {
+    case 'savedQuestions':
+      questions = await getAllSavedQuestions({
+        mongoUser,
+        searchQuestionQuery,
+      });
+      break;
+    case 'questionAskedByAuthor':
+      ({ questions } = await getQuestionsByAuthorId(mongoUser));
+      break;
+    case 'questionsAnsweredByAuthor':
+      ({ questions } = await questionsAnsweredByAuthor(mongoUser));
+      break;
+    case 'questionsByTag':
+      questions =
+        searchQuestionQuery === undefined
+          ? await getQuestionsbyTag(tagId)
+          : await getSearchTagQuestions(tagId, searchQuestionQuery);
+      break;
+    default:
+      questions =
+        searchQuestionQuery === undefined
+          ? await getAllQuestions()
+          : await getSearchQuestions(searchQuestionQuery);
   }
 
   return (
@@ -44,14 +58,15 @@ const QuestionCard = async (params: QuestionCardProps) => {
           <Link key={index} href={`/question-details/${question._id}`}>
             <div className=" p-4 rounded-3xl bg-gray-50 dark:bg-gray-700 shadow-md my-5 md:my-8 cursor-pointer">
               <h1 className="text-xl font-semibold">{question.title}</h1>
-              <div className="flex space-x-2 mt-2">
-                {question.tags &&
+              <div className="flex flex-wrap gap-2 mt-2 w-full">
+                {question?.tags &&
                   question.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-200 rounded-full text-sm"
+                      className="px-2.5 py-0.5 bg-orange-100 dark:bg-gray-600  text-orange-400 rounded-full text-sm"
                     >
-                      {tag.toString()}
+                      {/* @ts-ignore */}
+                      {tag?.name}
                     </span>
                   ))}
               </div>

@@ -6,24 +6,54 @@ import { CreateQuestionParams } from './shared.types';
 import { revalidatePath } from 'next/cache';
 import Answer from '@/database/answer-model';
 import User from '@/database/user-model';
+import Tag from '@/database/tag-model';
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
-    connectToMongoDb();
-    const { title, content, tags, path, author } = params;
-    await Question.create({
+    await connectToMongoDb();
+    const { title, content, tags: tagNames, path, author } = params;
+    const tagIds = [];
+
+    // Process each tag
+    for (const tagName of tagNames) {
+      // Check if tag already exists
+      let tag = await Tag.findOne({ name: tagName.toLowerCase() });
+
+      if (!tag) {
+        // Create new tag if it doesn't exist
+        tag = await Tag.create({
+          name: tagName.toLowerCase(),
+          description: `Questions about ${tagName}`,
+          followers: [],
+          questions: [],
+        });
+      }
+
+      // Add tag ID to our array
+      tagIds.push(tag._id);
+    }
+
+    // Create the question with tag IDs
+    const question = await Question.create({
       title,
       content,
-      tags,
-      path,
+      tags: tagIds,
       author,
     });
 
+    // Update each tag to include this question
+    await Tag.updateMany(
+      { _id: { $in: tagIds } },
+      { $addToSet: { questions: question._id } },
+    );
+
+    // Update user reputation
     await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
+    throw new Error('Failed to create question');
   }
 }
 
@@ -38,6 +68,32 @@ export async function getSearchQuestions(searchQuestionQuery: string) {
       ],
     })
       .populate('author', 'name picture')
+      .populate('tags', 'name')
+      .exec();
+
+    return questions;
+  } catch (error) {
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
+  }
+}
+
+export async function getSearchTagQuestions(
+  tagId: string | undefined,
+  searchQuestionQuery: string,
+) {
+  try {
+    await connectToMongoDb();
+
+    const questions = await Question.find({
+      tags: { $in: [tagId] },
+      $or: [
+        { title: { $regex: searchQuestionQuery, $options: 'i' } },
+        { content: { $regex: searchQuestionQuery, $options: 'i' } },
+      ],
+    })
+      .populate('author', 'name picture')
+      .populate('tags', 'name')
       .exec();
 
     return questions;
@@ -52,8 +108,8 @@ export async function getAllQuestions() {
     await connectToMongoDb();
     const questions = await Question.find()
       .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
+      .populate('tags', 'name')
       .exec();
-
     return questions;
   } catch (error) {
     console.error('Error fetching questions:', error);
@@ -83,8 +139,25 @@ export async function getQuestionById(id: string) {
           select: 'name picture',
         },
       })
+      .populate('tags', 'name')
       .exec();
     return question;
+  } catch (error) {
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
+  }
+}
+
+export async function getQuestionsbyTag(id: string | undefined) {
+  try {
+    const res = await Question.find({
+      tags: id,
+    })
+      .populate('author', 'name picture')
+      .populate('tags', 'name')
+      .exec();
+
+    return res;
   } catch (error) {
     console.error('Error fetching questions:', error);
     throw new Error('Failed to fetch questions');
@@ -95,7 +168,10 @@ export async function getQuestionsByAuthorId(id: string) {
   try {
     await connectToMongoDb();
     const [questions, totalQuestions] = await Promise.all([
-      Question.find({ author: id }).populate('author', 'name picture').exec(),
+      Question.find({ author: id })
+        .populate('author', 'name picture')
+        .populate('tags', 'name')
+        .exec(),
       Question.countDocuments({ author: id }),
     ]);
 
@@ -126,6 +202,7 @@ export async function questionsAnsweredByAuthor(id: string) {
       Question.countDocuments({ _id: { $in: uniqueQuestionIds } }),
       Question.find({ _id: { $in: uniqueQuestionIds } })
         .populate('author', 'name picture')
+        .populate('tags', 'name')
         .exec(),
     ]);
 
