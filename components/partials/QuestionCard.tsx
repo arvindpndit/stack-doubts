@@ -10,15 +10,17 @@ import { CiClock2 } from 'react-icons/ci';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { FiMessageSquare } from 'react-icons/fi';
 import { FaRegThumbsUp } from 'react-icons/fa6';
+import { getQuestionsbyTag } from '@/lib/actions/tag.action';
 
 interface QuestionCardProps {
   searchQuestionQuery?: string | undefined;
   filter?: string;
   mongoUser?: any;
+  tagId?: string | undefined;
 }
 
 const QuestionCard = async (params: QuestionCardProps) => {
-  const { filter, mongoUser, searchQuestionQuery } = params;
+  const { filter, mongoUser, searchQuestionQuery, tagId } = params;
 
   if (filter == 'savedQuestions') {
     var questions = await getAllSavedQuestions({
@@ -29,6 +31,9 @@ const QuestionCard = async (params: QuestionCardProps) => {
     var { questions } = await getQuestionsByAuthorId(mongoUser);
   } else if (filter == 'questionsAnsweredByAuthor') {
     var { questions } = await questionsAnsweredByAuthor(mongoUser);
+  } else if (filter == 'questionsByTag') {
+    //@ts-ignore
+    var { questions } = await getQuestionsbyTag(tagId);
   } else {
     if (searchQuestionQuery === undefined) {
       questions = await getAllQuestions();

@@ -32,6 +32,7 @@ const TagsPage = async ({ searchParams }: Props) => {
             key={tag._id}
             name={tag.name}
             questionCount={tag.questionCount}
+            id={tag._id}
           />
         ))}
       </div>
