@@ -1,9 +1,8 @@
 import React from 'react';
-import { getAllSavedQuestions, getUserById } from '@/lib/actions/user.action';
+import { getUserById } from '@/lib/actions/user.action';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
-import Image from 'next/image';
-import searchIcon from '../../public/assets/icons/search.svg';
+
 import QuestionCard from '../partials/QuestionCard';
 import LocalSearchBar from '../common/LocalSearchBar';
 

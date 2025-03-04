@@ -1,6 +1,25 @@
 import Tag from '@/database/tag-model';
 import { connectToMongoDb } from '../mongoose';
 
+export async function getAllTags() {
+  try {
+    connectToMongoDb();
+    const tags = await Tag.aggregate([
+      {
+        $project: {
+          name: 1,
+          description: 1,
+          questionCount: { $size: '$questions' },
+        },
+      },
+    ]);
+    return tags;
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    throw new Error('Failed to fetch tags');
+  }
+}
+
 export async function getPopularTags() {
   try {
     connectToMongoDb();
