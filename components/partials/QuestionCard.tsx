@@ -23,27 +23,32 @@ interface QuestionCardProps {
 const QuestionCard = async (params: QuestionCardProps) => {
   const { filter, mongoUser, searchQuestionQuery, tagId } = params;
 
-  if (filter == 'savedQuestions') {
-    var questions = await getAllSavedQuestions({
-      mongoUser,
-      searchQuestionQuery,
-    });
-  } else if (filter == 'questionAskedByAuthor') {
-    var { questions } = await getQuestionsByAuthorId(mongoUser);
-  } else if (filter == 'questionsAnsweredByAuthor') {
-    var { questions } = await questionsAnsweredByAuthor(mongoUser);
-  } else if (filter == 'questionsByTag') {
-    if (searchQuestionQuery === undefined) {
-      questions = await getQuestionsbyTag(tagId);
-    } else {
-      questions = await getSearchTagQuestions(tagId, searchQuestionQuery);
-    }
-  } else {
-    if (searchQuestionQuery === undefined) {
-      questions = await getAllQuestions();
-    } else {
-      questions = await getSearchQuestions(searchQuestionQuery);
-    }
+  let questions;
+
+  switch (filter) {
+    case 'savedQuestions':
+      questions = await getAllSavedQuestions({
+        mongoUser,
+        searchQuestionQuery,
+      });
+      break;
+    case 'questionAskedByAuthor':
+      ({ questions } = await getQuestionsByAuthorId(mongoUser));
+      break;
+    case 'questionsAnsweredByAuthor':
+      ({ questions } = await questionsAnsweredByAuthor(mongoUser));
+      break;
+    case 'questionsByTag':
+      questions =
+        searchQuestionQuery === undefined
+          ? await getQuestionsbyTag(tagId)
+          : await getSearchTagQuestions(tagId, searchQuestionQuery);
+      break;
+    default:
+      questions =
+        searchQuestionQuery === undefined
+          ? await getAllQuestions()
+          : await getSearchQuestions(searchQuestionQuery);
   }
 
   return (
