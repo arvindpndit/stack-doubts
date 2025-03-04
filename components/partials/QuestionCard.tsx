@@ -2,6 +2,7 @@ import {
   getAllQuestions,
   getQuestionsByAuthorId,
   getSearchQuestions,
+  getSearchTagQuestions,
   questionsAnsweredByAuthor,
 } from '@/lib/actions/question.action';
 import { getAllSavedQuestions, getUserById } from '@/lib/actions/user.action';
@@ -32,7 +33,11 @@ const QuestionCard = async (params: QuestionCardProps) => {
   } else if (filter == 'questionsAnsweredByAuthor') {
     var { questions } = await questionsAnsweredByAuthor(mongoUser);
   } else if (filter == 'questionsByTag') {
-    var questions = await getQuestionsbyTag(tagId);
+    if (searchQuestionQuery === undefined) {
+      questions = await getQuestionsbyTag(tagId);
+    } else {
+      questions = await getSearchTagQuestions(tagId, searchQuestionQuery);
+    }
   } else {
     if (searchQuestionQuery === undefined) {
       questions = await getAllQuestions();

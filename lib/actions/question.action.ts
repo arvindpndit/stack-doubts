@@ -78,6 +78,31 @@ export async function getSearchQuestions(searchQuestionQuery: string) {
   }
 }
 
+export async function getSearchTagQuestions(
+  tagId: string | undefined,
+  searchQuestionQuery: string,
+) {
+  try {
+    await connectToMongoDb();
+
+    const questions = await Question.find({
+      tags: { $in: [tagId] },
+      $or: [
+        { title: { $regex: searchQuestionQuery, $options: 'i' } },
+        { content: { $regex: searchQuestionQuery, $options: 'i' } },
+      ],
+    })
+      .populate('author', 'name picture')
+      .populate('tags', 'name')
+      .exec();
+
+    return questions;
+  } catch (error) {
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
+  }
+}
+
 export async function getAllQuestions() {
   try {
     await connectToMongoDb();
