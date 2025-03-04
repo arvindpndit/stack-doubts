@@ -10,7 +10,6 @@ interface Props {
 }
 const page = async ({ params, searchParams }: Props) => {
   const searchQuestionQuery = searchParams.query;
-  console.log(searchQuestionQuery);
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <div className="flex justify-between">
