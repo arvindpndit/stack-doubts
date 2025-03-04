@@ -123,6 +123,22 @@ export async function getQuestionById(id: string) {
   }
 }
 
+export async function getQuestionsbyTag(id: string | undefined) {
+  try {
+    const res = await Question.find({
+      tags: id,
+    })
+      .populate('author', 'name picture')
+      .populate('tags', 'name')
+      .exec();
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching questions:', error);
+    throw new Error('Failed to fetch questions');
+  }
+}
+
 export async function getQuestionsByAuthorId(id: string) {
   try {
     await connectToMongoDb();

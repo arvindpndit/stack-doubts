@@ -20,32 +20,6 @@ export async function getAllTags() {
   }
 }
 
-export async function getQuestionsbyTag(id: string | undefined) {
-  try {
-    const res = await Tag.findById(id)
-      .populate({
-        path: 'questions',
-        populate: [
-          {
-            path: 'author',
-            select: 'name picture',
-          },
-          {
-            path: 'tags', // Ensure tags inside questions are populated
-            select: 'name',
-          },
-        ],
-      })
-      .lean() // Converts Mongoose document to a plain JS object
-      .exec();
-
-    return res;
-  } catch (error) {
-    console.error('Error fetching questions:', error);
-    throw new Error('Failed to fetch questions');
-  }
-}
-
 export async function getSearchTags(searchTagQuery: string) {
   try {
     await connectToMongoDb();
