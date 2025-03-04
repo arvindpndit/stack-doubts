@@ -7,10 +7,10 @@ export const metadata: Metadata = {
     'Browse and explore various programming tags to find relevant discussions, solutions, and expert insights on Stack Doubts.',
 };
 
-const page = () => {
+const page = ({ searchParams }: any) => {
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
-      <TagsPage />
+      <TagsPage searchParams={searchParams.query} />
     </div>
   );
 };

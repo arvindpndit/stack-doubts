@@ -20,6 +20,32 @@ export async function getAllTags() {
   }
 }
 
+export async function getSearchTags(searchTagQuery: string) {
+  try {
+    await connectToMongoDb();
+
+    const tags = await Tag.aggregate([
+      {
+        $match: {
+          name: { $regex: searchTagQuery, $options: 'i' },
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          description: 1,
+          questionCount: { $size: { $ifNull: ['$questions', []] } },
+        },
+      },
+    ]);
+
+    return tags;
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    throw new Error('Failed to fetch tags');
+  }
+}
+
 export async function getPopularTags() {
   try {
     connectToMongoDb();

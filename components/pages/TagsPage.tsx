@@ -6,14 +6,18 @@ import { redirect } from 'next/navigation';
 import QuestionCard from '../partials/QuestionCard';
 import LocalSearchBar from '../common/LocalSearchBar';
 import TagCard from '../common/TagCard';
-import { getAllTags } from '@/lib/actions/tag.action';
+import { getAllTags, getSearchTags } from '@/lib/actions/tag.action';
 
 interface Props {
-  searchQuestionQuery: string | undefined;
+  searchParams: string | undefined;
 }
 
-const TagsPage: React.FC = async () => {
-  const tags = await getAllTags();
+const TagsPage = async ({ searchParams }: Props) => {
+  if (searchParams === undefined) {
+    var tags = await getAllTags();
+  } else {
+    var tags = await getSearchTags(searchParams);
+  }
 
   return (
     <div className="pb-24">
@@ -23,7 +27,7 @@ const TagsPage: React.FC = async () => {
       <LocalSearchBar placeholder="Search tags..." />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
-        {tags.map((tag) => (
+        {tags?.map((tag) => (
           <TagCard
             key={tag._id}
             name={tag.name}
