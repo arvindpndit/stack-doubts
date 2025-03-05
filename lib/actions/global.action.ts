@@ -1,3 +1,5 @@
+'use server';
+
 import Question from '@/database/question-model';
 import { connectToMongoDb } from '../mongoose';
 import Tag from '@/database/tag-model';
@@ -19,10 +21,10 @@ export async function getGlobalSearchResult(searchGlobalQuery: string) {
           { name: { $regex: searchGlobalQuery, $options: 'i' } },
           { username: { $regex: searchGlobalQuery, $options: 'i' } },
         ],
-      }),
+      }).exec(),
       Tag.find({
         name: { $regex: searchGlobalQuery, $options: 'i' },
-      }),
+      }).exec(),
     ]);
 
     //console.log(questions, users, tags);

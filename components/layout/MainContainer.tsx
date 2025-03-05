@@ -22,7 +22,6 @@ const MainContainer = ({ searchQuestionQuery }: Props) => {
       </div>
 
       <LocalSearchBar placeholder="Search questions..." />
-
       <QuestionCard searchQuestionQuery={searchQuestionQuery} />
     </div>
   );
