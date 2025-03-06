@@ -3,6 +3,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import searchIcon from '../../public/assets/icons/search.svg';
+import { FaSearch } from 'react-icons/fa';
 import { useEffect, useRef, useState } from 'react';
 import { getGlobalSearchResult } from '@/lib/actions/global.action';
 import Link from 'next/link';
@@ -82,35 +83,48 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
   }, []);
 
   return (
-    <div
-      ref={searchRef}
-      className="hidden sm:flex flex-col items-center w-1/2 relative"
-    >
-      {/* Search Bar */}
-      <div className="w-full flex items-center relative">
-        <input
-          className="w-full h-12 px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none"
-          placeholder={placeholder}
-          onChange={(e) => handleSearch(e.target.value)}
-          onFocus={() => setShowResultContainer(true)}
-          defaultValue={searchQuery}
-          //value={searchQuery}
-        />
-        <Image
-          src={searchIcon}
-          alt="Search Icon"
-          width={20}
-          height={20}
-          className="absolute right-3 top-3 cursor-pointer"
+    <div ref={searchRef} className=" sm:flex flex-col items-center">
+      {/* fake search bar */}
+      <div className="w-full flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 h-10 dark:border-gray-600 ">
+        <div
+          className="hidden md:block ml-4 focus:outline-none text-gray-500 text-sm"
+          onClick={() => setShowResultContainer(true)}
+        >
+          Search anything globally...
+        </div>
+        <FaSearch
+          onClick={() => setShowResultContainer(true)}
+          className="text-gray-500 text-xl mx-4 cursor-pointer"
         />
       </div>
 
       {showResultContainer && (
         <>
-          <div className="absolute top-full mt-2 mx-auto w-full max-h-96 overflow-y-auto bg-gray-50 dark:bg-gray-700 rounded-3xl z-20 shadow-md p-4 no-scrollbar">
+          <div
+            onClick={() => setShowResultContainer(false)}
+            className="fixed inset-0 bg-black bg-opacity-20 backdrop-blur-sm z-0"
+          ></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-full lg:w-2/3 max-h-[550px] overflow-y-auto bg-gray-50 dark:bg-gray-700 rounded-3xl z-50 shadow-lg border border-gray-100 dark:border-gray-700 p-4 no-scrollbar">
+            <div className="w-full flex items-center relative">
+              <input
+                className="w-full h-12 px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none"
+                placeholder={placeholder}
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={() => setShowResultContainer(true)}
+                defaultValue={searchQuery}
+                //value={searchQuery}
+              />
+              <Image
+                src={searchIcon}
+                alt="Search Icon"
+                width={20}
+                height={20}
+                className="absolute right-3 top-3 cursor-pointer"
+              />
+            </div>
             {result.questions.length > 0 && (
               <div>
-                <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
+                <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200 mt-5">
                   Questions
                 </h3>
                 {result.questions.map((question) => (
@@ -119,7 +133,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
                     href={`/question-details/${question._id}`}
                     onClick={() => setShowResultContainer(false)}
                   >
-                    <div className="mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg cursor-pointer transition-colors">
+                    <div className="mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-3xl cursor-pointer transition-colors">
                       <h4 className="text-md font-medium text-gray-900 dark:text-gray-100">
                         {question.title}
                       </h4>
@@ -127,7 +141,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
                         {question.content
                           ? question.content
                               .replace(/<[^>]*>/g, '')
-                              .substring(0, 100)
+                              .substring(0, 150) + '...'
                           : 'No description available'}
                       </p>
                       <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -153,7 +167,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
                   >
                     <div
                       key={user._id}
-                      className="flex items-center mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg cursor-pointer transition-colors"
+                      className="flex items-center mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-3xl cursor-pointer transition-colors"
                     >
                       <img
                         src={user.picture}

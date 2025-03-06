@@ -13,13 +13,14 @@ const Navbar: React.FC = () => {
       <div className=" flex items-center justify-center">
         <Image src={logo} alt="devLogo" className="h-9 sm:h-12 w-9 sm:w-12" />
 
-        <div className=" ml-1 text-2xl font-bold">
+        <div className="hidden sm:block ml-1 text-2xl font-bold">
           Stack <span className="text-orange-500">Doubts</span>
         </div>
       </div>
-      <GlobalSearchBar placeholder="Search anything globally..." />
+      <div className="relative"></div>
       {/* <div className="absolute top-full mt-2 w-full  flex justify-center items-center h-96 bg-gray-50 dark:bg-gray-700 rounded-3xl z-20 shadow-md"></div> */}
       <div className="flex items-center gap-3">
+        <GlobalSearchBar placeholder="Search anything globally..." />
         <ThemeSwitcher />
         <a
           href="https://github.com/arvindpndit/stack-overflow-nextjs"
