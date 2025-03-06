@@ -27,7 +27,6 @@ export async function getGlobalSearchResult(searchGlobalQuery: string) {
       }).exec(),
     ]);
 
-    //console.log(questions, users, tags);
     return { questions, users, tags };
   } catch (error) {
     console.error('Error fetching :', error);

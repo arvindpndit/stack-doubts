@@ -83,7 +83,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
   }, []);
 
   return (
-    <div ref={searchRef} className=" sm:flex flex-col items-center">
+    <div className=" sm:flex flex-col items-center">
       {/* fake search bar */}
       <div className="w-full flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 h-10 dark:border-gray-600 ">
         <div
