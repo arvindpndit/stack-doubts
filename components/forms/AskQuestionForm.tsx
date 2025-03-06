@@ -217,6 +217,12 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                   />
                 </FormControl>
+                <FormDescription className="text-xs text-gray-500">
+                  {/* Adding tags is disabled. This feature will be added in
+                  upcoming release. */}
+                  Add up to 5 tags to describe what your question is about. You
+                  need to press enter to add a tag.
+                </FormDescription>
                 <div className="flex flex-wrap gap-2 p-2 rounded-md mt-2">
                   {field.value.map((tag, index) => (
                     <div
@@ -240,12 +246,6 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     </div>
                   ))}
                 </div>
-                <FormDescription className="text-xs text-gray-500">
-                  {/* Adding tags is disabled. This feature will be added in
-                  upcoming release. */}
-                  Add up to 5 tags to describe what your question is about. You
-                  need to press enter to add a tag.
-                </FormDescription>
                 <FormMessage className="text-red-500" />
               </FormItem>
             )}

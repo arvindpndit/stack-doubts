@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Inter, Space_Grotesk, Open_Sans } from 'next/font/google';
 import './globals.css';
 import '../styles/prism.css';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -13,6 +13,13 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-inter',
+});
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-inter',
+  display: 'swap',
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -39,7 +46,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <Providers>
-          <body className={`${spaceGrotesk.className}`}>
+          <body className={`${openSans.className}`}>
             <div className="min-h-screen">
               <Navbar />
               <div className="container flex justify-between px-0 md:px-2">
