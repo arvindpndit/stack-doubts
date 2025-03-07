@@ -11,9 +11,9 @@ const PopularTags = async () => {
         {popularTags.map((tag) => {
           return (
             <Link href={`/tags/${tag.name}/${tag._id}`}>
-              <div className="text-orange-500 text-xs px-3 py-1.5 rounded-full border-orange-500 shadow-md hover:cursor-pointer">
+              <div className=" bg-orange-100 dark:bg-gray-700 rounded-full  text-xs px-3 py-1.5 rounded-ful shadow-sm hover:cursor-pointer">
                 {tag.name}
-                <span className="ml-3 bg-orange-100 dark:bg-gray-700 px-2 rounded-full">
+                <span className="ml-3 bg-orange-50 dark:bg-gray-800 px-2 rounded-full">
                   {tag.questionCount}
                 </span>
               </div>

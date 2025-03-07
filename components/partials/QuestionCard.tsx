@@ -56,14 +56,14 @@ const QuestionCard = async (params: QuestionCardProps) => {
       {questions?.reverse().map(async (question, index) => {
         return (
           <Link key={index} href={`/question-details/${question._id}`}>
-            <div className=" p-4 rounded-3xl bg-gray-50 dark:bg-gray-700 shadow-md my-5 md:my-8 cursor-pointer">
+            <div className="bg-white dark:bg-gray-800  p-4 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 my-5 md:my-8 cursor-pointer">
               <h1 className="text-xl font-semibold">{question.title}</h1>
               <div className="flex flex-wrap gap-2 mt-2 w-full">
                 {question?.tags &&
                   question.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2.5 py-0.5 bg-orange-100 dark:bg-gray-600  text-orange-400 rounded-full text-sm"
+                      className="px-2.5 py-0.5 bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-white rounded-full text-sm"
                     >
                       {/* @ts-ignore */}
                       {tag?.name}

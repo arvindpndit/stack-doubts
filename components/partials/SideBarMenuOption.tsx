@@ -1,10 +1,10 @@
-import React from "react";
-import Link from "next/link";
-import { TbSmartHome, TbHash, TbBriefcase } from "react-icons/tb";
-import { MdPeopleOutline } from "react-icons/md";
-import { FaRegStar } from "react-icons/fa";
-import { BiBookReader } from "react-icons/bi";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
+import React from 'react';
+import Link from 'next/link';
+import { TbSmartHome, TbHash, TbBriefcase } from 'react-icons/tb';
+import { MdPeopleOutline } from 'react-icons/md';
+import { FaRegStar } from 'react-icons/fa';
+import { BiBookReader } from 'react-icons/bi';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
 
 interface SideBarMenuOptionProps {
   menutitle: string;
@@ -16,10 +16,10 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
   return (
     <Link
       href={props.link}
-      className="hover:text-white hover:bg-orange-500 w-fit transition-all md:p-3 rounded-full"
+      className="hover:text-white hover:bg-orange-500 w-fit transition-all overflow-hidden md:p-3 rounded-full"
     >
-      <div className="flex flex-col lg:flex-row items-center  gap-3">
-        <div className="text-3xl lg:text-2xl">
+      <div className="flex flex-col lg:flex-row items-center gap-3">
+        <div className="text-3xl p-2 md:p-0 lg:text-2xl">
           {IconComponent && <IconComponent />}
         </div>
         <div className="hidden lg:block md:text-xl"> {props.menutitle}</div>
@@ -30,19 +30,19 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
 
 export const getIconComponent = (menutitle: string) => {
   switch (menutitle.toLowerCase()) {
-    case "home":
+    case 'home':
       return TbSmartHome;
-    case "community":
+    case 'community':
       return MdPeopleOutline;
-    case "courses":
+    case 'courses':
       return BiBookReader;
-    case "collections":
+    case 'collections':
       return FaRegStar;
-    case "find jobs":
+    case 'find jobs':
       return TbBriefcase;
-    case "tags":
+    case 'tags':
       return TbHash;
-    case "ask a question":
+    case 'ask a question':
       return AiOutlineQuestionCircle;
     default:
       return null;
@@ -50,3 +50,4 @@ export const getIconComponent = (menutitle: string) => {
 };
 
 export default SideBarMenuOption;
+
