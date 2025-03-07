@@ -87,14 +87,18 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
       {/* fake search bar */}
       <div className="w-full flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 h-10 dark:border-gray-600 ">
         <div
-          className="hidden md:block ml-4 focus:outline-none text-gray-500 text-sm"
+          className="hidden md:block ml-4 focus:outline-none text-gray-400 text-sm"
           onClick={() => setShowResultContainer(true)}
         >
           Search anything globally...
         </div>
-        <FaSearch
+        <Image
+          src={searchIcon}
+          alt="Search Icon"
+          width={16}
+          height={16}
+          className="cursor-pointer mx-4"
           onClick={() => setShowResultContainer(true)}
-          className="text-gray-500 text-xl mx-4 cursor-pointer"
         />
       </div>
 
@@ -224,4 +228,5 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
 };
 
 export default GlobalSearchBar;
+
 

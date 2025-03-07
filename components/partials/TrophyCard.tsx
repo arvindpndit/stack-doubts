@@ -5,7 +5,7 @@ import React from 'react';
 const TrophyCard = async () => {
   const user = await getMostReputedUser();
   return (
-    <div className="group relative h-[150px] transition-all duration-500 overflow-hidden hover:h-[270px] bg-transparent">
+    <div className="group relative h-[150px] mt-5 transition-all duration-500 overflow-hidden hover:h-[270px] bg-transparent">
       <div className="relative bg-gradient-to-tr from-[#fffbf0] to-[#ffdd87] dark:gradient-to-tr dark:from-[#2a1f0f] dark:to-[#6b4e1e] w-full h-[150px] rounded-[25px] transition-all duration-500 z-10 group-hover:shadow-[0_10px_15px_#b1985e]">
         <svg
           className="absolute right-0 top-1 z-20"
