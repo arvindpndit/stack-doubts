@@ -17,6 +17,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 import { createAnswer } from '@/lib/actions/answer.action';
 import { useTheme } from 'next-themes';
+import { toast } from 'sonner';
 
 interface Props {
   id: string;
@@ -50,6 +51,7 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
         // @ts-ignore
         editorRef.current.setContent('');
       }
+      toast('Nice one! Your knowledge is valuable. Keep it up! 👏');
     } catch (error) {
       console.error('Error creating answer:', error);
     }

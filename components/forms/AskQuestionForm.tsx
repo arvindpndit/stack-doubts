@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,7 +20,7 @@ import Input from '../ui/input';
 import { createQuestion } from '@/lib/actions/question.action';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import TagInput from './TagInput';
+import { toast } from 'sonner';
 
 interface Props {
   mongoUserId: string;
@@ -56,7 +54,8 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
       path: pathname,
       author: JSON.parse(mongoUserId),
     });
-    // navigate to home page
+    // show toast and navigate to home page
+    toast('Question posted! The community is here to help you out.🚀');
     router.push('/');
   }
 
