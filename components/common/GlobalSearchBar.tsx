@@ -229,4 +229,3 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
 
 export default GlobalSearchBar;
 
-

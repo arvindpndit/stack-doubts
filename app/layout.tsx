@@ -8,6 +8,7 @@ import LeftSideBar from '@/components/layout/LeftSideBar';
 import RightSideBar from '@/components/layout/RightSideBar';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { Providers } from './providers';
+import { Toaster } from 'sonner';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -62,6 +63,7 @@ export default function RootLayout({
                 <BottomNavigation />
               </div>
             </div>
+            <Toaster richColors />
           </body>
         </Providers>
       </html>

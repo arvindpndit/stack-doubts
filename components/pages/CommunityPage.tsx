@@ -15,7 +15,7 @@ const CommunityPage = async ({ searchParams }: Props) => {
     var users = await getSearchUsers(searchParams);
   }
   return (
-    <div>
+    <div className="overflow-hidden">
       <h1 className="font-bold text-3xl">All Users</h1>
 
       <LocalSearchBar placeholder="Search amazing minds here..." />
@@ -32,10 +32,10 @@ const CommunityPage = async ({ searchParams }: Props) => {
               alt={user.name}
               className="w-40 object-cover rounded-full mb-4 mx-auto"
             />
-            <div className="text-2xl font-semibold mb-2 text-center">
+            <div className="text-sm sm:text-xl truncate font-semibold mb-2 text-center">
               {user.name}
             </div>
-            <div className="text-gray-500 dark:text-gray-400 text-center">
+            <div className="text-xs sm:text-lg text-gray-500 dark:text-gray-400 text-center ">
               @{user.username}
             </div>
           </Link>
