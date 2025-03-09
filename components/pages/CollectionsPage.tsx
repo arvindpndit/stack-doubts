@@ -18,7 +18,7 @@ const CollectionsPage = async ({ searchQuestionQuery }: Props) => {
   return (
     <div className="pb-24">
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl">Saved Questions</h1>
+        <h1 className="font-bold text-3xl mx-1">Saved Questions</h1>
       </div>
       <LocalSearchBar placeholder="Search questions..." />
       <QuestionCard
