@@ -50,7 +50,7 @@ export default function RootLayout({
           <body className={`${openSans.className}`}>
             <div className="min-h-screen">
               <Navbar />
-              <div className="container flex justify-between px-0 md:px-2 mt-8 ">
+              <div className="container flex justify-between px-0 md:px-2 mt-0 md:mt-8">
                 <div className="w-1/3 hidden lg:block   ">
                   <LeftSideBar />
                 </div>

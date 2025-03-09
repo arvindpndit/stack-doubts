@@ -9,11 +9,10 @@ import GlobalSearchBar from './GlobalSearchBar';
 
 const Navbar: React.FC = () => {
   return (
-    <div className="bg-white dark:bg-gray-800 container fixed top-0 left-0 right-0 h-16 sm:h-20 flex items-center gap-4 justify-between px-2 md:px-4 z-50 my-4 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="bg-white dark:bg-gray-900 sm:dark:bg-gray-800 w-[calc(100%-8px)] container fixed top-0 left-0 right-0 h-[71px] sm:h-20 flex items-center gap-4 justify-between px-2 md:px-4 z-50 sm:my-4 rounded-none sm:rounded-3xl sm:border sm:border-gray-200 sm:dark:border-gray-700 shadow-sm border-b-[0.5px] border-gray-200  dark:border-gray-800">
       <div className=" flex items-center justify-center">
-        <Image src={logo} alt="devLogo" className="h-9  w-9 " />
-
-        <div className="hidden sm:block ml-1 text-2xl font-bold">
+        <Image src={logo} alt="devLogo" className="h-7 sm:h-9  w-7 sm:w-9 " />
+        <div className="block ml-1 text-xl sm:text-2xl font-bold">
           Stack <span className="text-orange-500">Doubts</span>
         </div>
       </div>
