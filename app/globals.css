@@ -6,6 +6,20 @@
   body {
     @apply dark:bg-gray-900 bg-white;
   }
+
+  /* Remove focus outline, box-shadow, and tap highlight */
+  * {
+    @apply outline-none;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent text selection on unnecessary elements */
+  button,
+  a,
+  div {
+    user-select: none;
+  }
 }
 
 @layer utilities {

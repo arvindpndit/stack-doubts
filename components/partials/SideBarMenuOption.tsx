@@ -1,10 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { TbSmartHome, TbHash, TbBriefcase } from 'react-icons/tb';
-import { MdPeopleOutline } from 'react-icons/md';
-import { FaRegStar } from 'react-icons/fa';
-import { BiBookReader } from 'react-icons/bi';
-import { AiOutlineQuestionCircle } from 'react-icons/ai';
+import {
+  TbSmartHome,
+  TbUsers,
+  TbBooks,
+  TbStar,
+  TbBriefcase,
+  TbTags,
+  TbHelpCircle,
+} from 'react-icons/tb';
 
 interface SideBarMenuOptionProps {
   menutitle: string;
@@ -19,10 +23,10 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
       className="hover:text-white hover:bg-orange-500 w-fit transition-all overflow-hidden md:p-3 rounded-full"
     >
       <div className="flex flex-col lg:flex-row items-center gap-3">
-        <div className="text-3xl p-2 md:p-0 lg:text-2xl">
+        <div className="text-3xl font-bold p-2 md:p-0 lg:text-2xl">
           {IconComponent && <IconComponent />}
         </div>
-        <div className="hidden lg:block md:text-xl"> {props.menutitle}</div>
+        <div className="hidden lg:block md:text-xl">{props.menutitle}</div>
       </div>
     </Link>
   );
@@ -33,17 +37,17 @@ export const getIconComponent = (menutitle: string) => {
     case 'home':
       return TbSmartHome;
     case 'community':
-      return MdPeopleOutline;
+      return TbUsers;
     case 'courses':
-      return BiBookReader;
+      return TbBooks;
     case 'collections':
-      return FaRegStar;
+      return TbStar;
     case 'find jobs':
       return TbBriefcase;
     case 'tags':
-      return TbHash;
+      return TbTags;
     case 'ask a question':
-      return AiOutlineQuestionCircle;
+      return TbHelpCircle;
     default:
       return null;
   }
