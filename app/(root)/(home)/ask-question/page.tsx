@@ -17,7 +17,7 @@ const Ask = async () => {
 
   return (
     <div className="w-full px-1 lg:pr-8 mt-28  h-screen">
-      <h1 className="font-bold text-3xl">Ask a question</h1>
+      <h1 className="font-bold text-3xl mx-1">Ask a question</h1>
       <AskQuestionForm mongoUserId={JSON.stringify(mongoUser?._id)} />
     </div>
   );

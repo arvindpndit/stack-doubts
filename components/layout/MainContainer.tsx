@@ -10,7 +10,7 @@ interface Props {
 const MainContainer = ({ searchQuestionQuery }: Props) => {
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
-      <div className="flex justify-between">
+      <div className="flex justify-between mx-1">
         <h1 className="font-bold text-3xl">All Questions</h1>
         <Link
           href="/ask-question"

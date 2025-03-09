@@ -22,7 +22,7 @@ const TagsPage = async ({ searchParams }: Props) => {
   return (
     <div className="pb-24">
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl">All #tags</h1>
+        <h1 className="font-bold text-3xl mx-1">All #tags</h1>
       </div>
       <LocalSearchBar placeholder="Search tags..." />
 

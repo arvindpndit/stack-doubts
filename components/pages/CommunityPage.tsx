@@ -16,7 +16,7 @@ const CommunityPage = async ({ searchParams }: Props) => {
   }
   return (
     <div className="overflow-hidden">
-      <h1 className="font-bold text-3xl">All Users</h1>
+      <h1 className="font-bold text-3xl mx-1">All Users</h1>
 
       <LocalSearchBar placeholder="Search amazing minds here..." />
 

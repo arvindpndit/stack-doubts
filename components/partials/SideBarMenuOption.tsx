@@ -23,7 +23,7 @@ const SideBarMenuOption: React.FC<SideBarMenuOptionProps> = (props) => {
       className="hover:text-white hover:bg-orange-500 w-fit transition-all overflow-hidden md:p-3 rounded-full"
     >
       <div className="flex flex-col lg:flex-row items-center gap-3">
-        <div className="text-3xl font-bold p-2 md:p-0 lg:text-2xl">
+        <div className="text-2xl font-bold p-2 md:p-0">
           {IconComponent && <IconComponent />}
         </div>
         <div className="hidden lg:block md:text-xl">{props.menutitle}</div>
