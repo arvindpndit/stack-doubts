@@ -1,4 +1,4 @@
-![stack doubts](./public/assets/images/ss1.png)
+![stack doubts](./public/assets/images/ss3.0.png)
 
 <div align="center">
   <h1>stack d🤔ubts</h1>
@@ -66,3 +66,4 @@ npm run dev
 
 > Note:
 > If you encounter any problem in local setup, DM me on [LinkedIn](https://www.linkedin.com/in/arvindpndit/) or on [X/twitter](https://twitter.com/arvindpnditz)
+
