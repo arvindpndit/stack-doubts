@@ -52,7 +52,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
 
       <ParseHTML code={question?.content || ''}></ParseHTML>
-      <StackyAIAnswer />
+      <StackyAIAnswer title={question?.title} content={question?.content} />
       <div className="my-8 font-semibold text-lg  p-2 rounded-full w-fit text-green-800 dark:text-green-300">
         {question?.answers?.length} Answers
       </div>
