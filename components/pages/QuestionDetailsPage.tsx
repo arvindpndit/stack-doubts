@@ -1,11 +1,13 @@
-import { getQuestionById } from '@/lib/actions/question.action';
 import React from 'react';
-import ParseHTML from '../partials/ParseHtml';
-import AnswerForm from '../forms/AnswerForm';
-import { CiClock2, CiStar } from 'react-icons/ci';
+import { getQuestionById } from '@/lib/actions/question.action';
+import { CiClock2 } from 'react-icons/ci';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { FiMessageSquare } from 'react-icons/fi';
+
+import ParseHTML from '../partials/ParseHtml';
+import AnswerForm from '../forms/AnswerForm';
 import QuestionInteractions from '../partials/QuestionInteractions';
+import StackyAIAnswer from '../partials/StackyAIAnswer';
 
 interface Props {
   id: string;
@@ -50,6 +52,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
 
       <ParseHTML code={question?.content || ''}></ParseHTML>
+      <StackyAIAnswer />
       <div className="my-8 font-semibold text-lg  p-2 rounded-full w-fit text-green-800 dark:text-green-300">
         {question?.answers?.length} Answers
       </div>
