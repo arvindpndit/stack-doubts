@@ -18,4 +18,5 @@ const Courses = async () => {
 };
 
 export default Courses;
+export const dynamic = 'force-static'; //static page
 
