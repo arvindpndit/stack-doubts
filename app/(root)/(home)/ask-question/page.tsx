@@ -1,6 +1,6 @@
 import AskQuestionForm from '@/components/forms/AskQuestionForm';
 import { getUserById } from '@/lib/actions/user.action';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const Ask = async () => {
-  const { userId } = auth();
+  const { userId } = await auth();
   if (!userId) redirect('/sign-in');
   const mongoUser = await getUserById({ key: 'clerkId', value: userId });
 
