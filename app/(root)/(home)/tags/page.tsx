@@ -7,10 +7,15 @@ export const metadata: Metadata = {
     'Browse and explore various programming tags to find relevant discussions, solutions, and expert insights on Stack Doubts.',
 };
 
-const page = ({ searchParams }: any) => {
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+const page = async ({ searchParams }: PageProps) => {
+  const query = (await searchParams).query as string | undefined;
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
-      <TagsPage searchParams={searchParams.query} />
+      <TagsPage searchParams={query} />
     </div>
   );
 };
