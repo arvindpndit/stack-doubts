@@ -7,8 +7,12 @@ export const metadata: Metadata = {
     'Get answers to your programming questions on Stack Doubts - a community-driven platform for knowledge sharing and problem-solving.',
 };
 
-export default function Home({ searchParams }: any) {
-  const searchQuestionQuery = searchParams.query;
-  return <MainContainer searchQuestionQuery={searchQuestionQuery} />;
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function Home({ searchParams }: PageProps) {
+  const query = (await searchParams).query as string | undefined;
+  return <MainContainer searchQuestionQuery={query} />;
 }
 

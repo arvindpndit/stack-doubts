@@ -1,21 +1,24 @@
-import { authMiddleware } from '@clerk/nextjs';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export default authMiddleware({
-  publicRoutes: [
-    '/',
-    '/api/webhook',
-    'question/:id',
-    '/tags',
-    '/tags/:id',
-    '/profile/:id',
-    '/community',
-    '/jobs',
-    '/courses',
-  ],
-  ignoredRoutes: ['/api/webhook', '/api/ai-answer'],
+// Define routes to ignore
+const isIgnoredRoute = createRouteMatcher(['/api/webhook', '/api/ai-answer']);
+
+export default clerkMiddleware((auth, req) => {
+  // Skip Clerk middleware for ignored routes
+  if (isIgnoredRoute(req)) {
+    return NextResponse.next();
+  }
+
+  // Optional: Protect other routes
+  // Example: auth().protect();
 });
 
 export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: [
+    '/((?!.*\\..*|_next).*)', // Exclude static files and Next.js internals
+    '/',
+    '/(api|trpc)(.*)',
+  ],
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { getUserById } from '@/lib/actions/user.action';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
 import QuestionCard from '../partials/QuestionCard';
