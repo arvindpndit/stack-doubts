@@ -15,3 +15,20 @@ export const popularTags: Array<string> = [
   'Node',
 ];
 
+export const waitingButtonMessages: Array<string> = [
+  'Processing your request...',
+  'Analyzing data...',
+  'Fetching the best answer...',
+  'Getting answer...',
+  'Still thinking...',
+  'Almost there...',
+  'Just a moment...',
+  'Hang tight...',
+  "This won't take long...",
+  'Finding the right response...',
+  'One sec...',
+  'Just a little more patience...',
+  "We're on it...",
+  'Refining the answer...',
+];
+

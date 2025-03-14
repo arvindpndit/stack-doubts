@@ -114,7 +114,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     type="text"
                     placeholder="Type your question here"
                     {...field}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-full shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                    className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700  dark:bg-gray-800  rounded-full shadow-sm focus:outline-none focus:ring focus:border-gray-400 dark:focus:border-gray-600"
                   />
                 </FormControl>
                 <FormDescription className="text-xs text-gray-500">
@@ -213,7 +213,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
                     placeholder="Add tags..."
                     //disabled={true}
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                    className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700  dark:bg-gray-800  rounded-full shadow-sm focus:outline-none focus:ring focus:border-gray-400 dark:focus:border-gray-600"
                   />
                 </FormControl>
                 <FormDescription className="text-xs text-gray-500">

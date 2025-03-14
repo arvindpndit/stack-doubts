@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const Courses = async () => {
   const playlists = await getYoutubePlaylists();
   return (
-    <div className="w-full lg:pr-8 mt-20 sm:mt-28 h-screen">
+    <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <CoursesPage playlists={playlists} />
     </div>
   );

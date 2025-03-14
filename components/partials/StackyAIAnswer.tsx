@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { waitingButtonMessages } from '@/utils/constants';
+import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -12,6 +13,7 @@ const StackyAIAnswer = ({ title, content }: Props) => {
   const [answer, setAnswer] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [buttonText, setButtonText] = useState('Ask Stacky AI');
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -38,6 +40,21 @@ const StackyAIAnswer = ({ title, content }: Props) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (loading) {
+      let index = 0;
+      setButtonText(waitingButtonMessages[0]);
+      const interval = setInterval(() => {
+        setButtonText(waitingButtonMessages[index + 1]);
+        index = (index + 1) % waitingButtonMessages.length;
+      }, 2500);
+      return () => clearInterval(interval);
+    } else {
+      setButtonText('Ask Stacky AI');
+    }
+  }, [loading]);
+
   return (
     <div>
       <div className="flex items-center my-10 border rounded-2xl border-gray-300  dark:border-gray-800">
@@ -60,7 +77,7 @@ const StackyAIAnswer = ({ title, content }: Props) => {
             onClick={handleSubmit}
             className="mt-4 sm:mt-0 px-5 sm:px-6 py-2 font-semibold rounded-full shadow-md transition bg-gradient-to-r from-orange-600 to-yellow-600 text-white hover:opacity-90"
           >
-            {loading ? 'Getting answer...' : 'Ask Stacky AI'}
+            {buttonText}
           </button>
         </div>
       </div>

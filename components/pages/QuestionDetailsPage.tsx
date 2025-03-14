@@ -45,7 +45,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
           <MdOutlineRemoveRedEye />
           <div>Views: {question?.views}</div>
         </div>
-        <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
+        <p className="hidden sm:flex text-gray-500 dark:text-gray-400 text-sm items-center gap-1">
           <FiMessageSquare />
           Answers: {question?.answers?.length}
         </p>
