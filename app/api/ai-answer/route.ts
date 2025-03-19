@@ -22,7 +22,7 @@ export async function POST(request: any) {
 
     // Initialize the Gemini API
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     // Create prompt
     const prompt = `You are a coding expert assistant.   

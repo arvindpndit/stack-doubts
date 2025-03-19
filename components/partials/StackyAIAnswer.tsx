@@ -90,7 +90,7 @@ const StackyAIAnswer = ({ title, content }: Props) => {
               Stacky AI may generate incorrect responses, double check important
               information
             </h2>
-            <div className="prose max-w-full break-words whitespace-pre-wrap">
+            <div className="prose max-w-full break-words whitespace-pre-wrap overflow-scroll">
               {/* <ParseHTML code={answer}></ParseHTML> */}
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {answer}
