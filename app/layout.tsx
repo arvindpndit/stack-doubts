@@ -45,8 +45,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Providers>
-        <body className={`${openSans.className}`}>
+      <body className={`${openSans.className}`}>
+        <Providers>
           <div className="min-h-screen">
             <Navbar />
             <div className="container flex justify-between px-0 md:px-2 mt-0 md:mt-8">
@@ -63,8 +63,8 @@ export default function RootLayout({
             </div>
           </div>
           <Toaster richColors />
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   );
 }
