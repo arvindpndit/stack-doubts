@@ -8,6 +8,7 @@ import ParseHTML from '../partials/ParseHtml';
 import AnswerForm from '../forms/AnswerForm';
 import QuestionInteractions from '../partials/QuestionInteractions';
 import StackyAIAnswer from '../partials/StackyAIAnswer';
+import { timeAgo } from '@/utils/data-manipulation';
 
 interface Props {
   id: string;
@@ -39,7 +40,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       <div className="mt-4 flex gap-4">
         <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <CiClock2 />
-          <div>asked on {question?.createdAt?.toLocaleDateString()}</div>
+          <div>{question?.createdAt && timeAgo(question?.createdAt)}</div>
         </div>
         <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
           <MdOutlineRemoveRedEye />
@@ -66,7 +67,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
               {/* @ts-ignore */}
               <div className="font-medium text-sm">{answer.author?.name}</div>
               <div className="text-gray-500 text-sm">
-                ‣ answered on {answer?.createdAt.toLocaleDateString()}
+                ‣ Answered {timeAgo(answer?.createdAt)}
               </div>
             </div>
             <ParseHTML code={answer?.content} />

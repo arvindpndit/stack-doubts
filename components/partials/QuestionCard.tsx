@@ -12,6 +12,7 @@ import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { FiMessageSquare } from 'react-icons/fi';
 import { FaRegThumbsUp } from 'react-icons/fa6';
 import { getQuestionsbyTag } from '@/lib/actions/question.action';
+import { timeAgo } from '@/utils/data-manipulation';
 
 interface QuestionCardProps {
   searchQuestionQuery?: string | undefined;
@@ -85,9 +86,7 @@ const QuestionCard = async (params: QuestionCardProps) => {
                   </div>
                   <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
                     <CiClock2 />
-                    <span>
-                      asked on {question?.createdAt.toLocaleDateString()}
-                    </span>
+                    <span>Asked {timeAgo(question?.createdAt)}</span>
                   </div>
                 </div>
 
