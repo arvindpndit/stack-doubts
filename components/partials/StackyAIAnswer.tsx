@@ -1,8 +1,11 @@
 'use client';
-import { waitingButtonMessages } from '@/utils/constants';
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Image from 'next/image';
+
+import Ripples from '@/public/assets/icons/ripples.svg';
+import { waitingButtonMessages } from '@/utils/constants';
 
 interface Props {
   title: string | undefined;
@@ -57,14 +60,22 @@ const StackyAIAnswer = ({ title, content }: Props) => {
 
   return (
     <div>
-      <div className="flex items-center my-10 border rounded-2xl border-gray-300  dark:border-gray-800">
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between p-6 bg-gradient-to-b from-red-100 to-white dark:from-gray-900 dark:to-black text-center sm:text-left rounded-2xl shadow-lg">
+      <div className="flex flex-col bg-gradient-to-b from-red-100 to-white dark:from-gray-900 dark:to-black text-center items-center my-10 border rounded-2xl border-gray-300  dark:border-gray-800">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between p-6  sm:text-left rounded-2xl shadow-lg">
           {/* Left Section: Logo & Subtext */}
           <div className="flex flex-col items-center sm:items-start">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <span className="text-orange-500 dark:text-yellow-400">★</span>
               <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-transparent bg-clip-text">
                 Stacky AI
+              </span>
+              <span>
+                <Image
+                  src={Ripples}
+                  alt="searching..."
+                  width={50}
+                  height={50}
+                />
               </span>
             </h1>
             <p className="text-md text-gray-600 dark:text-gray-300 mt-2">
@@ -80,6 +91,15 @@ const StackyAIAnswer = ({ title, content }: Props) => {
             {buttonText}
           </button>
         </div>
+        {loading && (
+          <Image
+            src={Ripples}
+            alt="searching..."
+            width={100}
+            height={100}
+            className="mb-4"
+          />
+        )}
       </div>
       <div>
         {error && <div className="mt-4 p-3 text-red-500">{error}</div>}
