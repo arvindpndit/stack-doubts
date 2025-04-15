@@ -7,12 +7,14 @@ import {
 } from '@/lib/actions/question.action';
 import { getAllSavedQuestions, getUserById } from '@/lib/actions/user.action';
 import Link from 'next/link';
-import { CiClock2 } from 'react-icons/ci';
-import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import { FiMessageSquare } from 'react-icons/fi';
-import { FaRegThumbsUp } from 'react-icons/fa6';
+import {
+  TbClockHour2,
+  TbEye,
+  TbMessageCircle,
+  TbThumbUp,
+} from 'react-icons/tb';
 import { getQuestionsbyTag } from '@/lib/actions/question.action';
-import { timeAgo } from '@/utils/data-manipulation';
+import { timeAgo, truncateText } from '@/utils/data-manipulation';
 import AppPagination from '../common/AppPagination';
 
 interface QuestionCardProps {
@@ -69,7 +71,9 @@ const QuestionCard = async (params: QuestionCardProps) => {
         return (
           <Link key={index} href={`/question-details/${question._id}`}>
             <div className="bg-white dark:bg-gray-800  p-4 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 my-5 md:my-8 cursor-pointer">
-              <h1 className="text-xl font-semibold">{question.title}</h1>
+              <h1 className="text-xl font-semibold">
+                {truncateText(question.title, 60)}
+              </h1>
               <div className="flex flex-wrap gap-2 mt-2 w-full">
                 {question?.tags &&
                   question.tags.map((tag, index) => (
@@ -95,23 +99,23 @@ const QuestionCard = async (params: QuestionCardProps) => {
                       {question?.author?.name}
                     </div>
                   </div>
-                  <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
-                    <CiClock2 />
+                  <div className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
+                    <TbClockHour2 />
                     <span>Asked {timeAgo(question?.createdAt)}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center  gap-4">
-                  <div className="text-sm font-semibold flex items-center gap-1">
-                    <FaRegThumbsUp />
+                  <div className=" text-xs font-semibold flex items-center gap-1">
+                    <TbThumbUp className="text-sm" />
                     <div>{question?.upvotes?.length} Votes</div>
                   </div>
-                  <p className="text-gray-500  dark:text-gray-400 text-sm flex items-center gap-1">
-                    <FiMessageSquare />
+                  <p className=" text-xs font-semibold  flex items-center gap-1">
+                    <TbMessageCircle className="text-sm" />
                     {question?.answers?.length} Answers
                   </p>
-                  <div className="  text-sm font-semibold flex items-center gap-1">
-                    <MdOutlineRemoveRedEye />
+                  <div className="text-xs font-semibold flex items-center gap-1">
+                    <TbEye className="text-sm" />
                     <div>{question?.views} Views</div>
                   </div>
                 </div>

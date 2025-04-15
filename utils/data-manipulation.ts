@@ -19,3 +19,8 @@ export function timeAgo(timestamp: Date | string | number): string {
   return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
 }
 
+export function truncateText(text: string, maxLength: number) {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + '...';
+}
+

@@ -1,8 +1,6 @@
 import React from 'react';
 import { getQuestionById } from '@/lib/actions/question.action';
-import { CiClock2 } from 'react-icons/ci';
-import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import { FiMessageSquare } from 'react-icons/fi';
+import { TbClockHour2, TbEye, TbMessageCircle } from 'react-icons/tb';
 
 import ParseHTML from '../partials/ParseHtml';
 import AnswerForm from '../forms/AnswerForm';
@@ -37,19 +35,21 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
       </div>
       <h2 className="text-3xl font-bold ">{question?.title}</h2>
       <div className="flex items-center justify-between"></div>
-      <div className="mt-4 flex gap-4">
-        <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
-          <CiClock2 />
-          <div>{question?.createdAt && timeAgo(question?.createdAt)}</div>
+      <div className="text-gray-600 dark:text-gray-400 mt-4 flex gap-4">
+        <div className=" flex items-center gap-1">
+          <TbClockHour2 className="text-base" />
+          <div className="text-sm">
+            {question?.createdAt && timeAgo(question?.createdAt)}
+          </div>
         </div>
-        <div className=" text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
-          <MdOutlineRemoveRedEye />
-          <div>Views: {question?.views}</div>
+        <div className="flex items-center gap-1">
+          <TbEye className="text-base" />
+          <div className="text-sm">Views: {question?.views}</div>
         </div>
-        <p className="hidden sm:flex text-gray-500 dark:text-gray-400 text-sm items-center gap-1">
-          <FiMessageSquare />
-          Answers: {question?.answers?.length}
-        </p>
+        <div className="hidden sm:flex  items-center gap-1">
+          <TbMessageCircle className="text-base" />
+          <div className="text-sm">Answers: {question?.answers?.length}</div>
+        </div>
       </div>
 
       <ParseHTML code={question?.content || ''}></ParseHTML>
