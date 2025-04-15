@@ -9,6 +9,7 @@ import {
 } from './shared.types';
 import { revalidatePath } from 'next/cache';
 import Question from '@/database/question-model';
+import { currentUser } from '@clerk/nextjs/server';
 
 export async function getUserById(params: { key: string; value: any }) {
   try {
@@ -100,29 +101,56 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
 interface getAllSavedQuestionsParams {
   mongoUser: any;
   searchQuestionQuery?: string;
+  page?: number;
+  limit?: number;
 }
 
 export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
-  const { mongoUser, searchQuestionQuery } = params;
+  const { mongoUser, searchQuestionQuery, page = 1, limit = 12 } = params;
   const savedQuestion = mongoUser.saved;
-
   try {
     await connectToMongoDb();
+    const skip = (page - 1) * limit;
+
     if (searchQuestionQuery === undefined) {
-      const questions = await Question.find({
+      const matchFilter = {
         _id: { $in: savedQuestion },
-      })
-        .populate('author', 'name picture')
-        .exec();
-      return questions;
+      };
+      const [questions, total] = await Promise.all([
+        Question.find(matchFilter)
+          .populate('author', 'name picture')
+          .skip(skip)
+          .limit(limit)
+          .exec(),
+        Question.countDocuments(matchFilter),
+      ]);
+      return {
+        questions,
+        total,
+        totalPages: Math.ceil(total / limit),
+        currentPage: page,
+      };
     } else {
-      const questions = await Question.find({
+      const matchFilter = {
         _id: { $in: savedQuestion },
         title: { $regex: searchQuestionQuery, $options: 'i' },
-      })
-        .populate('author', 'name picture')
-        .exec();
-      return questions;
+      };
+
+      const [questions, total] = await Promise.all([
+        Question.find(matchFilter)
+          .populate('author', 'name picture')
+          .skip(skip)
+          .limit(limit)
+          .exec(),
+        Question.countDocuments(matchFilter),
+      ]);
+
+      return {
+        questions,
+        total,
+        totalPages: Math.ceil(total / limit),
+        currentPage: page,
+      };
     }
   } catch (error) {
     console.error('Error fetching questions:', error);
@@ -219,11 +247,22 @@ export async function deleteUser(params: DeleteUserParams) {
   }
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(page = 1, limit = 15) {
   try {
     connectToMongoDb();
-    const users = await User.find();
-    return users;
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await Promise.all([
+      User.find().skip(skip).limit(limit).exec(),
+      User.countDocuments(),
+    ]);
+
+    return {
+      users,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   } catch (error) {
     console.log(error);
     throw error;
@@ -244,18 +283,32 @@ export async function getMostReputedUser() {
   }
 }
 
-export async function getSearchUsers(searchUserQuery: string) {
+export async function getSearchUsers(
+  searchUserQuery: string,
+  page = 1,
+  limit = 15,
+) {
   try {
     await connectToMongoDb();
+    const skip = (page - 1) * limit;
 
-    const users = await User.find({
+    const searchCondition = {
       $or: [
         { name: { $regex: searchUserQuery, $options: 'i' } },
         { username: { $regex: searchUserQuery, $options: 'i' } },
       ],
-    });
+    };
+    const [users, total] = await Promise.all([
+      User.find(searchCondition).skip(skip).limit(limit),
+      User.countDocuments(searchCondition),
+    ]);
 
-    return users;
+    return {
+      users,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   } catch (error) {
     console.error('Error fetching users:', error);
     throw new Error('Failed to fetch users');

@@ -3,16 +3,20 @@ import React from 'react';
 import { getAllUsers, getSearchUsers } from '@/lib/actions/user.action';
 import Link from 'next/link';
 import LocalSearchBar from '../common/LocalSearchBar';
+import AppPagination from '../common/AppPagination';
 
 interface Props {
   searchParams: string | undefined;
+  page?: number;
 }
 
-const CommunityPage = async ({ searchParams }: Props) => {
+const CommunityPage = async ({ searchParams, page = 1 }: Props) => {
+  let users, totalPages;
+
   if (searchParams === undefined) {
-    var users = await getAllUsers();
+    ({ users, totalPages } = await getAllUsers(page));
   } else {
-    var users = await getSearchUsers(searchParams);
+    ({ users, totalPages } = await getSearchUsers(searchParams, page));
   }
   return (
     <div className="overflow-hidden">
@@ -40,6 +44,15 @@ const CommunityPage = async ({ searchParams }: Props) => {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="mb-20 lg:mb-12">
+        <AppPagination
+          searchParams={searchParams}
+          page={page}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

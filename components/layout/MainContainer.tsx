@@ -5,9 +5,10 @@ import LocalSearchBar from '../common/LocalSearchBar';
 
 interface Props {
   searchQuestionQuery?: string | undefined;
+  page?: number;
 }
 
-const MainContainer = ({ searchQuestionQuery }: Props) => {
+const MainContainer = ({ searchQuestionQuery, page = 1 }: Props) => {
   return (
     <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
       <div className="flex justify-between mx-1">
@@ -22,7 +23,11 @@ const MainContainer = ({ searchQuestionQuery }: Props) => {
       </div>
 
       <LocalSearchBar placeholder="Search questions..." />
-      <QuestionCard searchQuestionQuery={searchQuestionQuery} />
+      <QuestionCard
+        searchQuestionQuery={searchQuestionQuery}
+        page={page}
+        showPagination={true}
+      />
     </div>
   );
 };

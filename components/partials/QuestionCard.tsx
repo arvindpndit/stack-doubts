@@ -13,25 +13,36 @@ import { FiMessageSquare } from 'react-icons/fi';
 import { FaRegThumbsUp } from 'react-icons/fa6';
 import { getQuestionsbyTag } from '@/lib/actions/question.action';
 import { timeAgo } from '@/utils/data-manipulation';
+import AppPagination from '../common/AppPagination';
 
 interface QuestionCardProps {
   searchQuestionQuery?: string | undefined;
   filter?: string;
   mongoUser?: any;
   tagId?: string | undefined;
+  page?: number;
+  showPagination?: boolean;
 }
 
 const QuestionCard = async (params: QuestionCardProps) => {
-  const { filter, mongoUser, searchQuestionQuery, tagId } = params;
+  const {
+    filter,
+    mongoUser,
+    searchQuestionQuery,
+    tagId,
+    page,
+    showPagination = false,
+  } = params;
 
-  let questions;
+  let questions, totalPages;
 
   switch (filter) {
     case 'savedQuestions':
-      questions = await getAllSavedQuestions({
+      ({ questions, totalPages } = await getAllSavedQuestions({
         mongoUser,
         searchQuestionQuery,
-      });
+        page,
+      }));
       break;
     case 'questionAskedByAuthor':
       ({ questions } = await getQuestionsByAuthorId(mongoUser));
@@ -40,16 +51,16 @@ const QuestionCard = async (params: QuestionCardProps) => {
       ({ questions } = await questionsAnsweredByAuthor(mongoUser));
       break;
     case 'questionsByTag':
-      questions =
+      ({ questions, totalPages } =
         searchQuestionQuery === undefined
-          ? await getQuestionsbyTag(tagId)
-          : await getSearchTagQuestions(tagId, searchQuestionQuery);
+          ? await getQuestionsbyTag(tagId, page)
+          : await getSearchTagQuestions(tagId, searchQuestionQuery, page));
       break;
     default:
-      questions =
+      ({ questions, totalPages } =
         searchQuestionQuery === undefined
-          ? await getAllQuestions()
-          : await getSearchQuestions(searchQuestionQuery);
+          ? await getAllQuestions(page)
+          : await getSearchQuestions(searchQuestionQuery, page));
   }
 
   return (
@@ -109,6 +120,16 @@ const QuestionCard = async (params: QuestionCardProps) => {
           </Link>
         );
       })}
+
+      {showPagination && (
+        <div className="mb-3">
+          <AppPagination
+            searchParams={searchQuestionQuery}
+            page={page ?? 1} //ensures that if page is undefined, it falls back to 1.
+            totalPages={totalPages ?? 0}
+          />
+        </div>
+      )}
     </div>
   );
 };

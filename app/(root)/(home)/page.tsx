@@ -13,6 +13,9 @@ interface PageProps {
 
 export default async function Home({ searchParams }: PageProps) {
   const query = (await searchParams).query as string | undefined;
-  return <MainContainer searchQuestionQuery={query} />;
+  const pageParam = (await searchParams).page as string | undefined;
+  const page = pageParam ? parseInt(pageParam, 10) : 1;
+
+  return <MainContainer searchQuestionQuery={query} page={page} />;
 }
 
