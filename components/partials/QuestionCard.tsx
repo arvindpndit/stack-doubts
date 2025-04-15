@@ -50,10 +50,10 @@ const QuestionCard = async (params: QuestionCardProps) => {
       ({ questions } = await questionsAnsweredByAuthor(mongoUser));
       break;
     case 'questionsByTag':
-      questions =
+      ({ questions, totalPages } =
         searchQuestionQuery === undefined
-          ? await getQuestionsbyTag(tagId)
-          : await getSearchTagQuestions(tagId, searchQuestionQuery);
+          ? await getQuestionsbyTag(tagId, page)
+          : await getSearchTagQuestions(tagId, searchQuestionQuery, page));
       break;
     default:
       ({ questions, totalPages } =
