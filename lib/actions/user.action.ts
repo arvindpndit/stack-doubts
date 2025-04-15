@@ -9,6 +9,7 @@ import {
 } from './shared.types';
 import { revalidatePath } from 'next/cache';
 import Question from '@/database/question-model';
+import { currentUser } from '@clerk/nextjs/server';
 
 export async function getUserById(params: { key: string; value: any }) {
   try {
@@ -219,11 +220,22 @@ export async function deleteUser(params: DeleteUserParams) {
   }
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(page = 1, limit = 15) {
   try {
     connectToMongoDb();
-    const users = await User.find();
-    return users;
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await Promise.all([
+      User.find().skip(skip).limit(limit).exec(),
+      User.countDocuments(),
+    ]);
+
+    return {
+      users,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   } catch (error) {
     console.log(error);
     throw error;
@@ -244,18 +256,32 @@ export async function getMostReputedUser() {
   }
 }
 
-export async function getSearchUsers(searchUserQuery: string) {
+export async function getSearchUsers(
+  searchUserQuery: string,
+  page = 1,
+  limit = 15,
+) {
   try {
     await connectToMongoDb();
+    const skip = (page - 1) * limit;
 
-    const users = await User.find({
+    const searchCondition = {
       $or: [
         { name: { $regex: searchUserQuery, $options: 'i' } },
         { username: { $regex: searchUserQuery, $options: 'i' } },
       ],
-    });
+    };
+    const [users, total] = await Promise.all([
+      User.find(searchCondition).skip(skip).limit(limit),
+      User.countDocuments(searchCondition),
+    ]);
 
-    return users;
+    return {
+      users,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   } catch (error) {
     console.error('Error fetching users:', error);
     throw new Error('Failed to fetch users');
