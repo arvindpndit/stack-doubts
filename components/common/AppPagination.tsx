@@ -96,7 +96,7 @@ const AppPagination = ({ searchParams, page, totalPages }: Props) => {
   };
 
   return (
-    <div className="flex justify-center mb-20 lg:mb-12">
+    <div className="flex justify-center">
       <Pagination>
         <PaginationContent>
           {page > 1 && (

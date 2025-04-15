@@ -47,11 +47,13 @@ const CommunityPage = async ({ searchParams, page = 1 }: Props) => {
       </div>
 
       {/* Pagination */}
-      <AppPagination
-        searchParams={searchParams}
-        page={page}
-        totalPages={totalPages}
-      />
+      <div className="mb-20 lg:mb-12">
+        <AppPagination
+          searchParams={searchParams}
+          page={page}
+          totalPages={totalPages}
+        />
+      </div>
     </div>
   );
 };

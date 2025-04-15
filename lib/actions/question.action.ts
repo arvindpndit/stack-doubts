@@ -57,21 +57,38 @@ export async function createQuestion(params: CreateQuestionParams) {
   }
 }
 
-export async function getSearchQuestions(searchQuestionQuery: string) {
+export async function getSearchQuestions(
+  searchQuestionQuery: string,
+  page = 1,
+  limit = 12,
+) {
   try {
     await connectToMongoDb();
+    const skip = (page - 1) * limit;
 
-    const questions = await Question.find({
+    const searchCondition = {
       $or: [
         { title: { $regex: searchQuestionQuery, $options: 'i' } },
         { content: { $regex: searchQuestionQuery, $options: 'i' } },
       ],
-    })
-      .populate('author', 'name picture')
-      .populate('tags', 'name')
-      .exec();
+    };
 
-    return questions;
+    const [questions, total] = await Promise.all([
+      Question.find(searchCondition)
+        .populate('author', 'name picture')
+        .populate('tags', 'name')
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      Question.countDocuments(searchCondition),
+    ]);
+
+    return {
+      questions,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   } catch (error) {
     console.error('Error fetching questions:', error);
     throw new Error('Failed to fetch questions');
@@ -103,14 +120,27 @@ export async function getSearchTagQuestions(
   }
 }
 
-export async function getAllQuestions() {
+export async function getAllQuestions(page = 1, limit = 12) {
   try {
     await connectToMongoDb();
-    const questions = await Question.find()
-      .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
-      .populate('tags', 'name')
-      .exec();
-    return questions;
+    const skip = (page - 1) * limit;
+
+    const [questions, total] = await Promise.all([
+      Question.find()
+        .populate('author', 'name picture') // Populate the 'author' of the question with 'name' and 'picture'
+        .populate('tags', 'name')
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      Question.countDocuments(),
+    ]);
+
+    return {
+      questions,
+      total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   } catch (error) {
     console.error('Error fetching questions:', error);
     throw new Error('Failed to fetch questions');
