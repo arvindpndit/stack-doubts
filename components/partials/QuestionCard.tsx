@@ -38,10 +38,11 @@ const QuestionCard = async (params: QuestionCardProps) => {
 
   switch (filter) {
     case 'savedQuestions':
-      questions = await getAllSavedQuestions({
+      ({ questions, totalPages } = await getAllSavedQuestions({
         mongoUser,
         searchQuestionQuery,
-      });
+        page,
+      }));
       break;
     case 'questionAskedByAuthor':
       ({ questions } = await getQuestionsByAuthorId(mongoUser));

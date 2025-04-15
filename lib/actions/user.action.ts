@@ -101,29 +101,56 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
 interface getAllSavedQuestionsParams {
   mongoUser: any;
   searchQuestionQuery?: string;
+  page?: number;
+  limit?: number;
 }
 
 export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
-  const { mongoUser, searchQuestionQuery } = params;
+  const { mongoUser, searchQuestionQuery, page = 1, limit = 12 } = params;
   const savedQuestion = mongoUser.saved;
-
   try {
     await connectToMongoDb();
+    const skip = (page - 1) * limit;
+
     if (searchQuestionQuery === undefined) {
-      const questions = await Question.find({
+      const matchFilter = {
         _id: { $in: savedQuestion },
-      })
-        .populate('author', 'name picture')
-        .exec();
-      return questions;
+      };
+      const [questions, total] = await Promise.all([
+        Question.find(matchFilter)
+          .populate('author', 'name picture')
+          .skip(skip)
+          .limit(limit)
+          .exec(),
+        Question.countDocuments(matchFilter),
+      ]);
+      return {
+        questions,
+        total,
+        totalPages: Math.ceil(total / limit),
+        currentPage: page,
+      };
     } else {
-      const questions = await Question.find({
+      const matchFilter = {
         _id: { $in: savedQuestion },
         title: { $regex: searchQuestionQuery, $options: 'i' },
-      })
-        .populate('author', 'name picture')
-        .exec();
-      return questions;
+      };
+
+      const [questions, total] = await Promise.all([
+        Question.find(matchFilter)
+          .populate('author', 'name picture')
+          .skip(skip)
+          .limit(limit)
+          .exec(),
+        Question.countDocuments(matchFilter),
+      ]);
+
+      return {
+        questions,
+        total,
+        totalPages: Math.ceil(total / limit),
+        currentPage: page,
+      };
     }
   } catch (error) {
     console.error('Error fetching questions:', error);

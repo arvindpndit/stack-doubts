@@ -8,15 +8,16 @@ import LocalSearchBar from '../common/LocalSearchBar';
 
 interface Props {
   searchQuestionQuery: string | undefined;
+  page?: number;
 }
 
-const CollectionsPage = async ({ searchQuestionQuery }: Props) => {
+const CollectionsPage = async ({ searchQuestionQuery, page = 1 }: Props) => {
   const { userId } = await auth();
   if (!userId) redirect('/sign-in');
   const mongoUser = await getUserById({ key: 'clerkId', value: userId });
 
   return (
-    <div className="pb-24">
+    <div>
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl mx-1">Saved Questions</h1>
       </div>
@@ -25,6 +26,8 @@ const CollectionsPage = async ({ searchQuestionQuery }: Props) => {
         searchQuestionQuery={searchQuestionQuery}
         filter="savedQuestions"
         mongoUser={mongoUser}
+        page={page}
+        showPagination={true}
       />
     </div>
   );
