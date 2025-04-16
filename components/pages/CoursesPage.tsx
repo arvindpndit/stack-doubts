@@ -16,9 +16,9 @@ const CoursesPage = ({ playlists }: any) => {
                 <div className="h-full">
                   <Image
                     src={playlist.snippet.thumbnails.maxres.url}
+                    alt={playlist.title}
                     width={700}
                     height={400}
-                    alt={playlist.title}
                     className="w-full h-full object-cover rounded-2xl"
                   />
                 </div>

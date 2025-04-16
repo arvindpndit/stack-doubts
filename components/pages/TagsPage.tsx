@@ -8,6 +8,7 @@ import LocalSearchBar from '../common/LocalSearchBar';
 import TagCard from '../common/TagCard';
 import { getAllTags, getSearchTags } from '@/lib/actions/tag.action';
 import AppPagination from '../common/AppPagination';
+import PageHeader from '../common/PageHeader';
 
 interface Props {
   searchParams: string | undefined;
@@ -24,10 +25,12 @@ const TagsPage = async ({ searchParams, page = 1 }: Props) => {
 
   return (
     <div className="pb-20">
-      <div className="flex justify-between">
-        <h1 className="font-bold text-3xl mx-1">All #tags</h1>
-      </div>
-      <LocalSearchBar placeholder="Search tags..." />
+      <PageHeader
+        introBadgeText="🏷️ Browse Topics"
+        titleText="Explore Tags"
+        subTitleText="Find questions grouped by technology, concept, or category."
+        searchBarPlaceholder="Search tags..."
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 mb-8">
         {tags?.map((tag) => (

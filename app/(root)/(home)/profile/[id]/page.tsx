@@ -9,7 +9,7 @@ interface PageProps {
 const Profile = async ({ params }: PageProps) => {
   const { id } = await params;
   return (
-    <div className="w-full px-1 lg:pr-8 mt-28 mb-24 lg:mb-14 h-screen">
+    <div className="w-full px-2 lg:pr-8 mt-20 sm:mt-28 md:mt-24 h-screen">
       <ProfileHeader authorId={id} />
       <ToggleUserQuestions
         questionsAsked={

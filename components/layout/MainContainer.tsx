@@ -1,7 +1,6 @@
 import React from 'react';
 import QuestionCard from '../partials/QuestionCard';
-import Link from 'next/link';
-import LocalSearchBar from '../common/LocalSearchBar';
+import PageHeader from '../common/PageHeader';
 
 interface Props {
   searchQuestionQuery?: string | undefined;
@@ -10,19 +9,13 @@ interface Props {
 
 const MainContainer = ({ searchQuestionQuery, page = 1 }: Props) => {
   return (
-    <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
-      <div className="flex justify-between mx-1">
-        <h1 className="font-bold text-3xl">All Questions</h1>
-        <Link
-          href="/ask-question"
-          type="button"
-          className="text-white transition-all bg-orange-500 font-medium rounded-full text-sm px-5 py-3 text-center  mb-2 hover:scale-105  hover:shadow-md"
-        >
-          Ask a question
-        </Link>
-      </div>
-
-      <LocalSearchBar placeholder="Search questions..." />
+    <div className="w-full px-2 lg:pr-8 mt-20 sm:mt-28 md:mt-24 h-screen">
+      <PageHeader
+        introBadgeText="👋 Welcome back!"
+        titleText="All Questions"
+        subTitleText="Dive into the community’s knowledge or ask your own."
+        searchBarPlaceholder="Search questions..."
+      />
       <QuestionCard
         searchQuestionQuery={searchQuestionQuery}
         page={page}
