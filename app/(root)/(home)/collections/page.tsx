@@ -18,7 +18,7 @@ const page = async ({ searchParams }: PageProps) => {
   const page = pageParam ? parseInt(pageParam, 10) : 1;
 
   return (
-    <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
+    <div className="w-full px-2 lg:pr-8 mt-20 sm:mt-28 md:mt-24 h-screen">
       <CollectionsPage searchQuestionQuery={searchQuestionQuery} page={page} />
     </div>
   );

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 
 import QuestionCard from '../partials/QuestionCard';
 import LocalSearchBar from '../common/LocalSearchBar';
+import PageHeader from '../common/PageHeader';
 
 interface Props {
   searchQuestionQuery: string | undefined;
@@ -18,10 +19,12 @@ const CollectionsPage = async ({ searchQuestionQuery, page = 1 }: Props) => {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <h1 className="font-bold text-3xl mx-1">Saved Questions</h1>
-      </div>
-      <LocalSearchBar placeholder="Search questions..." />
+      <PageHeader
+        introBadgeText="🔖 Your Collection"
+        titleText="Saved Questions"
+        subTitleText="Easily revisit the questions you found helpful or want to explore later."
+        searchBarPlaceholder="Search saved questions..."
+      />
       <QuestionCard
         searchQuestionQuery={searchQuestionQuery}
         filter="savedQuestions"

@@ -67,69 +67,69 @@ const QuestionCard = async (params: QuestionCardProps) => {
 
   return (
     <div className="mt-8 pb-16 md:pb-10 mb-16 md:mb-10">
-      {questions?.reverse().map(async (question, index) => {
-        return (
-          <Link key={index} href={`/question-details/${question._id}`}>
-            <div className="bg-white dark:bg-gray-800  p-4 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 my-5 md:my-8 cursor-pointer">
-              <h1 className="text-xl font-semibold">
-                {truncateText(question.title, 60)}
-              </h1>
-              <div className="flex flex-wrap gap-2 mt-2 w-full">
-                {question?.tags &&
-                  question.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-2.5 py-0.5 bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-white rounded-full text-sm"
-                    >
-                      {/* @ts-ignore */}
-                      {tag?.name}
-                    </span>
-                  ))}
+      {questions?.reverse().map(async (question, index) => (
+        <Link key={index} href={`/question-details/${question._id}`}>
+          <div className="group bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-md border border-gray-200 dark:border-gray-700 my-6 transition-all hover:shadow-lg hover:border-orange-400 cursor-pointer">
+            <h1 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors">
+              {truncateText(question.title, 60)}
+            </h1>
+
+            <div className="flex flex-wrap gap-2 mt-3">
+              {question?.tags?.map((tag, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 bg-orange-50 dark:bg-orange-400/10 text-orange-600 dark:text-orange-400 rounded-full text-xs font-medium"
+                >
+                  {/* @ts-expect-error fix later */}
+                  {tag?.name}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-col mt-5 gap-4">
+              {/* Author & Time */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={question?.author?.picture}
+                    alt={`Profile of ${question?.author?.name}`}
+                    className="h-9 w-9 rounded-full object-cover"
+                  />
+                  <span className="text-sm font-medium text-gray-800 dark:text-gray-100">
+                    {question?.author?.name}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                  <TbClockHour2 className="text-base" />
+                  <span>Asked {timeAgo(question?.createdAt)}</span>
+                </div>
               </div>
 
-              <div className="flex flex-col  mt-4 gap-4 ">
-                <div className="flex items-center justify-between mr-4">
-                  <div className="flex items-center justify-center">
-                    <img
-                      src={question?.author?.picture}
-                      className="h-8 mr-2 rounded-full"
-                      alt={`Profile of ${question?.author?.name}`}
-                    />
-                    <div className="text-sm font-semibold mr-4">
-                      {question?.author?.name}
-                    </div>
-                  </div>
-                  <div className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1">
-                    <TbClockHour2 />
-                    <span>Asked {timeAgo(question?.createdAt)}</span>
-                  </div>
+              {/* Stats: Votes, Answers, Views */}
+              <div className="flex items-center gap-6 text-xs font-semibold text-gray-700 dark:text-gray-300">
+                <div className="flex items-center gap-1">
+                  <TbThumbUp className="text-sm" />
+                  <span>{question?.upvotes?.length} Votes</span>
                 </div>
-
-                <div className="flex items-center  gap-4">
-                  <div className=" text-xs font-semibold flex items-center gap-1">
-                    <TbThumbUp className="text-sm" />
-                    <div>{question?.upvotes?.length} Votes</div>
-                  </div>
-                  <p className=" text-xs font-semibold  flex items-center gap-1">
-                    <TbMessageCircle className="text-sm" />
-                    {question?.answers?.length} Answers
-                  </p>
-                  <div className="text-xs font-semibold flex items-center gap-1">
-                    <TbEye className="text-sm" />
-                    <div>{question?.views} Views</div>
-                  </div>
+                <div className="flex items-center gap-1">
+                  <TbMessageCircle className="text-sm" />
+                  <span>{question?.answers?.length} Answers</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <TbEye className="text-sm" />
+                  <span>{question?.views} Views</span>
                 </div>
               </div>
             </div>
-          </Link>
-        );
-      })}
+          </div>
+        </Link>
+      ))}
 
       {showPagination && (
         <div className="mb-3">
           <AppPagination
             searchParams={searchQuestionQuery}
-            page={page ?? 1} //ensures that if page is undefined, it falls back to 1.
+            page={page ?? 1}
             totalPages={totalPages ?? 0}
           />
         </div>

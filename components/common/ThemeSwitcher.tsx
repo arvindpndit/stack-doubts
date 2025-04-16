@@ -1,6 +1,6 @@
 'use client';
 
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { TbSun, TbMoon } from 'react-icons/tb';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
@@ -16,16 +16,16 @@ const ThemeSwitcher = () => {
 
   if (resolvedTheme === 'dark') {
     return (
-      <FiSun
-        className="text-3xl hover:cursor-pointer"
+      <TbSun
+        className="text-2xl md:text-3xl hover:cursor-pointer "
         onClick={() => setTheme('light')}
       />
     );
   }
   if (resolvedTheme === 'light') {
     return (
-      <FiMoon
-        className="text-3xl hover:cursor-pointer"
+      <TbMoon
+        className="text-2xl md:text-3xl hover:cursor-pointer "
         onClick={() => setTheme('dark')}
       />
     );

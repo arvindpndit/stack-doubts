@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import searchIcon from '../../public/assets/icons/search.svg';
 import { FaSearch } from 'react-icons/fa';
+import { TbSearch } from 'react-icons/tb';
 import { useEffect, useRef, useState } from 'react';
 import { getGlobalSearchResult } from '@/lib/actions/global.action';
 import Link from 'next/link';
@@ -85,19 +86,23 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
   return (
     <div className=" sm:flex flex-col items-center">
       {/* fake search bar */}
-      <div className="w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-700 rounded-full border border-gray-300 h-10 dark:border-gray-600 ">
+      <div className="w-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 sm:dark:bg-gray-700 rounded-full md:border border-gray-300 h-10 dark:border-gray-600 ">
         <div
           className="hidden md:block ml-4 focus:outline-none text-gray-400 text-sm"
           onClick={() => setShowResultContainer(true)}
         >
           Search anything globally...
         </div>
+        <TbSearch
+          className="block md:hidden text-2xl cursor-pointer "
+          onClick={() => setShowResultContainer(true)}
+        />
         <Image
           src={searchIcon}
           alt="Search Icon"
           width={16}
           height={16}
-          className="cursor-pointer mx-4"
+          className="cursor-pointer hidden md:block mx-4"
           onClick={() => setShowResultContainer(true)}
         />
       </div>

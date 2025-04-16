@@ -95,7 +95,7 @@ const AskQuestionForm = ({ mongoUserId }: Props) => {
   };
 
   return (
-    <div className="mt-8 pb-24 lg:pb-14">
+    <div className="pb-24 lg:pb-14">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

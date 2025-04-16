@@ -2,9 +2,7 @@
 
 import { useDebouncedCallback } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
-import Image from 'next/image';
-import searchIcon from '../../public/assets/icons/search.svg';
+import { TbSearch } from 'react-icons/tb';
 
 interface localSearchBarProps {
   placeholder: string;
@@ -29,22 +27,19 @@ const LocalSearchBar = ({ placeholder }: localSearchBarProps) => {
   }, 300);
 
   return (
-    <div className="relative flex items-center mt-6">
-      <input
-        className="w-full h-12 px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-full border border-gray-300 dark:border-gray-600  focus:outline-none"
-        placeholder={placeholder}
-        onChange={(e) => {
-          handleSearch(e.target.value);
-        }}
-        defaultValue={searchParams.get('query')?.toString()}
-      />
-      <Image
-        src={searchIcon}
-        alt="Search Icon"
-        width={20}
-        height={20}
-        className="absolute right-3 top-3 cursor-pointer "
-      />
+    <div className="mt-4 w-full max-w-sm">
+      <div className="relative">
+        <input
+          placeholder={placeholder}
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
+          defaultValue={searchParams.get('query')?.toString()}
+          type="text"
+          className="w-full pl-10 pr-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        />
+        <TbSearch className="absolute left-3 top-2.5 text-gray-500 dark:text-gray-400" />
+      </div>
     </div>
   );
 };

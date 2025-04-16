@@ -11,7 +11,7 @@ interface TagCardProps {
 const TagCard: React.FC<TagCardProps> = ({ name, questionCount, id }) => {
   return (
     <Link href={`/tags/${name}/${id}`}>
-      <div className="rounded-3xl dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm mx-0.5 sm:mx-2 mt-8 p-4 hover:cursor-pointer">
+      <div className="rounded-3xl dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm mx-0.5 sm:mx-2 mb-6 p-4 hover:cursor-pointer">
         <div className="flex flex-col justify-start">
           <p className="my-3 text-left text-3xl font-semibold">
             <span className="text-sm"> # </span>

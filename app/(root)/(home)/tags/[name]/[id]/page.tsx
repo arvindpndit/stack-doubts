@@ -1,4 +1,5 @@
 import LocalSearchBar from '@/components/common/LocalSearchBar';
+import PageHeader from '@/components/common/PageHeader';
 import QuestionCard from '@/components/partials/QuestionCard';
 
 interface PageProps {
@@ -12,11 +13,14 @@ const page = async ({ params, searchParams }: PageProps) => {
   const pageParam = (await searchParams).page as string | undefined;
   const page = pageParam ? parseInt(pageParam, 10) : 1;
   return (
-    <div className="w-full px-1 lg:pr-8 mt-28 h-screen">
-      <div className="flex justify-between">
-        <h1 className="font-bold text-3xl">#{name}</h1>
-      </div>
-      <LocalSearchBar placeholder={`Search ${name} questions...`} />
+    <div className="w-full px-2 lg:pr-8 mt-20 sm:mt-28 md:mt-24 h-screen">
+      <PageHeader
+        introBadgeText={`🧩 Tag: ${name}`}
+        titleText={`${name} Questions`}
+        subTitleText={`Explore all questions tagged with ${name}. Learn, contribute, or ask your own.`}
+        searchBarPlaceholder={`Search in ${name}...`}
+      />
+
       <QuestionCard
         filter="questionsByTag"
         tagId={id}

@@ -4,6 +4,7 @@ import { getAllUsers, getSearchUsers } from '@/lib/actions/user.action';
 import Link from 'next/link';
 import LocalSearchBar from '../common/LocalSearchBar';
 import AppPagination from '../common/AppPagination';
+import PageHeader from '../common/PageHeader';
 
 interface Props {
   searchParams: string | undefined;
@@ -19,10 +20,13 @@ const CommunityPage = async ({ searchParams, page = 1 }: Props) => {
     ({ users, totalPages } = await getSearchUsers(searchParams, page));
   }
   return (
-    <div className="overflow-hidden">
-      <h1 className="font-bold text-3xl mx-1">All Users</h1>
-
-      <LocalSearchBar placeholder="Search amazing minds here..." />
+    <div>
+      <PageHeader
+        introBadgeText="👤 Our Community"
+        titleText="Meet the Members"
+        subTitleText="Explore profiles and discover talented individuals in the community."
+        searchBarPlaceholder="Search amazing individuals here..."
+      />
 
       <div className="mt-8 pb-16 md:pb-10 grid grid-cols-2 lg:grid-cols-3 gap-8">
         {users?.map((user) => (
@@ -47,7 +51,7 @@ const CommunityPage = async ({ searchParams, page = 1 }: Props) => {
       </div>
 
       {/* Pagination */}
-      <div className="mb-20 lg:mb-12">
+      <div className="pb-20 lg:pb-12">
         <AppPagination
           searchParams={searchParams}
           page={page}

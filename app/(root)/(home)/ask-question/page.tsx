@@ -1,3 +1,4 @@
+import PageHeader from '@/components/common/PageHeader';
 import AskQuestionForm from '@/components/forms/AskQuestionForm';
 import { getUserById } from '@/lib/actions/user.action';
 import { auth } from '@clerk/nextjs/server';
@@ -16,8 +17,16 @@ const Ask = async () => {
   const mongoUser = await getUserById({ key: 'clerkId', value: userId });
 
   return (
-    <div className="w-full px-1 lg:pr-8 mt-28  h-screen">
-      <h1 className="font-bold text-3xl mx-1">Ask a question</h1>
+    <div className="w-full px-2 lg:pr-8 mt-20 sm:mt-28 md:mt-24 h-screen">
+      <PageHeader
+        introBadgeText="💬 Ask Away"
+        titleText="Post a New Question"
+        subTitleText="Describe your issue and get guidance from the dev community."
+        searchBarPlaceholder="Search existing questions first..."
+        showBtn={false}
+        showSearchBar={false}
+      />
+
       <AskQuestionForm mongoUserId={JSON.stringify(mongoUser?._id)} />
     </div>
   );
