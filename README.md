@@ -5,7 +5,9 @@
 </div>
 
 <div align="center">
-  <p>A knowledge sharing opensource platform to facilitate Q&A, real-time events, and community interaction.</p>
+  <p>
+    An open-source knowledge-sharing platform for Q&A, real-time events, and community interaction.
+  </p>
 </div>
 
 <div align="center">
@@ -20,50 +22,65 @@
   <a href="https://github.com/arvindpndit/stack-doubts">🔎 Explore Code</a>
 </div>
 
-## Prerequisites
+---
+
+## 🛠 Prerequisites
 
 - Node.js v18+
 
-## Development
+---
 
-1. Clone the repository:
+## 🚀 Development Setup
 
-```bash
-git clone https://github.com/arvindpndit/stack-doubts.git
-```
+1. **Clone the repository**:
 
-2. Enter the project directory:
+   ```bash
+   git clone https://github.com/arvindpndit/stack-doubts.git
+   ```
 
-```bash
-cd stack-doubts
-```
+2. **Navigate into the project directory**:
 
-3. Install the dependencies:
+   ```bash
+   cd stack-doubts
+   ```
 
-```bash
-npm i
-```
+3. **Install dependencies**:
 
-4. Configure the env vars as described below -
+   ```bash
+   npm install
+   ```
 
-   1. Create a new file named `.env.local` in your project's root directory
-   2. Open the `.env.local` file in a text editor.
-   3. Set the values of the environment variables with the appropriate values
+4. **Configure environment variables**:
 
-```dotenv
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
-NEXT_PUBLIC_TINY_URL_API_KEY=your_tinyurl_api_key
-MONGODB_URL=your_mongodb_connection_url
-WEBHOOK_SECRET=your_webhook_secret
-```
+   Option 1 — manually create:
 
-5. Start the development server with:
+   - Create a new file named `.env.local` in the root
+   - Add the following variables with your own values:
 
-```bash
-npm run dev
-```
+     ```dotenv
+     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+     CLERK_SECRET_KEY=your_clerk_secret_key
+     NEXT_PUBLIC_TINY_URL_API_KEY=your_tinyurl_api_key
+     MONGODB_URL=your_mongodb_connection_url
+     WEBHOOK_SECRET=your_webhook_secret
+     YOUTUBE_API=your_youtube_api_key
+     GEMINI_API_KEY=your_gemini_api_key
+     ```
 
-> Note:
-> If you encounter any problem in local setup, DM me on [LinkedIn](https://www.linkedin.com/in/arvindpndit/) or on [X/twitter](https://twitter.com/arvindpnditz)
+   Option 2 — copy from example:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+5. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+---
+
+> 💡 **Need help?**
+> DM me on [LinkedIn](https://www.linkedin.com/in/arvindpndit/) or [X/Twitter](https://twitter.com/arvindpnditz)
 
