@@ -64,7 +64,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
       saved: {
         $elemMatch: { $eq: questionId },
       },
-    });
+    }).lean();
 
     if (!update) {
       return IsQuestionAlreadySaved; //null or obj
@@ -73,9 +73,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
         const res = await User.findOneAndUpdate(
           { _id: userId },
           { $push: { saved: questionId } },
-          {
-            new: true,
-          },
+          { new: true, lean: true },
         );
         revalidatePath(path);
         return res; //obj
@@ -83,9 +81,7 @@ export async function saveTheQuestion(params: saveTheQuestionProps) {
         await User.findOneAndUpdate(
           { _id: userId },
           { $pull: { saved: questionId } },
-          {
-            new: true,
-          },
+          { new: true, lean: true },
         );
 
         revalidatePath(path);
@@ -162,14 +158,14 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
   try {
     const { questionId, authorId, path } = params;
 
-    //check whether the user is present in the upvotes or downvotes (Question model)
+    //check whether the user is present in the upvotes (Question model)
     const hasUserAlreadyUpvoted = await Question.findOne({
       _id: questionId,
       upvotes: authorId,
     });
 
     if (!hasUserAlreadyUpvoted) {
-      const question = await Question.findOneAndUpdate(
+      await Question.findOneAndUpdate(
         { _id: questionId },
         { $pull: { downvotes: authorId }, $push: { upvotes: authorId } },
         {
@@ -178,15 +174,16 @@ export async function upvoteQuestion(params: voteTheQuestionParams) {
       );
       revalidatePath(path);
 
-      return question;
+      return { isQuestionUpvoted: true };
     }
 
-    const removeUpvote = await Question.updateOne(
+    //remove the upvote
+    await Question.updateOne(
       { _id: questionId },
       { $pull: { upvotes: authorId } },
     );
 
-    return;
+    return { isQuestionUpvoted: false };
   } catch (error) {
     console.log(error);
     throw error;
@@ -198,13 +195,13 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
     const { questionId, authorId, path } = params;
 
     //check whether the user is present in the upvotes or downvotes (Question model)
-    const hasUserAlreadyUpvoted = await Question.findOne({
+    const hasUserAlreadyDownvoted = await Question.findOne({
       _id: questionId,
       downvotes: authorId,
     });
 
-    if (!hasUserAlreadyUpvoted) {
-      const question = await Question.findOneAndUpdate(
+    if (!hasUserAlreadyDownvoted) {
+      await Question.findOneAndUpdate(
         { _id: questionId },
         { $pull: { upvotes: authorId }, $push: { downvotes: authorId } },
         {
@@ -212,15 +209,15 @@ export async function downvoteQuestion(params: voteTheQuestionParams) {
         },
       );
       revalidatePath(path);
-      return question;
+      return { isQuestionDownvoted: true };
     }
 
-    const removeUpvote = await Question.updateOne(
+    const removeDownvote = await Question.updateOne(
       { _id: questionId },
       { $pull: { upvotes: authorId } },
     );
 
-    return;
+    return { isQuestionDownvoted: false };
   } catch (error) {
     console.log(error);
     throw error;

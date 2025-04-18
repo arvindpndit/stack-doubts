@@ -24,7 +24,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
             className="h-6 mr-2 rounded-full"
             alt={`Profile of ${question?.author?.name}`}
           />
-          <div className="text-lg font-semibold mr-4">
+          <div className="text-base md:text-lg font-medium mr-4">
             {question?.author?.name}
           </div>
         </div>
@@ -33,7 +33,7 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
           question={JSON.stringify(question)}
         />
       </div>
-      <h2 className="text-3xl font-bold ">{question?.title}</h2>
+      <h2 className="text-2xl md:text-3xl font-semibold ">{question?.title}</h2>
       <div className="flex items-center justify-between"></div>
       <div className="text-gray-600 dark:text-gray-400 mt-4 flex gap-4">
         <div className=" flex items-center gap-1">

@@ -99,10 +99,12 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
   return (
     <div className=" sm:flex flex-col items-center">
       {/* fake search bar */}
-      <TbSearch
-        className="block md:hidden text-2xl cursor-pointer "
-        onClick={() => setShowResultContainer(true)}
-      />
+      <div className="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition duration-200">
+        <TbSearch
+          className="block md:hidden text-2xl cursor-pointer "
+          onClick={() => setShowResultContainer(true)}
+        />
+      </div>
       <div
         className="hidden md:block w-full max-w-sm"
         onClick={() => setShowResultContainer(true)}
@@ -119,9 +121,9 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
 
       {showResultContainer && (
         <>
-          <div className="fixed inset-0 bg-white dark:bg-gray-900  z-0"></div>
+          <div className="fixed inset-0 bg-white dark:bg-gray-900  z-50"></div>
           <div className="absolute top-1 md:-top-1 left-1/2 transform -translate-x-1/2 w-full lg:w-2/3 max-h-screen overflow-y-auto z-50 shadow-lg p-2 no-scrollbar ">
-            <div className="w-full ">
+            <div className="w-full">
               <div className="relative flex gap-4">
                 <input
                   placeholder={placeholder}
@@ -154,7 +156,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
                       onClick={() => setShowResultContainer(false)}
                       href={`/question-details/${question._id}`}
                     >
-                      <div className="mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl cursor-pointer transition-colors border border-gray-200 dark:border-gray-700 hover:border-orange-500 ">
+                      <div className="mb-3 md:mb-6 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl cursor-pointer transition-colors border border-gray-200 dark:border-gray-700 hover:border-orange-500 ">
                         <h4 className="text-md font-medium text-gray-900 dark:text-gray-100">
                           {question.title}
                         </h4>
@@ -189,7 +191,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
                       >
                         <div
                           key={user._id}
-                          className="flex items-center mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl cursor-pointer transition-colors  border border-gray-200 dark:border-gray-700 hover:border-orange-500"
+                          className="flex items-center -mb-1 md:mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl cursor-pointer transition-colors  border border-gray-200 dark:border-gray-700 hover:border-orange-500"
                         >
                           <img
                             src={user.picture}
@@ -225,7 +227,7 @@ const GlobalSearchBar = ({ placeholder }: GlobalSearchBarProps) => {
                       >
                         <div
                           key={tag._id}
-                          className="flex items-center mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl cursor-pointer transition-colors  border border-gray-200 dark:border-gray-700 hover:border-orange-500"
+                          className="flex items-center -mb-1 md:mb-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl cursor-pointer transition-colors  border border-gray-200 dark:border-gray-700 hover:border-orange-500"
                         >
                           <div className="w-8 h-8 flex justify-center items-center rounded-full mr-3  bg-gray-100 dark:bg-gray-700">
                             <TbHash />
