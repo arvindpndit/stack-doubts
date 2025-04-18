@@ -1,11 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { UserButton } from '@clerk/nextjs';
-import { TbBrandGithub } from 'react-icons/tb';
+import { TbUser } from 'react-icons/tb';
 
 import logo from '../../public/assets/images/stack-logo.png';
 import ThemeSwitcher from './ThemeSwitcher';
 import GlobalSearchBar from './GlobalSearchBar';
+import Link from 'next/link';
 
 const Navbar: React.FC = async () => {
   return (
@@ -19,28 +20,31 @@ const Navbar: React.FC = async () => {
 
       {/* <div className="absolute top-full mt-2 w-full  flex justify-center items-center h-96 bg-gray-50 dark:bg-gray-700 rounded-3xl z-20 shadow-md"></div> */}
       <div className="flex items-center gap-3">
-        <div className="w-6 h-6 md:w-8 md:h-8">
-          <UserButton
-            appearance={{
-              elements: {
-                userButtonAvatarBox: {
-                  width: '100%',
-                  height: '100%',
-                },
-              },
-            }}
-          />
-        </div>
         <GlobalSearchBar placeholder="Search anything globally..." />
-        <ThemeSwitcher />
-        <a
-          href="https://github.com/arvindpndit/stack-overflow-nextjs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-2xl md:text-3xl "
-        >
-          <TbBrandGithub />
-        </a>
+        <div className="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition duration-200">
+          <ThemeSwitcher />
+        </div>
+        <div className="relative">
+          <Link
+            href="/sign-in"
+            className="w-6 h-6 md:w-8 md:h-8 rounded-full text-2xl md:text-3xl absolute top-0 left-0 text-gray-700 dark:text-gray-300 hover:text-orange-500 transition duration-200"
+          >
+            <TbUser />
+          </Link>
+
+          <div className="w-6 h-6 md:w-8 md:h-8 ">
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonAvatarBox: {
+                    width: '100%',
+                    height: '100%',
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

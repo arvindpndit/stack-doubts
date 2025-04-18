@@ -9,7 +9,7 @@ import { FaRegStar, FaStar } from 'react-icons/fa';
 import { BiUpvote, BiDownvote } from 'react-icons/bi';
 import { usePathname } from 'next/navigation';
 import { IUser } from '@/database/user-model';
-import { questionSchema } from '@/lib/schema';
+import { toast } from 'sonner';
 
 interface QuestionInteractionProps {
   question: string;
@@ -23,7 +23,7 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
     null,
   );
 
-  const questionObj = JSON.parse(question);
+  const questionObj = JSON.parse(question); //converts the question string to an object
   const userIdObj = JSON.parse(userId);
 
   const isQuestionSaved = async function () {
@@ -33,23 +33,39 @@ const QuestionInteractions: React.FC<QuestionInteractionProps> = (params) => {
       path: pathname,
       update: true,
     });
+
     setQuestionSavedStatus(response);
+    if (response) {
+      toast('✨ Boom! Question added to your collection!');
+    } else {
+      toast('🗑️ Poof! Question removed from your collection!');
+    }
   };
 
   async function upvoteQuestionHandler() {
-    await upvoteQuestion({
+    const { isQuestionUpvoted } = await upvoteQuestion({
       questionId: questionObj._id,
       authorId: userIdObj,
       path: pathname,
     });
+    if (isQuestionUpvoted) {
+      toast('🧠 Big brain move. You upvoted!');
+    } else {
+      toast('😮‍💨 Changed your mind? Upvote removed.');
+    }
   }
 
   async function downvoteQuestionHandler() {
-    await downvoteQuestion({
+    const { isQuestionDownvoted } = await downvoteQuestion({
       questionId: questionObj._id,
       authorId: userIdObj,
       path: pathname,
     });
+    if (isQuestionDownvoted) {
+      toast('👎 Oof! You just downvoted this question.');
+    } else {
+      toast('😅 Changed your mind? Downvote removed!');
+    }
   }
 
   useEffect(() => {
