@@ -18,15 +18,16 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createAnswer } from '@/lib/actions/answer.action';
 import { useTheme } from 'next-themes';
 import { toast } from 'sonner';
+import { sendAnswerEmail } from '@/lib/actions/send-email.action';
 
 interface Props {
   id: string;
   mongoUserId: string;
+  question: any;
 }
 
-const AnswerForm = ({ id, mongoUserId }: Props) => {
+const AnswerForm = ({ id, mongoUserId, question }: Props) => {
   const editorRef = useRef(null);
-  const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
 
@@ -46,6 +47,11 @@ const AnswerForm = ({ id, mongoUserId }: Props) => {
         author: JSON.parse(mongoUserId),
         question: id,
         path: pathname,
+      });
+      await sendAnswerEmail({
+        recipientEmail: question.author,
+        questionTitle: question.title,
+        id: id,
       });
       if (editorRef.current) {
         // @ts-ignore

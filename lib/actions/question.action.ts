@@ -176,7 +176,7 @@ export async function getQuestionById(id: string) {
         new: true,
       },
     )
-      .populate('author', 'name picture') // Populate the 'author' of the question
+      .populate('author', 'name picture email') // Populate the 'author' of the question
       .populate({
         path: 'answers',
         populate: {
