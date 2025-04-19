@@ -15,6 +15,11 @@ interface Props {
 
 const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
   const question = await getQuestionById(id);
+  const sendMailRequiredArgs = {
+    title: question?.title,
+    author: question?.author?.email,
+  };
+
   return (
     <div className="mt-8 pb-24 lg:pb-14">
       <div className="flex justify-between mb-2">
@@ -75,7 +80,11 @@ const QuestionDetailsPage = async ({ id, mongoUserId }: Props) => {
         );
       })}
       <div className="text-xl font-bold">Write your answer here</div>
-      <AnswerForm id={id} mongoUserId={mongoUserId} />
+      <AnswerForm
+        id={id}
+        mongoUserId={mongoUserId}
+        question={sendMailRequiredArgs}
+      />
     </div>
   );
 };
