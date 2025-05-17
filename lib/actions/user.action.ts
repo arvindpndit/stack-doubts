@@ -115,6 +115,7 @@ export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
       const [questions, total] = await Promise.all([
         Question.find(matchFilter)
           .populate('author', 'name picture')
+          .populate('tags', 'name')
           .skip(skip)
           .limit(limit)
           .exec(),
@@ -135,6 +136,7 @@ export async function getAllSavedQuestions(params: getAllSavedQuestionsParams) {
       const [questions, total] = await Promise.all([
         Question.find(matchFilter)
           .populate('author', 'name picture')
+          .populate('tags', 'name')
           .skip(skip)
           .limit(limit)
           .exec(),
